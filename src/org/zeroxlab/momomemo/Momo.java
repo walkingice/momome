@@ -18,22 +18,6 @@
 
 package org.zeroxlab.momomemo;
 
-import org.zeroxlab.momomemo.R;
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.ListView;
-
-public class MainActivity extends Activity {
-    ListView mListView;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        initViews();
-    }
-
-    private void initViews() {
-        mListView = (ListView) findViewById(R.id.main_list_view);
-    }
+public interface Momo {
+    public final static String TAG = "Momo";
 }
