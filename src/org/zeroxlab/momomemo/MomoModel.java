@@ -18,28 +18,9 @@
 
 package org.zeroxlab.momomemo;
 
-import android.app.Application;
+import org.json.JSONObject;
 
-
-public class MomoApp extends Application implements Momo {
-
-    private static MomoModel sModel;
-
-    public MomoApp() {
-    }
-
-    public static MomoModel getModel() {
-        return sModel;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        sModel = new DummyModel();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
+public interface MomoModel extends Momo {
+    // this method is just for testing. need to be removed.
+    public JSONObject getJSON();
 }

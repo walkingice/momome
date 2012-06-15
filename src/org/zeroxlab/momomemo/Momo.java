@@ -20,4 +20,8 @@ package org.zeroxlab.momomemo;
 
 public interface Momo {
     public final static String TAG = "Momo";
+
+    /* for JSON */
+    public final static String ITEM_LIST     = "momo_items";
+    public final static String ITEM_TITLE    = "momo_item_title";
 }
