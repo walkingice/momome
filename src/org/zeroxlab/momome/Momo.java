@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momomemo;
+package org.zeroxlab.momome;
 
 public interface Momo {
     public final static String TAG = "Momo";

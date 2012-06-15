@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momomemo;
+package org.zeroxlab.momome;
 
 import org.json.JSONArray;
 import org.json.JSONException;
