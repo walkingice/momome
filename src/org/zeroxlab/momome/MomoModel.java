@@ -21,6 +21,8 @@ package org.zeroxlab.momome;
 import org.json.JSONObject;
 
 public interface MomoModel extends Momo {
-    // this method is just for testing. need to be removed.
-    public JSONObject getJSON();
+    public boolean isAccessible();
+    public int getItemsSize();
+    public JSONObject getItem(int position);
+    public JSONObject[] getItems();
 }

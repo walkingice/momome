@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements Momo {
         initViews();
 
         MomoModel model = MomoApp.getModel();
-        mAdapter = new JSONAdapter(this, model.getJSON());
+        mAdapter = new JSONAdapter(this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int pos, long id) {

@@ -34,31 +34,30 @@ public class JSONAdapter extends BaseAdapter implements Momo {
 
     protected Context         mContext;
     protected LayoutInflater  mInflater;
-    protected JSONObject      mRoot;
-    protected JSONArray       mItems;
+    protected MomoModel       mModel;
 
-    public JSONAdapter(Context context, JSONObject root) {
+    public JSONAdapter(Context context) {
         super();
         mContext  = context;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        setRoot(root);
+        mModel    = MomoApp.getModel();
     }
 
     @Override
     public int getCount() {
-        if (mRoot == null || mItems == null) {
-            return 0;
+        if (mModel.isAccessible()) {
+            return mModel.getItemsSize();
         } else {
-            return mItems.length();
+            return 0;
         }
     }
 
     @Override
     public Object getItem(int pos) {
-        if (mRoot == null || mItems == null) {
-            return null;
+        if (mModel.isAccessible()) {
+            return mModel.getItem(pos);
         } else {
-            return mItems.opt(pos);
+            return null;
         }
     }
 
@@ -83,19 +82,5 @@ public class JSONAdapter extends BaseAdapter implements Momo {
          }
 
          return convertView;
-    }
-
-    public void setRoot(JSONObject root) {
-        mRoot  = root;
-        this.onRootChanged();
-    }
-
-    public JSONObject getRoot() {
-        return mRoot;
-    }
-
-    public void onRootChanged() {
-        mItems = mRoot.optJSONArray(ITEM_LIST);
-        super.notifyDataSetChanged();
     }
 }

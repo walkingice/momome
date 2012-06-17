@@ -48,7 +48,7 @@ public class DetailActivity extends Activity implements Momo {
     }
 
     private void initViews(int pos) {
-        if (pos == INVALID_INT) {
+        if (pos == INVALID_INT || !mModel.isAccessible()) {
             String msg = "Not valid position";
             Log.e(TAG, msg);
             Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
@@ -57,9 +57,7 @@ public class DetailActivity extends Activity implements Momo {
             return;
         }
 
-        JSONObject root = mModel.getJSON();
-        JSONArray array = root.optJSONArray(ITEM_LIST);
-        JSONObject json = (JSONObject) array.opt(pos);
+        JSONObject json = mModel.getItem(pos);
         mTextView = (TextView) findViewById(R.id.detail_textview);
         mTextView.setText(json.optString(ITEM_CONTENT));
     }

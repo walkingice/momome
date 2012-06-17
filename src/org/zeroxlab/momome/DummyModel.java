@@ -25,6 +25,7 @@ import org.json.JSONObject;
 public class DummyModel implements MomoModel {
 
     JSONObject mRoot;
+    JSONArray  mArray;
 
     private String[] mTitles = {"Facebook", "Twitter", "Gmail"};
     private String[] mContents = {"contentOfFB", "contentOfTW", "contentOfGMail"};
@@ -37,22 +38,46 @@ public class DummyModel implements MomoModel {
         }
     }
 
-    public JSONObject getJSON() {
-        return mRoot;
+    @Override
+    public boolean isAccessible() {
+        return true;
+    }
+
+    @Override
+    public int getItemsSize() {
+        return mTitles.length;
+    }
+
+    @Override
+    public JSONObject getItem(int position) {
+        if (position <= 0 || position >= mArray.length()) {
+            return null;
+        }
+
+        return mArray.optJSONObject(position);
+    }
+
+    @Override
+    public JSONObject[] getItems() {
+        JSONObject[] items = new JSONObject[mArray.length()];
+        for (int i = 0; i < mArray.length(); i++) {
+            items[i] = mArray.optJSONObject(i);
+        }
+
+        return items;
     }
 
     private void initRootJson() throws JSONException {
         mRoot = new JSONObject();
-
-        JSONArray array = new JSONArray();
+        mArray = new JSONArray();
 
         for (int i = 0; i < mTitles.length; i++) {
             JSONObject obj = new JSONObject();
             obj.put(ITEM_TITLE, mTitles[i]);
             obj.put(ITEM_CONTENT, mContents[i]);
-            array.put(obj);
+            mArray.put(obj);
         }
 
-        mRoot.put(ITEM_LIST, array);
+        mRoot.put(ITEM_LIST, mArray);
     }
 }
