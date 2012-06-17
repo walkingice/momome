@@ -27,6 +27,7 @@ public class DummyModel implements MomoModel {
     JSONObject mRoot;
 
     private String[] mTitles = {"Facebook", "Twitter", "Gmail"};
+    private String[] mContents = {"contentOfFB", "contentOfTW", "contentOfGMail"};
 
     public DummyModel() {
         try {
@@ -48,6 +49,7 @@ public class DummyModel implements MomoModel {
         for (int i = 0; i < mTitles.length; i++) {
             JSONObject obj = new JSONObject();
             obj.put(ITEM_TITLE, mTitles[i]);
+            obj.put(ITEM_CONTENT, mContents[i]);
             array.put(obj);
         }
 

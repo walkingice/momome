@@ -24,4 +24,5 @@ public interface Momo {
     /* for JSON */
     public final static String ITEM_LIST     = "momo_items";
     public final static String ITEM_TITLE    = "momo_item_title";
+    public final static String ITEM_CONTENT  = "momo_item_content";
 }
