@@ -25,12 +25,17 @@ import android.widget.ListView;
 
 public class MainActivity extends Activity {
     ListView mListView;
+    JSONAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         initViews();
+
+        MomoModel model = MomoApp.getModel();
+        mAdapter = new JSONAdapter(this, model.getJSON());
+        mListView.setAdapter(mAdapter);
     }
 
     private void initViews() {
