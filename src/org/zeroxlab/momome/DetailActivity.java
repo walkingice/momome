@@ -21,42 +21,46 @@ package org.zeroxlab.momome;
 import org.zeroxlab.momome.R;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class MainActivity extends Activity implements Momo {
-    ListView mListView;
-    JSONAdapter mAdapter;
+public class DetailActivity extends Activity implements Momo {
+    TextView mTextView;
+    MomoModel mModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        initViews();
+        setContentView(R.layout.detail);
 
-        MomoModel model = MomoApp.getModel();
-        mAdapter = new JSONAdapter(this, model.getJSON());
-        mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
-                launchDetailActivity(pos);
-            }
-        });
+        mModel = MomoApp.getModel();
+
+        int pos = getIntent().getIntExtra(CROSS_POS, INVALID_INT);
+        initViews(pos);
     }
 
-    private void initViews() {
-        mListView = (ListView) findViewById(R.id.main_list_view);
-    }
+    private void initViews(int pos) {
+        if (pos == INVALID_INT) {
+            String msg = "Not valid position";
+            Log.e(TAG, msg);
+            Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+            t.show();
+            finish();
+            return;
+        }
 
-    private void launchDetailActivity(int position) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(CROSS_POS, position);
-        startActivity(intent);
+        JSONObject root = mModel.getJSON();
+        JSONArray array = root.optJSONArray(ITEM_LIST);
+        JSONObject json = (JSONObject) array.opt(pos);
+        mTextView = (TextView) findViewById(R.id.detail_textview);
+        mTextView.setText(json.optString(ITEM_CONTENT));
     }
 }

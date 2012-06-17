@@ -25,4 +25,9 @@ public interface Momo {
     public final static String ITEM_LIST     = "momo_items";
     public final static String ITEM_TITLE    = "momo_item_title";
     public final static String ITEM_CONTENT  = "momo_item_content";
+
+
+    /* for cross activity */
+    public final static int    INVALID_INT   = -1;
+    public final static String CROSS_POS     = "cross_activity_item_position";
 }
