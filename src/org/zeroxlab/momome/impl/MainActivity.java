@@ -63,4 +63,13 @@ public class MainActivity extends Activity implements Momo {
         intent.putExtra(CROSS_ITEM_ID, id);
         startActivity(intent);
     }
+
+    public void onClickSettings(View v) {
+    }
+
+    public void onClickEdit(View v) {
+    }
+
+    public void onClickReload(View v) {
+    }
 }

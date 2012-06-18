@@ -4,6 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@android:color/background_light"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Settings"
+            android:onClick="onClickSettings"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Edit"
+            android:onClick="onClickEdit"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Reload"
+            android:onClick="onClickReload"
+            />
+    </LinearLayout>
     <ListView
         android:id="@+id/main_list_view"
         android:layout_width="match_parent"
