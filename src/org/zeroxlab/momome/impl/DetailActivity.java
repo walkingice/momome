@@ -24,9 +24,12 @@ import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -38,14 +41,17 @@ import java.util.Map;
 import java.util.Set;
 
 public class DetailActivity extends Activity implements Momo {
-    TextView mTextView;
     MomoModel mModel;
+    ViewGroup mContainer;
+    View      mAddButton;
+    LayoutInflater mInflater;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
 
+        mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mModel = MomoApp.getModel();
 
         int id = getIntent().getIntExtra(CROSS_ITEM_ID, INVALID_INT);
@@ -62,7 +68,8 @@ public class DetailActivity extends Activity implements Momo {
             return;
         }
 
-        mTextView = (TextView) findViewById(R.id.detail_textview);
+        mContainer = (ViewGroup) findViewById(R.id.detail_container);
+        mAddButton = findViewById(R.id.detail_add_button);
 
         StringBuilder sb = new StringBuilder();
         Map<String, String> map = mModel.getItemContent(id);
@@ -70,10 +77,25 @@ public class DetailActivity extends Activity implements Momo {
         for(Map.Entry<String, String> entry : set) {
             String key = entry.getKey();
             String value = entry.getValue();
-            System.out.printf("%s = %s%n", key, value);
-            sb.append("Key:" + key + " Value:" + value + "\n");
+            insertNewRow(key, value);
+        }
+    }
+
+    private void insertNewRow(String key, String value) {
+        View view = mInflater.inflate(R.layout.entry_editable, null);
+        TextView viewKey   = (TextView) view.findViewById(R.id.entry_key);
+        TextView viewValue = (TextView) view.findViewById(R.id.entry_value);
+        viewKey.setText(key);
+        viewValue.setText(value);
+
+        int btnPosition = mContainer.indexOfChild(mAddButton);
+        int targetPosition = mContainer.getChildCount();
+        if (btnPosition != -1) {
+            // if the Add button is in the container, insert new row
+            // before the add button.
+            targetPosition = btnPosition;
         }
 
-        mTextView.setText(sb.toString());
+        mContainer.addView(view, targetPosition);
     }
 }
