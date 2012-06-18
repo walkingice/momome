@@ -35,10 +35,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import java.util.Map;
 import java.util.Set;
+import android.app.AlertDialog;
+import android.widget.EditText;
+import android.content.DialogInterface;
 
 public class DetailActivity extends Activity implements Momo {
     protected MomoModel mModel;
@@ -46,6 +47,7 @@ public class DetailActivity extends Activity implements Momo {
     protected View      mAddButton;
     protected View      mEditButton;
     protected LayoutInflater mInflater;
+    protected Map<String, String> mMap;
 
     private boolean mIsEditing = false;
 
@@ -76,34 +78,59 @@ public class DetailActivity extends Activity implements Momo {
         mEditButton = findViewById(R.id.detail_edit_button);
 
         StringBuilder sb = new StringBuilder();
-        Map<String, String> map = mModel.getItemContent(id);
+        mMap = mModel.getItemContent(id);
+        regenerateRows(mMap);
+    }
+
+    private void regenerateRows(Map<String, String> map) {
+        mContainer.removeAllViews();
         Set<Map.Entry<String, String>> set = map.entrySet();
         for(Map.Entry<String, String> entry : set) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            insertNewRow(key, value);
+            insertNewRow(entry);
         }
     }
 
-    private void insertNewRow(String key, String value) {
+    private void insertNewRow(Map.Entry<String, String> entry) {
         View view = mInflater.inflate(R.layout.entry_editable, null);
         TextView viewKey   = (TextView) view.findViewById(R.id.entry_key);
         TextView viewValue = (TextView) view.findViewById(R.id.entry_value);
-        viewKey.setText(key);
-        viewValue.setText(value);
+        View btnName   = view.findViewById(R.id.entry_btn_name);
+        View btnValue  = view.findViewById(R.id.entry_btn_value);
 
-        int btnPosition = mContainer.indexOfChild(mAddButton);
-        int targetPosition = mContainer.getChildCount();
-        if (btnPosition != -1) {
-            // if the Add button is in the container, insert new row
-            // before the add button.
-            targetPosition = btnPosition;
-        }
+        btnName.setTag(viewKey);
+        viewKey.setTag(entry);
+        btnValue.setTag(viewValue);
+        viewValue.setTag(entry);
 
-        mContainer.addView(view, targetPosition);
+        viewKey.setText(entry.getKey());
+        viewValue.setText(entry.getValue());
+
+        mContainer.addView(view);
     }
 
     public void onClickEditName(View v) {
+        TextView tv = (TextView)v.getTag();
+        final Map.Entry<String, String> entry = (Map.Entry<String, String>)tv.getTag();
+        final EditText edit = new EditText(this);
+        edit.setText(entry.getKey());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Edit Name");
+        builder.setView(edit);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int what) {
+                mMap.remove(entry.getKey());
+                mMap.put(edit.getText().toString(), entry.getValue());
+                regenerateRows(mMap);
+            }
+        });
+
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int what) {
+            }
+        });
+
+        builder.show();
     }
 
     public void onClickEditValue(View v) {
@@ -127,6 +154,7 @@ public class DetailActivity extends Activity implements Momo {
     }
 
     private void finishEditing() {
+        regenerateRows(mMap);
         // save result to file
     }
 
