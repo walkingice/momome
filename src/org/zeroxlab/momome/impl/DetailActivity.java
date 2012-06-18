@@ -41,10 +41,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class DetailActivity extends Activity implements Momo {
-    MomoModel mModel;
-    ViewGroup mContainer;
-    View      mAddButton;
-    LayoutInflater mInflater;
+    protected MomoModel mModel;
+    protected ViewGroup mContainer;
+    protected View      mAddButton;
+    protected View      mEditButton;
+    protected LayoutInflater mInflater;
+
+    private boolean mIsEditing = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,7 @@ public class DetailActivity extends Activity implements Momo {
 
         mContainer = (ViewGroup) findViewById(R.id.detail_container);
         mAddButton = findViewById(R.id.detail_add_button);
+        mEditButton = findViewById(R.id.detail_edit_button);
 
         StringBuilder sb = new StringBuilder();
         Map<String, String> map = mModel.getItemContent(id);
@@ -97,5 +101,52 @@ public class DetailActivity extends Activity implements Momo {
         }
 
         mContainer.addView(view, targetPosition);
+    }
+
+    public void onClickEditName(View v) {
+    }
+
+    public void onClickEditValue(View v) {
+    }
+
+    public void onClickEditButton(View v) {
+        toggleEditing();
+    }
+
+    private void toggleEditing() {
+        if (mIsEditing) {
+            setVisibility(View.GONE);
+            mAddButton.setVisibility(View.GONE);
+            finishEditing();
+        } else {
+            setVisibility(View.VISIBLE);
+            mAddButton.setVisibility(View.VISIBLE);
+        }
+
+        mIsEditing = ! mIsEditing;
+    }
+
+    private void finishEditing() {
+        // save result to file
+    }
+
+    private void setVisibility(int visibility) {
+        for (int i = 0; i < mContainer.getChildCount(); i++) {
+            View view = mContainer.getChildAt(i);
+            if (view.getId() == R.id.entry) {
+                setEntryVisibility((ViewGroup)view, visibility);
+            } else {
+            }
+        }
+    }
+
+    private void setEntryVisibility(ViewGroup g, int visibility) {
+        for (int i = 0; i < g.getChildCount(); i++) {
+            View child = g.getChildAt(i);
+            if (child.getId() == R.id.entry_btn_name
+                    || child.getId() == R.id.entry_btn_value) {
+                child.setVisibility(visibility);
+            }
+        }
     }
 }

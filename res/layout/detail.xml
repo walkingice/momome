@@ -4,10 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <Button
+        android:id="@+id/detail_edit_button"
+        android:text="Edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickEditButton"
+        />
     <ScrollView
         android:id="@+id/detail_scroller"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         >
         <LinearLayout
             android:id="@+id/detail_container"
@@ -15,18 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-            <TextView
-                android:id="@+id/detail_textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-            <Button
-                android:id="@+id/detail_add_button"
-                android:text="Add Item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
         </LinearLayout>
     </ScrollView>
+    <Button
+        android:id="@+id/detail_add_button"
+        android:visibility="gone"
+        android:text="Add Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>
 
