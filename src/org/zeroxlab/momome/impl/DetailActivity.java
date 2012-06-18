@@ -22,6 +22,8 @@ import org.zeroxlab.momome.R;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
+import org.zeroxlab.momome.data.Item;
+import org.zeroxlab.momome.data.Item.ItemEntry;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,8 +37,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import android.app.AlertDialog;
 import android.widget.EditText;
 import android.content.DialogInterface;
@@ -46,8 +47,8 @@ public class DetailActivity extends Activity implements Momo {
     protected ViewGroup mContainer;
     protected View      mAddButton;
     protected View      mEditButton;
+    protected Item      mItem;
     protected LayoutInflater mInflater;
-    protected Map<String, String> mMap;
 
     private boolean mIsEditing = false;
 
@@ -60,6 +61,7 @@ public class DetailActivity extends Activity implements Momo {
         mModel = MomoApp.getModel();
 
         int id = getIntent().getIntExtra(CROSS_ITEM_ID, INVALID_INT);
+        mItem  = mModel.getItem(id);
         initViews(id);
     }
 
@@ -77,21 +79,27 @@ public class DetailActivity extends Activity implements Momo {
         mAddButton = findViewById(R.id.detail_add_button);
         mEditButton = findViewById(R.id.detail_edit_button);
 
-        StringBuilder sb = new StringBuilder();
-        mMap = mModel.getItemContent(id);
-        regenerateRows(mMap);
+        updateRows();
     }
 
-    private void regenerateRows(Map<String, String> map) {
+    private void updateRows() {
         mContainer.removeAllViews();
-        Set<Map.Entry<String, String>> set = map.entrySet();
-        for(Map.Entry<String, String> entry : set) {
-            insertNewRow(entry);
+        while(mContainer.getChildCount() != mItem.getEntryCount()) {
+            if (mContainer.getChildCount() > mItem.getEntryCount()) {
+                mContainer.removeViewAt(0);
+            } else {
+                View view = mInflater.inflate(R.layout.entry_editable, null);
+                mContainer.addView(view);
+            }
+        }
+
+        List<Item.ItemEntry> list = mItem.getEntries();
+        for(int i = 0; i < list.size(); i++) {
+            updateOneRow(list.get(i), mContainer.getChildAt(i));
         }
     }
 
-    private void insertNewRow(Map.Entry<String, String> entry) {
-        View view = mInflater.inflate(R.layout.entry_editable, null);
+    private void updateOneRow(ItemEntry entry, View view) {
         TextView viewKey   = (TextView) view.findViewById(R.id.entry_key);
         TextView viewValue = (TextView) view.findViewById(R.id.entry_value);
         View btnName   = view.findViewById(R.id.entry_btn_name);
@@ -102,26 +110,30 @@ public class DetailActivity extends Activity implements Momo {
         btnValue.setTag(viewValue);
         viewValue.setTag(entry);
 
-        viewKey.setText(entry.getKey());
-        viewValue.setText(entry.getValue());
-
-        mContainer.addView(view);
+        viewKey.setText(entry.getName());
+        viewValue.setText(entry.getContent());
+        if (mIsEditing) {
+            btnName.setVisibility(View.VISIBLE);
+            btnValue.setVisibility(View.VISIBLE);
+        } else {
+            btnName.setVisibility(View.GONE);
+            btnValue.setVisibility(View.GONE);
+        }
     }
 
     public void onClickEditName(View v) {
         TextView tv = (TextView)v.getTag();
-        final Map.Entry<String, String> entry = (Map.Entry<String, String>)tv.getTag();
+        final ItemEntry entry = (ItemEntry) tv.getTag();
         final EditText edit = new EditText(this);
-        edit.setText(entry.getKey());
+        edit.setText(entry.getName());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Edit Name");
         builder.setView(edit);
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int what) {
-                mMap.remove(entry.getKey());
-                mMap.put(edit.getText().toString(), entry.getValue());
-                regenerateRows(mMap);
+                mItem.updateEntry(entry, edit.getText().toString(), entry.getContent());
+                updateRows();
             }
         });
 
@@ -154,7 +166,7 @@ public class DetailActivity extends Activity implements Momo {
     }
 
     private void finishEditing() {
-        regenerateRows(mMap);
+        updateRows();
         // save result to file
     }
 

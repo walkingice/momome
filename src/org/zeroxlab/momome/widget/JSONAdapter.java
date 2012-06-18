@@ -21,6 +21,7 @@ package org.zeroxlab.momome.widget;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
+import org.zeroxlab.momome.data.Item;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -30,9 +31,7 @@ import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 public class JSONAdapter extends BaseAdapter implements Momo {
 
@@ -59,8 +58,8 @@ public class JSONAdapter extends BaseAdapter implements Momo {
     @Override
     public Object getItem(int pos) {
         if (mModel.isAccessible()) {
-            JSONObject[] items = mModel.getItems();
-            return items[pos];
+            List<Item> items = mModel.getItems();
+            return items.get(pos);
         } else {
             return null;
         }
@@ -78,15 +77,9 @@ public class JSONAdapter extends BaseAdapter implements Momo {
          }
 
          TextView tv = (TextView) convertView;
-         Object obj = getItem(pos);
-         if (obj != null && obj instanceof JSONObject) {
-             JSONObject json = (JSONObject) obj;
-             tv.setText(json.optString(ITEM_TITLE, "No Title"));
-             tv.setId(json.optInt(ITEM_ID));
-         } else {
-             Log.e(TAG, "cannot get jsonobject for position:" + pos);
-             tv.setId(INVALID_INT);
-         }
+         Item item = (Item) getItem(pos);
+         tv.setText(item.getTitle());
+         tv.setId(item.getId());
 
          return convertView;
     }

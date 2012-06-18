@@ -18,31 +18,26 @@
 
 package org.zeroxlab.momome.test;
 
+import org.zeroxlab.momome.data.Item;;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.util.Util;
+
 import android.util.Log;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.List;
 
 public class DummyModel implements MomoModel {
 
-    JSONObject mRoot;
-    JSONArray  mArray;
+    List<Item> mList;
 
     private String[] mTitles = {"Facebook", "Twitter", "Gmail"};
     private String[] mContents = {"contentOfFB", "contentOfTW", "contentOfGMail"};
 
     public DummyModel() {
-        try {
-            initRootJson();
-            assignRandomDataToItems();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        mList = new ArrayList<Item>();
+        initItems();
+        assignRandomDataToItems();
     }
 
     @Override
@@ -52,82 +47,46 @@ public class DummyModel implements MomoModel {
 
     @Override
     public int getItemsSize() {
-        return mTitles.length;
+        return mList.size();
     }
 
     @Override
-    public JSONObject getItem(int id) {
-        for (int i = 0; i < mArray.length(); i++) {
-            JSONObject j = mArray.optJSONObject(i);
-            if (j.optInt(ITEM_ID, INVALID_INT) == id) {
-                return j;
+    public Item getItem(int id) {
+        for (int i = 0; i < mList.size(); i++) {
+            Item item = mList.get(i);
+            if (item.getId() == id) {
+                return item;
             }
         }
 
-        Log.d(TAG, "No such JSONObject for id:" + id);
+        Log.e(TAG, "No item with id:" + id);
         return null;
     }
 
     @Override
-    public Map<String, String> getItemContent(int id) {
-        JSONObject item = getItem(id);
-        if (item == null) {
-            Log.d(TAG, "No such JSONObject for id:" + id);
-            return null;
-        }
-
-        Map<String,String> map = new TreeMap<String,String>();
-        Iterator iter = item.keys();
-        while(iter.hasNext()){
-            String key = (String)iter.next();
-            String value = item.optString(key);
-            map.put(key,value);
-        }
-
-        return map;
-    }
-
-    @Override
-    public JSONObject[] getItems() {
-        JSONObject[] items = new JSONObject[mArray.length()];
-        for (int i = 0; i < mArray.length(); i++) {
-            items[i] = mArray.optJSONObject(i);
-        }
-
-        return items;
+    public List<Item> getItems() {
+        return mList;
     }
 
 
     private void assignRandomDataToItems() {
-        for (int i = 0; i < mArray.length(); i++) {
-            JSONObject item = mArray.optJSONObject(i);
+        for (int i = 0; i < mList.size(); i++) {
+            Item item = mList.get(i);
             assignRandomData(item);
         }
     }
 
-    private void assignRandomData(JSONObject item) {
+    private void assignRandomData(Item item) {
         int count = Util.randomInt(5);
         for (int i = 0; i < count; i++) {
-            try {
-                item.put("Key" + i, "Value" + Util.randomInt(100));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            item.addEntry("Key" + i, "Value" + Util.randomInt(100));
         }
     }
 
-    private void initRootJson() throws JSONException {
-        mRoot = new JSONObject();
-        mArray = new JSONArray();
-
+    private void initItems() {
         for (int i = 0; i < mTitles.length; i++) {
-            JSONObject obj = new JSONObject();
-            obj.put(ITEM_ID, Util.randomInt());
-            obj.put(ITEM_TITLE, mTitles[i]);
-            obj.put(ITEM_CONTENT, mContents[i]);
-            mArray.put(obj);
+            Item item = new Item(mTitles[i]);
+            mList.add(item);
         }
-
-        mRoot.put(ITEM_LIST, mArray);
     }
 }
