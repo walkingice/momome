@@ -18,11 +18,13 @@
 
 package org.zeroxlab.momome;
 
-import org.json.JSONObject;
+public class Util implements Momo {
 
-public interface MomoModel extends Momo {
-    public boolean isAccessible();
-    public int getItemsSize();
-    public JSONObject getItem(int id);
-    public JSONObject[] getItems();
+    public static int randomInt(int range) {
+        return (int)(Math.random() * range);
+    }
+
+    public static int randomInt() {
+        return randomInt(10000000);
+    }
 }

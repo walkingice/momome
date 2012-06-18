@@ -43,13 +43,13 @@ public class DetailActivity extends Activity implements Momo {
 
         mModel = MomoApp.getModel();
 
-        int pos = getIntent().getIntExtra(CROSS_POS, INVALID_INT);
-        initViews(pos);
+        int id = getIntent().getIntExtra(CROSS_ITEM_ID, INVALID_INT);
+        initViews(id);
     }
 
-    private void initViews(int pos) {
-        if (pos == INVALID_INT || !mModel.isAccessible()) {
-            String msg = "Not valid position";
+    private void initViews(int id) {
+        if (id == INVALID_INT || !mModel.isAccessible()) {
+            String msg = "Not valid id";
             Log.e(TAG, msg);
             Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
             t.show();
@@ -57,7 +57,7 @@ public class DetailActivity extends Activity implements Momo {
             return;
         }
 
-        JSONObject json = mModel.getItem(pos);
+        JSONObject json = mModel.getItem(id);
         mTextView = (TextView) findViewById(R.id.detail_textview);
         mTextView.setText(json.optString(ITEM_CONTENT));
     }

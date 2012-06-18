@@ -55,7 +55,8 @@ public class JSONAdapter extends BaseAdapter implements Momo {
     @Override
     public Object getItem(int pos) {
         if (mModel.isAccessible()) {
-            return mModel.getItem(pos);
+            JSONObject[] items = mModel.getItems();
+            return items[pos];
         } else {
             return null;
         }
@@ -77,8 +78,10 @@ public class JSONAdapter extends BaseAdapter implements Momo {
          if (obj != null && obj instanceof JSONObject) {
              JSONObject json = (JSONObject) obj;
              tv.setText(json.optString(ITEM_TITLE, "No Title"));
+             tv.setId(json.optInt(ITEM_ID));
          } else {
              Log.e(TAG, "cannot get jsonobject for position:" + pos);
+             tv.setId(INVALID_INT);
          }
 
          return convertView;

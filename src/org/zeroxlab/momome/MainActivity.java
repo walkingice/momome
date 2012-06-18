@@ -45,7 +45,7 @@ public class MainActivity extends Activity implements Momo {
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
-                launchDetailActivity(pos);
+                launchDetailActivity(v.getId());
             }
         });
     }
@@ -54,9 +54,9 @@ public class MainActivity extends Activity implements Momo {
         mListView = (ListView) findViewById(R.id.main_list_view);
     }
 
-    private void launchDetailActivity(int position) {
+    private void launchDetailActivity(int id) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(CROSS_POS, position);
+        intent.putExtra(CROSS_ITEM_ID, id);
         startActivity(intent);
     }
 }

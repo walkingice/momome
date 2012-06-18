@@ -18,6 +18,7 @@
 
 package org.zeroxlab.momome;
 
+import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,12 +50,16 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
-    public JSONObject getItem(int position) {
-        if (position <= 0 || position >= mArray.length()) {
-            return null;
+    public JSONObject getItem(int id) {
+        for (int i = 0; i < mArray.length(); i++) {
+            JSONObject j = mArray.optJSONObject(i);
+            if (j.optInt(ITEM_ID, INVALID_INT) == id) {
+                return j;
+            }
         }
 
-        return mArray.optJSONObject(position);
+        Log.d(TAG, "No such JSONObject for id:" + id);
+        return null;
     }
 
     @Override
@@ -73,6 +78,7 @@ public class DummyModel implements MomoModel {
 
         for (int i = 0; i < mTitles.length; i++) {
             JSONObject obj = new JSONObject();
+            obj.put(ITEM_ID, Util.randomInt());
             obj.put(ITEM_TITLE, mTitles[i]);
             obj.put(ITEM_CONTENT, mContents[i]);
             mArray.put(obj);
