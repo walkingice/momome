@@ -18,8 +18,8 @@
 
 package org.zeroxlab.momome;
 
+import org.zeroxlab.momome.test.DummyModel;
 import android.app.Application;
-
 
 public class MomoApp extends Application implements Momo {
 

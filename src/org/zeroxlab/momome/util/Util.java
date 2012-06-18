@@ -16,7 +16,9 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momome;
+package org.zeroxlab.momome.util;
+
+import org.zeroxlab.momome.Momo;
 
 public class Util implements Momo {
 

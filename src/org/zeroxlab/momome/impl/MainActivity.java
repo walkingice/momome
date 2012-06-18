@@ -16,9 +16,13 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momome;
+package org.zeroxlab.momome.impl;
 
 import org.zeroxlab.momome.R;
+import org.zeroxlab.momome.Momo;
+import org.zeroxlab.momome.MomoApp;
+import org.zeroxlab.momome.MomoModel;
+import org.zeroxlab.momome.widget.JSONAdapter;
 
 import android.app.Activity;
 import android.content.Intent;

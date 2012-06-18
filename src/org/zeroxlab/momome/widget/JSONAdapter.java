@@ -16,7 +16,11 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momome;
+package org.zeroxlab.momome.widget;
+
+import org.zeroxlab.momome.Momo;
+import org.zeroxlab.momome.MomoApp;
+import org.zeroxlab.momome.MomoModel;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -8,14 +8,14 @@
         android:name="MomoApp"
         android:theme="@android:style/Theme.NoTitleBar"
         >
-        <activity android:name="MainActivity"
+        <activity android:name="org.zeroxlab.momome.impl.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="DetailActivity"
+        <activity android:name="org.zeroxlab.momome.impl.DetailActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

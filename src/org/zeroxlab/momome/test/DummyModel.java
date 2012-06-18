@@ -16,8 +16,10 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momome;
+package org.zeroxlab.momome.test;
 
+import org.zeroxlab.momome.MomoModel;
+import org.zeroxlab.momome.util.Util;
 import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
