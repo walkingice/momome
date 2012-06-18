@@ -33,13 +33,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.List;
 
-public class JSONAdapter extends BaseAdapter implements Momo {
+public class ItemAdapter extends BaseAdapter implements Momo {
 
     protected Context         mContext;
     protected LayoutInflater  mInflater;
     protected MomoModel       mModel;
 
-    public JSONAdapter(Context context) {
+    public ItemAdapter(Context context) {
         super();
         mContext  = context;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -22,7 +22,7 @@ import org.zeroxlab.momome.R;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
-import org.zeroxlab.momome.widget.JSONAdapter;
+import org.zeroxlab.momome.widget.ItemAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,7 +36,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends Activity implements Momo {
     ListView mListView;
-    JSONAdapter mAdapter;
+    ItemAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainActivity extends Activity implements Momo {
         initViews();
 
         MomoModel model = MomoApp.getModel();
-        mAdapter = new JSONAdapter(this);
+        mAdapter = new ItemAdapter(this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
