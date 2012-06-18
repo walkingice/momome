@@ -126,6 +126,7 @@ public class DetailActivity extends Activity implements Momo {
         final ItemEntry entry = (ItemEntry) tv.getTag();
         final EditText edit = new EditText(this);
         edit.setText(entry.getName());
+        edit.selectAll();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Edit Name");
@@ -146,10 +147,37 @@ public class DetailActivity extends Activity implements Momo {
     }
 
     public void onClickEditValue(View v) {
+        TextView tv = (TextView)v.getTag();
+        final ItemEntry entry = (ItemEntry) tv.getTag();
+        final EditText edit = new EditText(this);
+        edit.setText(entry.getContent());
+        edit.selectAll();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Edit Content");
+        builder.setView(edit);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int what) {
+                mItem.updateEntry(entry, entry.getName(), edit.getText().toString());
+                updateRows();
+            }
+        });
+
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int what) {
+            }
+        });
+
+        builder.show();
     }
 
     public void onClickEditButton(View v) {
         toggleEditing();
+    }
+
+    public void onClickAddButton(View v) {
+        mItem.addEntry(Item.DEF_NAME, "");
+        updateRows();
     }
 
     private void toggleEditing() {
