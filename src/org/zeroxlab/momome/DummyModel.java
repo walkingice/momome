@@ -22,6 +22,9 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class DummyModel implements MomoModel {
 
@@ -34,6 +37,7 @@ public class DummyModel implements MomoModel {
     public DummyModel() {
         try {
             initRootJson();
+            assignRandomDataToItems();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -63,6 +67,25 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
+    public Map<String, String> getItemContent(int id) {
+        JSONObject item = getItem(id);
+        if (item == null) {
+            Log.d(TAG, "No such JSONObject for id:" + id);
+            return null;
+        }
+
+        Map<String,String> map = new TreeMap<String,String>();
+        Iterator iter = item.keys();
+        while(iter.hasNext()){
+            String key = (String)iter.next();
+            String value = item.optString(key);
+            map.put(key,value);
+        }
+
+        return map;
+    }
+
+    @Override
     public JSONObject[] getItems() {
         JSONObject[] items = new JSONObject[mArray.length()];
         for (int i = 0; i < mArray.length(); i++) {
@@ -70,6 +93,25 @@ public class DummyModel implements MomoModel {
         }
 
         return items;
+    }
+
+
+    private void assignRandomDataToItems() {
+        for (int i = 0; i < mArray.length(); i++) {
+            JSONObject item = mArray.optJSONObject(i);
+            assignRandomData(item);
+        }
+    }
+
+    private void assignRandomData(JSONObject item) {
+        int count = Util.randomInt(5);
+        for (int i = 0; i < count; i++) {
+            try {
+                item.put("Key" + i, "Value" + Util.randomInt(100));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void initRootJson() throws JSONException {

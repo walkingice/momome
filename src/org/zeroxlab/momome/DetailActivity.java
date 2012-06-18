@@ -31,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.Map;
+import java.util.Set;
 
 public class DetailActivity extends Activity implements Momo {
     TextView mTextView;
@@ -57,8 +59,18 @@ public class DetailActivity extends Activity implements Momo {
             return;
         }
 
-        JSONObject json = mModel.getItem(id);
         mTextView = (TextView) findViewById(R.id.detail_textview);
-        mTextView.setText(json.optString(ITEM_CONTENT));
+
+        StringBuilder sb = new StringBuilder();
+        Map<String, String> map = mModel.getItemContent(id);
+        Set<Map.Entry<String, String>> set = map.entrySet();
+        for(Map.Entry<String, String> entry : set) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.printf("%s = %s%n", key, value);
+            sb.append("Key:" + key + " Value:" + value + "\n");
+        }
+
+        mTextView.setText(sb.toString());
     }
 }

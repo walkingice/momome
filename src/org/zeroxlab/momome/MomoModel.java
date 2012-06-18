@@ -19,10 +19,12 @@
 package org.zeroxlab.momome;
 
 import org.json.JSONObject;
+import java.util.Map;
 
 public interface MomoModel extends Momo {
     public boolean isAccessible();
     public int getItemsSize();
     public JSONObject getItem(int id);
     public JSONObject[] getItems();
+    public Map<String, String> getItemContent(int id);
 }
