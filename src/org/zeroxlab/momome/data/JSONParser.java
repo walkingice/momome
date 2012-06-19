@@ -76,11 +76,11 @@ public class JSONParser implements Momo, Parser {
     }
 
     private Item JSONObjectToItem(JSONObject json) throws Exception {
-        if (json.has(KEY_ITEM_TITLE)) {
+        if (!json.has(KEY_ITEM_TITLE)) {
             throw new Exception("This JSON object does not have title");
         }
 
-        if (json.has(KEY_ITEM_ENTRIES)) {
+        if (!json.has(KEY_ITEM_ENTRIES)) {
             throw new Exception("This JSON object does not have entries");
         }
 
