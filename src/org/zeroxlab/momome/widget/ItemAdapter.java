@@ -79,7 +79,7 @@ public class ItemAdapter extends BaseAdapter implements Momo {
          TextView tv = (TextView) convertView;
          Item item = (Item) getItem(pos);
          tv.setText(item.getTitle());
-         tv.setId(item.getId());
+         tv.setTag(item.getId());
 
          return convertView;
     }

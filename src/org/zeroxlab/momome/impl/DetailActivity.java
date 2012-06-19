@@ -60,14 +60,14 @@ public class DetailActivity extends Activity implements Momo {
         mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mModel = MomoApp.getModel();
 
-        int id = getIntent().getIntExtra(CROSS_ITEM_ID, INVALID_INT);
-        mItem  = mModel.getItem(id);
-        initViews(id);
+        String key = getIntent().getStringExtra(CROSS_ITEM_KEY);
+        mItem  = mModel.getItem(key);
+        initViews(key);
     }
 
-    private void initViews(int id) {
-        if (id == INVALID_INT || !mModel.isAccessible()) {
-            String msg = "Not valid id";
+    private void initViews(String key) {
+        if (key == null || key.equals("") || !mModel.isAccessible()) {
+            String msg = "Not valid key";
             Log.e(TAG, msg);
             Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
             t.show();

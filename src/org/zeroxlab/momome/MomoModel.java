@@ -26,6 +26,6 @@ import java.util.List;
 public interface MomoModel extends Momo {
     public boolean isAccessible();
     public int getItemsSize();
-    public Item getItem(int id);
+    public Item getItem(String key);
     public List<Item> getItems();
 }

@@ -31,7 +31,7 @@ public class Item implements Momo {
     public final static String ENTRY_CONTENT = "entry_content";
 
     protected String mTitle;
-    protected int    mId;
+    protected String mId;
     protected List<ItemEntry> mEntries;
 
     public Item() {
@@ -39,10 +39,10 @@ public class Item implements Momo {
     }
 
     public Item(String title) {
-        this(Util.randomInt(), title);
+        this("" + Util.randomInt(), title);
     }
 
-    public Item(int id, String title) {
+    public Item(String id, String title) {
         setTitle(title);
         setId(id);
         mEntries = new ArrayList<ItemEntry>();
@@ -56,11 +56,11 @@ public class Item implements Momo {
         return mTitle;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         mId = id;
     }
 
-    public int getId() {
+    public String getId() {
         return mId;
     }
 

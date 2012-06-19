@@ -27,13 +27,15 @@ public interface Momo {
     public final static String EXTERNAL_DIR = EXTERNAL_STORAGE + "/Momome";
 
     /* for JSON */
-    public final static String ITEM_ID       = "momo_item_id_in_integer";
-    public final static String ITEM_LIST     = "momo_items";
-    public final static String ITEM_TITLE    = "momo_item_title";
-    public final static String ITEM_CONTENT  = "momo_item_content";
+    public final static String KEY_VERSION       = "momo_version";
+    public final static String KEY_ITEMS         = "momo_items";
+    public final static String KEY_ITEM_TITLE    = "momo_item_title";
+    public final static String KEY_ITEM_ENTRIES  = "momo_item_entries";
+    public final static String KEY_ENTRY_NAME    = "momo_entry_name";
+    public final static String KEY_ENTRY_CONTENT = "momo_entry_content";
 
 
     /* for cross activity */
-    public final static int    INVALID_INT   = -1;
-    public final static String CROSS_ITEM_ID = "cross_activity_item_id";
+    public final static int    INVALID_INT    = -1;
+    public final static String CROSS_ITEM_KEY = "cross_activity_item_key";
 }

@@ -51,15 +51,15 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
-    public Item getItem(int id) {
+    public Item getItem(String key) {
         for (int i = 0; i < mList.size(); i++) {
             Item item = mList.get(i);
-            if (item.getId() == id) {
+            if (item.getId().equals(key)) {
                 return item;
             }
         }
 
-        Log.e(TAG, "No item with id:" + id);
+        Log.e(TAG, "No item with key:" + key);
         return null;
     }
 
@@ -77,7 +77,7 @@ public class DummyModel implements MomoModel {
     }
 
     private void assignRandomData(Item item) {
-        int count = Util.randomInt(5);
+        int count = Util.randomInt(5) + 1;
         for (int i = 0; i < count; i++) {
             item.addEntry("Key" + i, "Value" + Util.randomInt(100));
         }
