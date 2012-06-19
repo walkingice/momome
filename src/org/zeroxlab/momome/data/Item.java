@@ -68,8 +68,18 @@ public class Item implements Momo {
         return mEntries.size();
     }
 
+    public ItemEntry getEntry(int position) {
+        return mEntries.get(position);
+    }
+
     public List<ItemEntry> getEntries() {
         return mEntries;
+    }
+
+    public void addEntry(ItemEntry entry) {
+        if (!mEntries.contains(entry)) {
+            mEntries.add(entry);
+        }
     }
 
     public void addEntry(String name, String content) {
