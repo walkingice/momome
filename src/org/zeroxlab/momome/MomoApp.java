@@ -20,6 +20,7 @@ package org.zeroxlab.momome;
 
 import org.zeroxlab.momome.test.DummyModel;
 import android.app.Application;
+import java.io.File;
 
 public class MomoApp extends Application implements Momo {
 
@@ -35,11 +36,19 @@ public class MomoApp extends Application implements Momo {
     @Override
     public void onCreate() {
         super.onCreate();
+        checkExternalStorage();
         sModel = new DummyModel();
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
+    }
+
+    private void checkExternalStorage() {
+        File dir = new File(EXTERNAL_DIR);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
     }
 }

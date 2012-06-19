@@ -18,8 +18,13 @@
 
 package org.zeroxlab.momome;
 
+import android.os.Environment;
+
 public interface Momo {
     public final static String TAG = "Momo";
+
+    public final static String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().getPath();
+    public final static String EXTERNAL_DIR = EXTERNAL_STORAGE + "/Momome";
 
     /* for JSON */
     public final static String ITEM_ID       = "momo_item_id_in_integer";
