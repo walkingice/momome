@@ -84,11 +84,11 @@ public class Item implements Momo {
         }
     }
 
-    public class ItemEntry {
+    public static class ItemEntry {
         String iName;
         String iContent;
 
-        ItemEntry(String name, String content) {
+        public ItemEntry(String name, String content) {
             update(name, content);
         }
 
