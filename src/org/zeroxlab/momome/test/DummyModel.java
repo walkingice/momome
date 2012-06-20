@@ -51,6 +51,13 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
+    public void addItem(Item item) {
+        if (!mList.contains(item)) {
+            mList.add(item);
+        }
+    }
+
+    @Override
     public Item getItem(String key) {
         for (int i = 0; i < mList.size(); i++) {
             Item item = mList.get(i);
