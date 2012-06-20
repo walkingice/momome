@@ -121,10 +121,6 @@ public class ImplModel implements MomoModel {
 
     @Override
     public DataStatus status() {
-        if (mPassword == null) {
-            changeStatus(DataStatus.NO_PASSWORD);
-        }
-
         return mStatus;
     }
 

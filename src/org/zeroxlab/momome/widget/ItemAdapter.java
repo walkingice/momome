@@ -48,7 +48,7 @@ public class ItemAdapter extends BaseAdapter implements Momo {
 
     @Override
     public int getCount() {
-        if (mModel.status() != DataStatus.OK) {
+        if (mModel.status() == DataStatus.OK) {
             return mModel.getItemsSize();
         } else {
             return 0;
