@@ -195,7 +195,7 @@ public class DetailActivity extends Activity implements Momo {
 
     private void finishEditing() {
         updateRows();
-        // save result to file
+        mModel.save();
     }
 
     private void setVisibility(int visibility) {
