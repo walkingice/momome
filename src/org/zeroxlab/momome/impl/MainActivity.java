@@ -88,12 +88,32 @@ public class MainActivity extends Activity implements Momo {
 
     public void onClickEdit(View v) {
         MomoModel model = MomoApp.getModel();
-        if (model.status() == DataStatus.OK) {
+        if (model.status() == DataStatus.OK
+                || model.status() == DataStatus.FILE_IS_EMPTY) {
             getNewItemName();
         }
     }
 
     public void onClickReload(View v) {
+        MomoModel model = MomoApp.getModel();
+        if (model.status() == DataStatus.NO_PASSWORD
+                || model.status() == DataStatus.PASSWORD_WRONG) {
+            askForPassword();
+        }
+    }
+
+    private void askForPassword() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        EditText edit = new EditText(this);
+        DialogInterface.OnClickListener okListener = new PasswordListener(edit);
+
+        builder.setMessage("Enter Password to Unlock");
+        builder.setCancelable(true);
+        builder.setView(edit);
+        builder.setPositiveButton(android.R.string.ok, okListener);
+        builder.setNegativeButton(android.R.string.cancel, okListener);
+
+        builder.show();
     }
 
     private void getNewItemName() {
@@ -110,10 +130,36 @@ public class MainActivity extends Activity implements Momo {
         builder.show();
     }
 
+    private void onEnteredPassword(CharSequence password) {
+        MomoModel model = MomoApp.getModel();
+        model.unlock(password);
+    }
+
     private void onAddItem(CharSequence name) {
         Item item = new Item(name.toString());
         MomoApp.getModel().addItem(item);
+        MomoApp.getModel().save();
         mAdapter.notifyDataSetChanged();
+    }
+
+    private class PasswordListener implements DialogInterface.OnClickListener {
+        TextView iTextView;
+
+        PasswordListener(TextView tv) {
+            iTextView = tv;
+        }
+
+        public void onClick(DialogInterface dialog, int button) {
+            CharSequence input = iTextView.getText();
+            if (button != AlertDialog.BUTTON_POSITIVE
+                    || input == null
+                    || input.toString().equals("")) {
+
+                return; // cancel or does not give a name, nothing happen
+            } else {
+                onEnteredPassword(input);
+            }
+        }
     }
 
     private class AddItemListener implements DialogInterface.OnClickListener {

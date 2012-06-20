@@ -48,7 +48,7 @@ public class ItemAdapter extends BaseAdapter implements Momo {
 
     @Override
     public int getCount() {
-        if (mModel.status() == DataStatus.OK) {
+        if (modelAccessible()) {
             return mModel.getItemsSize();
         } else {
             return 0;
@@ -57,7 +57,7 @@ public class ItemAdapter extends BaseAdapter implements Momo {
 
     @Override
     public Object getItem(int pos) {
-        if (mModel.status() == DataStatus.OK) {
+        if (modelAccessible()) {
             List<Item> items = mModel.getItems();
             return items.get(pos);
         } else {
@@ -82,5 +82,10 @@ public class ItemAdapter extends BaseAdapter implements Momo {
          tv.setTag(item.getId());
 
          return convertView;
+    }
+
+    private boolean modelAccessible() {
+        return ((mModel.status() == DataStatus.OK)
+                || mModel.status() == DataStatus.FILE_IS_EMPTY);
     }
 }

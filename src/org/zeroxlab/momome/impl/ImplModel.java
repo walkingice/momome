@@ -107,6 +107,7 @@ public class ImplModel implements MomoModel {
             if (mStatus == DataStatus.OK || mStatus == DataStatus.FILE_IS_EMPTY) {
                 CharSequence data = mParser.generate(mList);
                 mFileIO.save(mPassword.toString(), mFilePath, data);
+                changeStatus(DataStatus.OK);
                 return true;
             }
             return false;
