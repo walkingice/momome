@@ -163,10 +163,13 @@ public class ImplModel implements MomoModel {
         }
     }
 
-    private void changeStatus(DataStatus now) {
-        mStatus = now;
-        for(StatusListener listener: mListeners) {
-            listener.onStatusChanged(mStatus);
+    private void changeStatus(DataStatus newStatus) {
+        boolean changed = (mStatus != newStatus);
+        mStatus = newStatus;
+        if (changed) {
+            for(StatusListener listener: mListeners) {
+                listener.onStatusChanged(mStatus);
+            }
         }
     }
 
