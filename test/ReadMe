@@ -1,0 +1,8 @@
+generate project in directory 'test' by command
+
+    $ android create test-project -p . -m .. -n MomomeTest
+
+you can run this test by command
+
+    $ ant instrument install   # build and install
+    $ ant test                 # run test
