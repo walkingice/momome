@@ -94,6 +94,15 @@ public class Item implements Momo {
         }
     }
 
+    public boolean removeEntry(ItemEntry entry) {
+        if (mEntries.contains(entry)) {
+            mEntries.remove(entry);
+            return true;
+        }
+
+        return false;
+    }
+
     public void clear() {
         /* clear data in case showing data when locking */
         mTitle = DEF_TITLE;

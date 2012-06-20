@@ -121,6 +121,10 @@ public class DetailActivity extends Activity implements Momo {
         }
 
         public void onDelete(ItemEntry entry) {
+            boolean success = mItem.removeEntry(entry);
+            if (success) {
+                mAdapter.notifyDataSetChanged();
+            }
         }
 
         private void askName(final ItemEntry entry) {
