@@ -24,6 +24,7 @@ import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.data.Item.ItemEntry;
+import org.zeroxlab.momome.widget.EntryAdapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -44,11 +45,12 @@ import android.content.DialogInterface;
 
 public class DetailActivity extends Activity implements Momo {
     protected MomoModel mModel;
-    protected ViewGroup mContainer;
+    protected ListView  mContainer;
     protected View      mAddButton;
     protected View      mEditButton;
     protected Item      mItem;
     protected LayoutInflater mInflater;
+    protected EntryAdapter mAdapter;
 
     private boolean mIsEditing = false;
 
@@ -62,63 +64,27 @@ public class DetailActivity extends Activity implements Momo {
 
         String key = getIntent().getStringExtra(CROSS_ITEM_KEY);
         mItem  = mModel.getItem(key);
-        initViews(key);
+
+        if (initViews(key)) {
+            mAdapter = new EntryAdapter(this, mItem);
+            mContainer.setAdapter(mAdapter);
+        }
     }
 
-    private void initViews(String key) {
+    private boolean initViews(String key) {
         if (key == null || key.equals("") || mModel.status() != DataStatus.OK) {
             String msg = "Not valid key";
             Log.e(TAG, msg);
             Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
             t.show();
             finish();
-            return;
+            return false;
         }
 
-        mContainer = (ViewGroup) findViewById(R.id.detail_container);
+        mContainer = (ListView) findViewById(R.id.detail_container);
         mAddButton = findViewById(R.id.detail_add_button);
         mEditButton = findViewById(R.id.detail_edit_button);
-
-        updateRows();
-    }
-
-    private void updateRows() {
-        mContainer.removeAllViews();
-        while(mContainer.getChildCount() != mItem.getEntryCount()) {
-            if (mContainer.getChildCount() > mItem.getEntryCount()) {
-                mContainer.removeViewAt(0);
-            } else {
-                View view = mInflater.inflate(R.layout.entry_editable, null);
-                mContainer.addView(view);
-            }
-        }
-
-        List<Item.ItemEntry> list = mItem.getEntries();
-        for(int i = 0; i < list.size(); i++) {
-            updateOneRow(list.get(i), mContainer.getChildAt(i));
-        }
-    }
-
-    private void updateOneRow(ItemEntry entry, View view) {
-        TextView viewKey   = (TextView) view.findViewById(R.id.entry_key);
-        TextView viewValue = (TextView) view.findViewById(R.id.entry_value);
-        View btnName   = view.findViewById(R.id.entry_btn_name);
-        View btnValue  = view.findViewById(R.id.entry_btn_value);
-
-        btnName.setTag(viewKey);
-        viewKey.setTag(entry);
-        btnValue.setTag(viewValue);
-        viewValue.setTag(entry);
-
-        viewKey.setText(entry.getName());
-        viewValue.setText(entry.getContent());
-        if (mIsEditing) {
-            btnName.setVisibility(View.VISIBLE);
-            btnValue.setVisibility(View.VISIBLE);
-        } else {
-            btnName.setVisibility(View.GONE);
-            btnValue.setVisibility(View.GONE);
-        }
+        return true;
     }
 
     public void onClickEditName(View v) {
@@ -134,7 +100,7 @@ public class DetailActivity extends Activity implements Momo {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int what) {
                 mItem.updateEntry(entry, edit.getText().toString(), entry.getContent());
-                updateRows();
+                mAdapter.notifyDataSetChanged();
             }
         });
 
@@ -159,7 +125,7 @@ public class DetailActivity extends Activity implements Momo {
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int what) {
                 mItem.updateEntry(entry, entry.getName(), edit.getText().toString());
-                updateRows();
+                mAdapter.notifyDataSetChanged();
             }
         });
 
@@ -177,44 +143,24 @@ public class DetailActivity extends Activity implements Momo {
 
     public void onClickAddButton(View v) {
         mItem.addEntry(Item.DEF_NAME, "");
-        updateRows();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void toggleEditing() {
-        if (mIsEditing) {
-            setVisibility(View.GONE);
-            mAddButton.setVisibility(View.GONE);
-            finishEditing();
-        } else {
-            setVisibility(View.VISIBLE);
-            mAddButton.setVisibility(View.VISIBLE);
-        }
-
         mIsEditing = ! mIsEditing;
+        mAdapter.setEditing(mIsEditing);
+        if (mIsEditing) {
+            mAddButton.setVisibility(View.VISIBLE);
+            mContainer.invalidateViews();
+        } else {
+            mAddButton.setVisibility(View.GONE);
+            mContainer.invalidateViews();
+            finishEditing();
+        }
     }
 
     private void finishEditing() {
-        updateRows();
+        mAdapter.notifyDataSetChanged();
         mModel.save();
-    }
-
-    private void setVisibility(int visibility) {
-        for (int i = 0; i < mContainer.getChildCount(); i++) {
-            View view = mContainer.getChildAt(i);
-            if (view.getId() == R.id.entry) {
-                setEntryVisibility((ViewGroup)view, visibility);
-            } else {
-            }
-        }
-    }
-
-    private void setEntryVisibility(ViewGroup g, int visibility) {
-        for (int i = 0; i < g.getChildCount(); i++) {
-            View child = g.getChildAt(i);
-            if (child.getId() == R.id.entry_btn_name
-                    || child.getId() == R.id.entry_btn_value) {
-                child.setVisibility(visibility);
-            }
-        }
     }
 }
