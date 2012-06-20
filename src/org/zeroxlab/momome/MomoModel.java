@@ -59,4 +59,11 @@ public interface MomoModel extends Momo {
     public void addItem(Item item);
     public Item getItem(String key);
     public List<Item> getItems();
+
+    public void addListener(StatusListener listener);
+    public void removeListener(StatusListener listener);
+
+    public interface StatusListener  {
+        public void onStatusChanged(DataStatus now);
+    }
 }

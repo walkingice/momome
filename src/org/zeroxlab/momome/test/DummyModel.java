@@ -90,6 +90,13 @@ public class DummyModel implements MomoModel {
         return mList;
     }
 
+    @Override
+    public void addListener(StatusListener listener) {
+    }
+
+    @Override
+    public void removeListener(StatusListener listener) {
+    }
 
     private void assignRandomDataToItems() {
         for (int i = 0; i < mList.size(); i++) {

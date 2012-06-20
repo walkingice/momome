@@ -37,6 +37,7 @@ import java.util.List;
 
 public class ImplModel implements MomoModel {
 
+    protected List<StatusListener> mListeners;
     protected List<Item> mList;
     protected Parser     mParser;
     protected FileIO     mFileIO;
@@ -46,6 +47,7 @@ public class ImplModel implements MomoModel {
     protected DataStatus mStatus;
 
     public ImplModel() {
+        mListeners = new ArrayList<StatusListener>();
         mList = new ArrayList<Item>();
         mParser = new JSONParser();
         mFileIO = new ClearTextIO();
@@ -57,7 +59,7 @@ public class ImplModel implements MomoModel {
     public void lock() {
         clearListContent();
         mPassword = null;
-        mStatus = DataStatus.NO_PASSWORD;
+        changeStatus(DataStatus.NO_PASSWORD);
     }
 
     @Override
@@ -68,34 +70,34 @@ public class ImplModel implements MomoModel {
             File file = new File(mFilePath);
             if (!file.exists() && file.createNewFile()) {
                 file.setWritable(true);
-                mStatus = DataStatus.FILE_IS_EMPTY;
+                changeStatus(DataStatus.FILE_IS_EMPTY);
                 return true;
             }
 
             CharSequence data = mFileIO.read(mPassword.toString(), mFilePath);
             mList = mParser.parse(data);
         } catch (IOException e) {
-                mStatus = DataStatus.FILE_CANNOT_ACCESS;
+                changeStatus(DataStatus.FILE_CANNOT_ACCESS);
                 clearListContent();
                 e.printStackTrace();
                 return false;
         } catch (RWException e) {
-                mStatus = DataStatus.FILE_CANNOT_ACCESS;
+                changeStatus(DataStatus.FILE_CANNOT_ACCESS);
                 clearListContent();
                 e.printStackTrace();
                 return false;
         } catch (ParseException e) {
             if (e.isEmpty()) {
-                mStatus = DataStatus.FILE_IS_EMPTY;
+                changeStatus(DataStatus.FILE_IS_EMPTY);
                 return true;
             } else if (e.isBadData()) {
-                mStatus = DataStatus.PASSWORD_WRONG;
+                changeStatus(DataStatus.PASSWORD_WRONG);
             }
             e.printStackTrace();
             return false;
         }
 
-        mStatus = DataStatus.OK;
+        changeStatus(DataStatus.OK);
         return true;
     }
 
@@ -120,7 +122,7 @@ public class ImplModel implements MomoModel {
     @Override
     public DataStatus status() {
         if (mPassword == null) {
-            mStatus = DataStatus.NO_PASSWORD;
+            changeStatus(DataStatus.NO_PASSWORD);
         }
 
         return mStatus;
@@ -149,6 +151,27 @@ public class ImplModel implements MomoModel {
 
         Log.e(TAG, "No item with key:" + key);
         return null;
+    }
+
+    @Override
+    public void addListener(StatusListener listener) {
+        if (!mListeners.contains(listener)) {
+            mListeners.add(listener);
+        }
+    }
+
+    @Override
+    public void removeListener(StatusListener listener) {
+        if (mListeners.contains(listener)) {
+            mListeners.remove(listener);
+        }
+    }
+
+    private void changeStatus(DataStatus now) {
+        mStatus = now;
+        for(StatusListener listener: mListeners) {
+            listener.onStatusChanged(mStatus);
+        }
     }
 
     @Override
