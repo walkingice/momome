@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momome.impl;
+package org.zeroxlab.momome.data;
 
 import org.zeroxlab.momome.FileIO;
 import org.zeroxlab.momome.Momo;
