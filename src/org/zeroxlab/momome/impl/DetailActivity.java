@@ -72,6 +72,15 @@ public class DetailActivity extends Activity implements Momo {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mIsEditing) {
+            toggleEditing();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private boolean initViews(String key) {
         if (key == null || key.equals("") || mModel.status() != DataStatus.OK) {
             String msg = "Not valid key";
