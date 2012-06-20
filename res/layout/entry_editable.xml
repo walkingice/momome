@@ -31,10 +31,12 @@
         android:layout_alignLeft="@id/entry_name"
         android:layout_below="@id/entry_name"
         />
-    <Button
+    <ImageView
         android:id="@+id/entry_btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="24dip"
+        android:layout_height="24dip"
+        android:src="@drawable/icon_delete"
+        android:scaleType="fitXY"
         android:text="Del"
         android:visibility="gone"
         android:layout_alignParentRight="true"
