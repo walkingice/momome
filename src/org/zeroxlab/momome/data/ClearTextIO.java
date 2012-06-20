@@ -19,6 +19,7 @@
 package org.zeroxlab.momome.data;
 
 import org.zeroxlab.momome.FileIO;
+import org.zeroxlab.momome.FileIO.RWException;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.util.Util;
 
@@ -27,24 +28,27 @@ import java.io.IOException;
 
 public class ClearTextIO implements FileIO, Momo {
     @Override
-    public boolean save(String key, String outputPath, CharSequence content) {
+    public boolean save(String key,
+            String outputPath,
+            CharSequence content) throws RWException {
+
         try {
             Util.writeStrToFile(outputPath, content);
         } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+            throw new RWException(e);
         }
         return true;
     }
 
     @Override
-    public CharSequence read(String key, String inputPath) {
+    public CharSequence read(String key,
+            String inputPath) throws RWException {
         CharSequence data = null;
 
         try {
             data = Util.readStrFromFile(inputPath);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RWException(e);
         }
 
         return data;

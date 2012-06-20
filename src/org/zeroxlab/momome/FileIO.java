@@ -18,7 +18,28 @@
 
 package org.zeroxlab.momome;
 
+import java.io.IOException;
+
 public interface FileIO {
-    public boolean save(String key, String outputPath, CharSequence content);
-    public CharSequence read(String key, String inputPath);
+    public boolean save(String key,
+            String outputPath,
+            CharSequence content) throws RWException;
+
+    public CharSequence read(String key,
+            String inputPath) throws RWException;
+
+    public class RWException extends Exception {
+
+        public RWException(String msg) {
+            super(msg);
+        }
+
+        public RWException(String msg, Throwable throwable) {
+            super(msg, throwable);
+        }
+
+        public RWException(Throwable throwable) {
+            super(throwable);
+        }
+    }
 }
