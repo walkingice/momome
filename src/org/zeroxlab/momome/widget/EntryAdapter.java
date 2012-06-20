@@ -40,6 +40,8 @@ public class EntryAdapter extends BaseAdapter implements Momo {
     protected Context         mContext;
     protected LayoutInflater  mInflater;
     protected Item            mItem;
+    protected EditListener    mListener;
+    protected ClickListener   mMyListener;
     protected boolean         mIsEditing = false;
 
     public EntryAdapter(Context context, Item item) {
@@ -47,6 +49,7 @@ public class EntryAdapter extends BaseAdapter implements Momo {
         mContext  = context;
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mItem     = item;
+        mMyListener = new ClickListener();
     }
 
     @Override
@@ -81,24 +84,57 @@ public class EntryAdapter extends BaseAdapter implements Momo {
     }
 
     private void updateOneRow(ItemEntry entry, View view) {
-        TextView viewKey   = (TextView) view.findViewById(R.id.entry_key);
-        TextView viewValue = (TextView) view.findViewById(R.id.entry_value);
-        View btnName   = view.findViewById(R.id.entry_btn_name);
-        View btnValue  = view.findViewById(R.id.entry_btn_value);
+        TextView viewName    = (TextView) view.findViewById(R.id.entry_name);
+        TextView viewContent = (TextView) view.findViewById(R.id.entry_content);
+        View btnEdit     = view.findViewById(R.id.entry_btn_edit);
+        View btnDelete   = view.findViewById(R.id.entry_btn_delete);
 
-        btnName.setTag(viewKey);
-        viewKey.setTag(entry);
-        btnValue.setTag(viewValue);
-        viewValue.setTag(entry);
+        btnEdit.setTag(entry);
+        btnDelete.setTag(entry);
+        btnEdit.setOnClickListener(mMyListener);
+        btnDelete.setOnClickListener(mMyListener);
 
-        viewKey.setText(entry.getName());
-        viewValue.setText(entry.getContent());
+        viewName.setText(entry.getName());
+        viewContent.setText(entry.getContent());
+
         if (mIsEditing) {
-            btnName.setVisibility(View.VISIBLE);
-            btnValue.setVisibility(View.VISIBLE);
+            btnEdit.setVisibility(View.VISIBLE);
+            btnDelete.setVisibility(View.VISIBLE);
         } else {
-            btnName.setVisibility(View.GONE);
-            btnValue.setVisibility(View.GONE);
+            btnEdit.setVisibility(View.GONE);
+            btnDelete.setVisibility(View.GONE);
         }
     }
+
+    private class ClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            if (mListener == null) {
+                return;
+            }
+
+            if (v.getId() == R.id.entry_btn_edit) {
+                mListener.onEdit((ItemEntry)v.getTag());
+            } else if (v.getId() == R.id.entry_btn_delete) {
+                mListener.onDelete((ItemEntry)v.getTag());
+            }
+        }
+    }
+
+    public void setListener(EditListener listener) {
+        mListener = listener;
+    }
+
+    /**
+     * each views generate by getView() provide interface to editing.
+     *
+     * The inflated list item might has buttons 'Edit' or 'Delete'.
+     * ItemAdapter tries to listen it OnClick event and notify
+     * EditLister to do corresponding action.
+     * */
+    public interface EditListener {
+        public void onEdit(ItemEntry which);
+        public void onDelete(ItemEntry which);
+    }
 }
+
