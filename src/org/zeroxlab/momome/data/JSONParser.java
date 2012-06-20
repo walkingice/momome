@@ -20,11 +20,13 @@ package org.zeroxlab.momome.data;
 
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.Parser;
+import org.zeroxlab.momome.Parser.ParseException;
 import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.data.Item.ItemEntry;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSONParser implements Momo, Parser {
@@ -37,51 +39,62 @@ public class JSONParser implements Momo, Parser {
         mVersion = VERSION_1;
     }
 
-    public List<Item> parse(CharSequence content) throws Exception {
+    public List<Item> parse(CharSequence content) throws ParseException {
+        if (content == null || content.length() == 0) {
+            throw new ParseException("Empty content, cannot parse",
+                    ParseException.State.EMPTY);
+        }
+
         if (mVersion == VERSION_1) {
             return parseVersion1(content);
         } else {
-            Exception e = new Exception("Unknow parser version");
-            throw e;
+            throw new ParseException("Unknown parser version");
         }
     }
 
-    public CharSequence generate(List<Item> items) throws Exception {
+    public CharSequence generate(List<Item> items) throws ParseException {
         if (mVersion == VERSION_1) {
             return generateVersion1(items);
         } else {
-            Exception e = new Exception("Unknow parser version");
-            throw e;
+            throw new ParseException("Unknown parser version");
         }
     }
 
-    private List<Item> parseVersion1(CharSequence content) throws Exception {
-        JSONObject root = new JSONObject(content.toString());
-        if (!root.has(KEY_VERSION)) {
-            throw new Exception("This JSON file does not have version");
-        }
+    private List<Item> parseVersion1(CharSequence content) throws ParseException {
+        try {
+            JSONObject root = new JSONObject(content.toString());
+            if (!root.has(KEY_VERSION)) {
+                throw new ParseException("This JSON file does not have version",
+                        ParseException.State.WRONG_FORMAT);
+            }
 
-        if (!root.has(KEY_ITEMS)) {
-            throw new Exception("This JSON file does not have version");
-        }
+            if (!root.has(KEY_ITEMS)) {
+                throw new ParseException("This JSON file does not have version",
+                        ParseException.State.WRONG_FORMAT);
+            }
 
-        JSONArray array = root.optJSONArray(KEY_ITEMS);
-        List<Item> items = new ArrayList<Item>();
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject jsonItem = array.getJSONObject(i);
-            items.add(JSONObjectToItem(jsonItem));
-        }
+            JSONArray array = root.optJSONArray(KEY_ITEMS);
+            List<Item> items = new ArrayList<Item>();
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonItem = array.getJSONObject(i);
+                items.add(JSONObjectToItem(jsonItem));
+            }
 
-        return items;
+            return items;
+        } catch (JSONException e) {
+            throw new ParseException(e, ParseException.State.BAD_DATA);
+        }
     }
 
-    private Item JSONObjectToItem(JSONObject json) throws Exception {
+    private Item JSONObjectToItem(JSONObject json) throws ParseException {
         if (!json.has(KEY_ITEM_TITLE)) {
-            throw new Exception("This JSON object does not have title");
+            throw new ParseException("This JSON object does not have title",
+                    ParseException.State.WRONG_FORMAT);
         }
 
         if (!json.has(KEY_ITEM_ENTRIES)) {
-            throw new Exception("This JSON object does not have entries");
+            throw new ParseException("This JSON object does not have entries",
+                    ParseException.State.WRONG_FORMAT);
         }
 
         Item item = new Item(json.optString(KEY_ITEM_TITLE));
@@ -89,7 +102,7 @@ public class JSONParser implements Momo, Parser {
         return item;
     }
 
-    private void JSONArrayToEntries(Item item, JSONArray array) throws Exception {
+    private void JSONArrayToEntries(Item item, JSONArray array) throws ParseException {
         for (int i = 0; i < array.length(); i ++) {
             JSONObject obj = array.optJSONObject(i);
             String name    = obj.optString(KEY_ENTRY_NAME, Item.DEF_NAME);
@@ -98,39 +111,51 @@ public class JSONParser implements Momo, Parser {
         }
     }
 
-    private CharSequence generateVersion1(List<Item> items) throws Exception {
-        JSONObject root = new JSONObject();
-        root.put(KEY_VERSION, VERSION_1);
+    private CharSequence generateVersion1(List<Item> items) throws ParseException {
+        try {
+            JSONObject root = new JSONObject();
+            root.put(KEY_VERSION, VERSION_1);
 
-        JSONArray array = new JSONArray();
-        for (int i = 0; i < items.size(); i++) {
-            Item item = items.get(i);
-            array.put(itemToJSONObject(item));
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < items.size(); i++) {
+                Item item = items.get(i);
+                array.put(itemToJSONObject(item));
+            }
+
+            root.put(KEY_ITEMS, array);
+            return root.toString();
+        } catch (JSONException e) {
+            throw new ParseException(e);
         }
-
-        root.put(KEY_ITEMS, array);
-        return root.toString();
     }
 
-    private JSONObject itemToJSONObject(Item item) throws Exception {
-        JSONObject json = new JSONObject();
-        List<ItemEntry> entries = item.getEntries();
-        JSONArray array = entriesToJSONArray(entries);
-        json.put(KEY_ITEM_TITLE, item.getTitle());
-        json.put(KEY_ITEM_ENTRIES, array);
-        return json;
-    }
-
-    private JSONArray entriesToJSONArray(List<ItemEntry> entries) throws Exception {
-        JSONArray array = new JSONArray();
-        for (int i = 0; i < entries.size(); i++) {
-            ItemEntry entry = entries.get(i);
+    private JSONObject itemToJSONObject(Item item) throws ParseException {
+        try {
             JSONObject json = new JSONObject();
-            json.put(KEY_ENTRY_NAME, entry.getName());
-            json.put(KEY_ENTRY_CONTENT, entry.getContent());
-            array.put(json);
+            List<ItemEntry> entries = item.getEntries();
+            JSONArray array = entriesToJSONArray(entries);
+            json.put(KEY_ITEM_TITLE, item.getTitle());
+            json.put(KEY_ITEM_ENTRIES, array);
+            return json;
+        } catch (JSONException e) {
+            throw new ParseException(e);
         }
+    }
 
-        return array;
+    private JSONArray entriesToJSONArray(List<ItemEntry> entries) throws ParseException {
+        try {
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < entries.size(); i++) {
+                ItemEntry entry = entries.get(i);
+                JSONObject json = new JSONObject();
+                json.put(KEY_ENTRY_NAME, entry.getName());
+                json.put(KEY_ENTRY_CONTENT, entry.getContent());
+                array.put(json);
+            }
+
+            return array;
+        } catch (JSONException e) {
+            throw new ParseException(e);
+        }
     }
 }

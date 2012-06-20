@@ -1,6 +1,7 @@
 package org.zeroxlab.momome;
 
 import org.zeroxlab.momome.*;
+import org.zeroxlab.momome.Parser.ParseException;
 import org.zeroxlab.momome.data.*;
 import org.zeroxlab.momome.data.Item.ItemEntry;
 
@@ -41,6 +42,22 @@ public class TestJSONParser extends AndroidTestCase implements Momo {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+    }
+
+    public void testEmpty() {
+        try {
+            mParser.parse(null);
+            fail("Parser does not throw exception even if it got null data");
+        } catch (ParseException e){
+            assertTrue(e.isEmpty());
+        }
+
+        try {
+            mParser.parse("");
+            fail("Parser does not throw exception even if it got empty data");
+        } catch (ParseException e){
+            assertTrue(e.isEmpty());
+        }
     }
 
     public void testGenerate() {
