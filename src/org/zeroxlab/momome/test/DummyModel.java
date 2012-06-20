@@ -41,8 +41,23 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
-    public boolean isAccessible() {
+    public void lock() {
+        // I am dummy, I am not luck and never lock!
+    }
+
+    @Override
+    public boolean unlock(CharSequence password) {
         return true;
+    }
+
+    @Override
+    public boolean save() {
+        return true;
+    }
+
+    @Override
+    public DataStatus status() {
+        return DataStatus.OK;
     }
 
     @Override

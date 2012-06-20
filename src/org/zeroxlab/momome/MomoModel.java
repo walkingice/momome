@@ -24,7 +24,37 @@ import org.json.JSONObject;
 import java.util.List;
 
 public interface MomoModel extends Momo {
-    public boolean isAccessible();
+
+    /**
+     * Lock to make saved data unavailable until unlocked.
+     */
+    public void lock();
+
+    /**
+     * Unlock saved data by key.
+     *
+     * Momome assumes local data was saved in password based encryption.
+     * @param password The password to decrypt file
+     * @return True if successful.
+     */
+    public boolean unlock(CharSequence password);
+
+    /**
+     * Ask Model to save data immediatly.
+     * @return true if successful.
+     */
+    public boolean save();
+
+    /**
+     * To check if there is data to access.
+     *
+     * Model might have data for accessing. It might not have if
+     * the data is locked, the password is wrong or the file is not exists.
+     *
+     * @return Status code
+     */
+    public DataStatus status();
+
     public int getItemsSize();
     public void addItem(Item item);
     public Item getItem(String key);

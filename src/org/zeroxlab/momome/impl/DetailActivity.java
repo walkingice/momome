@@ -66,7 +66,7 @@ public class DetailActivity extends Activity implements Momo {
     }
 
     private void initViews(String key) {
-        if (key == null || key.equals("") || !mModel.isAccessible()) {
+        if (key == null || key.equals("") || mModel.status() != DataStatus.OK) {
             String msg = "Not valid key";
             Log.e(TAG, msg);
             Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);

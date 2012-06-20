@@ -38,4 +38,13 @@ public interface Momo {
     /* for cross activity */
     public final static int    INVALID_INT    = -1;
     public final static String CROSS_ITEM_KEY = "cross_activity_item_key";
+
+    public enum DataStatus {
+        OK,
+        DATA_LOCKING,
+        NO_PASSWORD,
+        PASSWORD_WRONG,
+        FILE_CANNOT_ACCESS,
+        FILE_IS_EMPTY
+    }
 }
