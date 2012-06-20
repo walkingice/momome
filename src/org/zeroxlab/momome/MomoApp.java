@@ -18,6 +18,7 @@
 
 package org.zeroxlab.momome;
 
+import org.zeroxlab.momome.impl.ImplModel;
 import org.zeroxlab.momome.test.DummyModel;
 import android.app.Application;
 import java.io.File;
@@ -37,7 +38,7 @@ public class MomoApp extends Application implements Momo {
     public void onCreate() {
         super.onCreate();
         checkExternalStorage();
-        sModel = new DummyModel();
+        sModel = new ImplModel();
     }
 
     @Override
