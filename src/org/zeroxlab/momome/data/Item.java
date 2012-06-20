@@ -94,6 +94,16 @@ public class Item implements Momo {
         }
     }
 
+    public void clear() {
+        /* clear data in case showing data when locking */
+        mTitle = DEF_TITLE;
+        mId    = "";
+
+        for(ItemEntry entry: mEntries) {
+            entry.clear();
+        }
+    }
+
     public static class ItemEntry {
         String iName;
         String iContent;
@@ -113,6 +123,11 @@ public class Item implements Momo {
 
         public String getContent() {
             return iContent;
+        }
+
+        public void clear() {
+            iName = "";
+            iContent = "";
         }
     }
 }
