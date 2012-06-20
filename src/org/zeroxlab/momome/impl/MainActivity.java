@@ -59,6 +59,8 @@ public class MainActivity extends Activity implements Momo {
                 launchDetailActivity(v.getTag().toString());
             }
         });
+
+        doReload();
     }
 
     @Override
@@ -95,6 +97,10 @@ public class MainActivity extends Activity implements Momo {
     }
 
     public void onClickReload(View v) {
+        doReload();
+    }
+
+    private void doReload() {
         MomoModel model = MomoApp.getModel();
         if (model.status() == DataStatus.NO_PASSWORD
                 || model.status() == DataStatus.PASSWORD_WRONG) {
