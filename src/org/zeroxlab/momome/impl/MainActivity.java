@@ -42,6 +42,7 @@ import org.json.JSONObject;
 public class MainActivity extends Activity implements Momo {
     ListView mListView;
     ItemAdapter mAdapter;
+    MomoModel.StatusListener mStatusListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MainActivity extends Activity implements Momo {
         setContentView(R.layout.main);
         initViews();
 
+        mStatusListener = new StatusListener();
         MomoModel model = MomoApp.getModel();
         mAdapter = new ItemAdapter(this);
         mListView.setAdapter(mAdapter);
@@ -57,6 +59,18 @@ public class MainActivity extends Activity implements Momo {
                 launchDetailActivity(v.getTag().toString());
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MomoApp.getModel().addListener(mStatusListener);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MomoApp.getModel().removeListener(mStatusListener);
     }
 
     private void initViews() {
@@ -119,6 +133,12 @@ public class MainActivity extends Activity implements Momo {
             } else {
                 onAddItem(input);
             }
+        }
+    }
+
+    private class StatusListener implements MomoModel.StatusListener {
+        public void onStatusChanged(DataStatus now) {
+            mAdapter.notifyDataSetChanged();
         }
     }
 }
