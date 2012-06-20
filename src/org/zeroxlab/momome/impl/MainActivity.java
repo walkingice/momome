@@ -73,7 +73,10 @@ public class MainActivity extends Activity implements Momo {
     }
 
     public void onClickEdit(View v) {
-        getNewItemName();
+        MomoModel model = MomoApp.getModel();
+        if (model.status() == DataStatus.OK) {
+            getNewItemName();
+        }
     }
 
     public void onClickReload(View v) {
