@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="stroke_color">#33999999</color>
+
     <color name="actionbar_bg_color">#3A3A3A</color>
     <color name="actionbar_bottom_color">#B3B3B3</color>
     <color name="logo_color_1">#FFD5D6</color>

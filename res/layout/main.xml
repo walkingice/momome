@@ -44,14 +44,18 @@
             android:text="Edit"
             android:onClick="onClickEdit"
             />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/default_gutter"
             android:text="Lock"
             android:onClick="onClickReload"
+            android:src="@drawable/icon_lock"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/actionbar_btn_bg"
             />
     </RelativeLayout>
     <ListView
