@@ -7,4 +7,6 @@
     <color name="logo_color_1">#FFD5D6</color>
     <color name="logo_color_2">#FF73C5</color>
     <color name="logo_color_3">#FF40B0</color>
+
+    <color name="btn_white">#FFFFFF</color>
 </resources>

@@ -4,26 +4,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <Button
-        android:id="@+id/detail_edit_button"
-        android:text="Edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onClickEditButton"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@drawable/actionbar_bg"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="@dimen/actionbar_logo_width"
+                android:layout_height="@dimen/actionbar_logo_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/small_gutter"
+                android:src="@drawable/logo"
+                android:scaleType="centerInside"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/app_name"
+                style="@style/actionbar_title"
+                />
+        </LinearLayout>
+        <Button
+            android:id="@+id/detail_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/btn_white"
+            android:layout_centerVertical="true"
+            android:background="@drawable/actionbar_btn_bg"
+            android:padding="10dp"
+            android:text="Edit"
+            android:onClick="onClickEditButton"
+            />
+        <Button
+            android:id="@+id/detail_add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/default_gutter"
+            android:text="Add"
+            android:textColor="@color/btn_white"
+            android:onClick="onClickAddButton"
+            android:padding="10dp"
+            android:background="@drawable/actionbar_btn_bg"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
     <ListView
         android:id="@+id/detail_container"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
-    <Button
-        android:id="@+id/detail_add_button"
-        android:visibility="gone"
-        android:text="Add Entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickAddButton"
         />
 </LinearLayout>
 
