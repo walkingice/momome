@@ -20,6 +20,7 @@
     <dimen name="actionbar_top_line_height">2dp</dimen>
     <dimen name="actionbar_bottom_line_height">1dp</dimen>
 
+    <dimen name="bottombar_height">55dp</dimen>
 
     <dimen name="default_font_size">15sp</dimen>
     <dimen name="small_font_size">12sp</dimen>
