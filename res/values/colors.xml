@@ -9,4 +9,6 @@
     <color name="logo_color_3">#FF40B0</color>
 
     <color name="btn_white">#FFFFFF</color>
+
+    <color name="list_bg">#FFFFFF</color>
 </resources>
