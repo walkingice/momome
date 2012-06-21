@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        >
+        <shape
+            android:shape="rectangle">
+            <solid
+                android:color="@color/logo_color_2"
+                />
+        </shape>
+    </item>
+
+    <item
+        android:top="@dimen/actionbar_top_line_height"
+        >
+        <shape
+            android:shape="rectangle">
+            <solid
+                android:color="@color/actionbar_bottom_color"
+                />
+        </shape>
+    </item>
+    <item
+        android:top="@dimen/actionbar_top_line_height"
+        android:bottom="@dimen/actionbar_bottom_line_height"
+        >
+        <shape
+            android:shape="rectangle">
+            <solid
+                android:color="@color/actionbar_bg_color"
+               />
+       </shape>
+   </item>
+</layer-list>

@@ -38,6 +38,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.json.JSONObject;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 
 public class MainActivity extends Activity implements Momo {
     ListView mListView;
@@ -61,6 +63,21 @@ public class MainActivity extends Activity implements Momo {
         });
 
         doReload();
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+        super.onAttachedToWindow();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_HOME) {
+            //this.finish(); //結束此activity
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

@@ -4,11 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:background="@android:color/background_light"
+        android:layout_height="@dimen/actionbar_height"
+        android:background="@drawable/actionbar_bg"
         >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="@dimen/actionbar_logo_width"
+                android:layout_height="@dimen/actionbar_logo_height"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/small_gutter"
+                android:src="@drawable/logo"
+                android:scaleType="centerInside"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/app_name"
+                style="@style/actionbar_title"
+                />
+        </LinearLayout>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -23,11 +46,14 @@
             />
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Reload"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/default_gutter"
+            android:text="Lock"
             android:onClick="onClickReload"
             />
-    </LinearLayout>
+    </RelativeLayout>
     <ListView
         android:id="@+id/main_list_view"
         android:layout_width="match_parent"
