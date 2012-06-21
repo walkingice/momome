@@ -18,6 +18,7 @@
 
 package org.zeroxlab.momome.widget;
 
+import org.zeroxlab.momome.R;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
@@ -73,13 +74,13 @@ public class ItemAdapter extends BaseAdapter implements Momo {
     @Override
     public View getView(int pos, View convertView, ViewGroup parent) {
          if (convertView == null || !(convertView instanceof TextView)) {
-             convertView = mInflater.inflate(android.R.layout.simple_list_item_1, null);
+             convertView = mInflater.inflate(R.layout.item_editable, null);
          }
 
-         TextView tv = (TextView) convertView;
+         TextView tv = (TextView) convertView.findViewById(R.id.item_title);
          Item item = (Item) getItem(pos);
          tv.setText(item.getTitle());
-         tv.setTag(item.getId());
+         convertView.setTag(item.getId());
 
          return convertView;
     }
