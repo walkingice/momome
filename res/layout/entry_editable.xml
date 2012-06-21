@@ -19,22 +19,22 @@
         android:visibility="gone"
         />
     <TextView
-        android:id="@+id/entry_name"
+        android:id="@+id/entry_data"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/entry_btn_edit"
         android:layout_alignParentTop="true"
-        style="@style/entry_name"
+        style="@style/entry_data"
         />
     <TextView
-        android:id="@+id/entry_content"
+        android:id="@+id/entry_comment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:editable="true"
         android:layout_toRightOf="@id/entry_btn_edit"
-        android:layout_below="@id/entry_name"
+        android:layout_below="@id/entry_data"
         android:layout_marginTop="@dimen/small_gutter"
-        style="@style/entry_content"
+        style="@style/entry_comment"
         />
     <ImageView
         android:id="@+id/entry_btn_delete"

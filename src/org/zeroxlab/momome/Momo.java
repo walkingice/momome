@@ -31,8 +31,8 @@ public interface Momo {
     public final static String KEY_ITEMS         = "momo_items";
     public final static String KEY_ITEM_TITLE    = "momo_item_title";
     public final static String KEY_ITEM_ENTRIES  = "momo_item_entries";
-    public final static String KEY_ENTRY_NAME    = "momo_entry_name";
-    public final static String KEY_ENTRY_CONTENT = "momo_entry_content";
+    public final static String KEY_ENTRY_DATA    = "momo_entry_data";
+    public final static String KEY_ENTRY_COMMENT = "momo_entry_comment";
 
 
     /* for cross activity */

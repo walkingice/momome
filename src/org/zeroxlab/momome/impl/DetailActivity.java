@@ -126,7 +126,7 @@ public class DetailActivity extends Activity implements Momo {
 
     class EditListener implements EntryAdapter.EditListener {
         public void onEdit(ItemEntry entry) {
-            askName(entry); // askName will call askContent
+            askData(entry); // askData will call askComment
         }
 
         public void onDelete(ItemEntry entry) {
@@ -136,31 +136,31 @@ public class DetailActivity extends Activity implements Momo {
             }
         }
 
-        private void askName(final ItemEntry entry) {
+        private void askData(final ItemEntry entry) {
             final EditText edit = new EditText(DetailActivity.this);
 
             DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int what) {
-                    mItem.updateEntry(entry, edit.getText().toString(), entry.getContent());
-                    askContent(entry);
+                    mItem.updateEntry(entry, edit.getText().toString(), entry.getComment());
+                    askComment(entry);
                 }
             };
 
             DialogInterface.OnClickListener cancel = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int what) {
-                    askContent(entry);
+                    askComment(entry);
                 }
             };
 
-            showDialog(edit, entry.getName(), "Edit Name", entry, ok, cancel);
+            showDialog(edit, entry.getData(), "Edit Data", entry, ok, cancel);
         }
 
-        private void askContent(final ItemEntry entry) {
+        private void askComment(final ItemEntry entry) {
             final EditText edit = new EditText(DetailActivity.this);
 
             DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int what) {
-                    mItem.updateEntry(entry, entry.getName(), edit.getText().toString());
+                    mItem.updateEntry(entry, entry.getData(), edit.getText().toString());
                     mAdapter.notifyDataSetChanged();
                 }
             };
@@ -170,7 +170,7 @@ public class DetailActivity extends Activity implements Momo {
                 }
             };
 
-            showDialog(edit, entry.getContent(), "Edit Content", entry, ok, cancel);
+            showDialog(edit, entry.getComment(), "Edit Comment", entry, ok, cancel);
         }
 
         private void showDialog(EditText edit,

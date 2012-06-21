@@ -84,8 +84,8 @@ public class EntryAdapter extends BaseAdapter implements Momo {
     }
 
     private void updateOneRow(ItemEntry entry, View view) {
-        TextView viewName    = (TextView) view.findViewById(R.id.entry_name);
-        TextView viewContent = (TextView) view.findViewById(R.id.entry_content);
+        TextView viewData    = (TextView) view.findViewById(R.id.entry_data);
+        TextView viewComment = (TextView) view.findViewById(R.id.entry_comment);
         View btnEdit     = view.findViewById(R.id.entry_btn_edit);
         View btnDelete   = view.findViewById(R.id.entry_btn_delete);
 
@@ -94,8 +94,8 @@ public class EntryAdapter extends BaseAdapter implements Momo {
         btnEdit.setOnClickListener(mMyListener);
         btnDelete.setOnClickListener(mMyListener);
 
-        viewName.setText(entry.getName());
-        viewContent.setText(entry.getContent());
+        viewData.setText(entry.getData());
+        viewComment.setText(entry.getComment());
 
         if (mIsEditing) {
             btnEdit.setVisibility(View.VISIBLE);

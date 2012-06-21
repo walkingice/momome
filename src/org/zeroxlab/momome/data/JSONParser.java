@@ -105,9 +105,9 @@ public class JSONParser implements Momo, Parser {
     private void JSONArrayToEntries(Item item, JSONArray array) throws ParseException {
         for (int i = 0; i < array.length(); i ++) {
             JSONObject obj = array.optJSONObject(i);
-            String name    = obj.optString(KEY_ENTRY_NAME, Item.DEF_NAME);
-            String content = obj.optString(KEY_ENTRY_CONTENT, "");
-            item.addEntry(name, content);
+            String data    = obj.optString(KEY_ENTRY_DATA, Item.DEF_NAME);
+            String comment = obj.optString(KEY_ENTRY_COMMENT, "");
+            item.addEntry(data, comment);
         }
     }
 
@@ -148,8 +148,8 @@ public class JSONParser implements Momo, Parser {
             for (int i = 0; i < entries.size(); i++) {
                 ItemEntry entry = entries.get(i);
                 JSONObject json = new JSONObject();
-                json.put(KEY_ENTRY_NAME, entry.getName());
-                json.put(KEY_ENTRY_CONTENT, entry.getContent());
+                json.put(KEY_ENTRY_DATA, entry.getData());
+                json.put(KEY_ENTRY_COMMENT, entry.getComment());
                 array.put(json);
             }
 

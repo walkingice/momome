@@ -26,9 +26,7 @@ import java.util.List;
 public class Item implements Momo {
 
     public final static String DEF_TITLE = "(NO TITLE)";
-    public final static String DEF_NAME  = "(NO NAME)";
-    public final static String ENTRY_NAME    = "entry_name";
-    public final static String ENTRY_CONTENT = "entry_content";
+    public final static String DEF_NAME  = "(Empty)";
 
     protected String mTitle;
     protected String mId;
@@ -114,29 +112,29 @@ public class Item implements Momo {
     }
 
     public static class ItemEntry {
-        String iName;
-        String iContent;
+        String iData;
+        String iComment;
 
-        public ItemEntry(String name, String content) {
-            update(name, content);
+        public ItemEntry(String data, String comment) {
+            update(data, comment);
         }
 
-        public void update(String name, String content) {
-            iName = name;
-            iContent = content;
+        public void update(String data, String comment) {
+            iData = data;
+            iComment = comment;
         }
 
-        public String getName() {
-            return iName;
+        public String getData() {
+            return iData;
         }
 
-        public String getContent() {
-            return iContent;
+        public String getComment() {
+            return iComment;
         }
 
         public void clear() {
-            iName = "";
-            iContent = "";
+            iData= "";
+            iComment= "";
         }
     }
 }
