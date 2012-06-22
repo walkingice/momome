@@ -138,6 +138,13 @@ public class ImplModel implements MomoModel {
     }
 
     @Override
+    public void removeItem(Item item) {
+        if (mList.contains(item)) {
+            mList.remove(item);
+        }
+    }
+
+    @Override
     public Item getItem(String key) {
         for (int i = 0; i < mList.size(); i++) {
             Item item = mList.get(i);

@@ -57,6 +57,7 @@ public interface MomoModel extends Momo {
 
     public int getItemsSize();
     public void addItem(Item item);
+    public void removeItem(Item item);
     public Item getItem(String key);
     public List<Item> getItems();
 

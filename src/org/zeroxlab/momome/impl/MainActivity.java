@@ -24,6 +24,7 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.widget.EditableActivity;
+import org.zeroxlab.momome.widget.EditableAdapter;
 import org.zeroxlab.momome.widget.EditableListItem;
 import org.zeroxlab.momome.widget.ItemAdapter;
 
@@ -43,12 +44,14 @@ import org.json.JSONObject;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
-public class MainActivity extends EditableActivity implements Momo {
+public class MainActivity extends EditableActivity implements Momo,
+       EditableAdapter.EditListener<Item> {
 
     ListView mListView;
     View     mBtnAdd;
     ItemAdapter mAdapter;
     MomoModel.StatusListener mStatusListener;
+    ItemClickListener mItemClickListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,13 +62,11 @@ public class MainActivity extends EditableActivity implements Momo {
         mStatusListener = new StatusListener();
         MomoModel model = MomoApp.getModel();
         mAdapter = new ItemAdapter(this);
+        mAdapter.setListener(this);
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
-                Item item = (Item)mAdapter.getItem(pos);
-                launchEntryActivity(item.getId());
-            }
-        });
+
+        mItemClickListener = new ItemClickListener();
+        mListView.setOnItemClickListener(mItemClickListener);
 
         doReload();
     }
@@ -128,13 +129,30 @@ public class MainActivity extends EditableActivity implements Momo {
     }
 
     @Override
+    public void onEdit(Item item) {
+    }
+
+    @Override
+    public void onDelete(Item item) {
+        MomoModel model = MomoApp.getModel();
+        model.removeItem(item);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     protected void onStartEdit() {
         mBtnAdd.setVisibility(View.VISIBLE);
+        mAdapter.setEditing(true);
+        mListView.setOnItemClickListener(null);
+        mListView.invalidateViews();
     }
 
     @Override
     protected void onStopEdit() {
         mBtnAdd.setVisibility(View.GONE);
+        mAdapter.setEditing(false);
+        mListView.setOnItemClickListener(mItemClickListener);
+        mListView.invalidateViews();
     }
 
     private void doReload() {
@@ -183,6 +201,13 @@ public class MainActivity extends EditableActivity implements Momo {
         MomoApp.getModel().addItem(item);
         MomoApp.getModel().save();
         mAdapter.notifyDataSetChanged();
+    }
+
+    private class ItemClickListener implements OnItemClickListener {
+        public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
+            Item item = (Item)mAdapter.getItem(pos);
+            launchEntryActivity(item.getId());
+        }
     }
 
     private class PasswordListener implements DialogInterface.OnClickListener {
