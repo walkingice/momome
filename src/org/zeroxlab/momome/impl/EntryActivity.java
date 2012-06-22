@@ -24,6 +24,7 @@ import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.data.Item.ItemEntry;
+import org.zeroxlab.momome.widget.EditableActivity;
 import org.zeroxlab.momome.widget.EntryAdapter;
 
 import android.app.Activity;
@@ -43,7 +44,7 @@ import android.app.AlertDialog;
 import android.widget.EditText;
 import android.content.DialogInterface;
 
-public class EntryActivity extends Activity implements Momo {
+public class EntryActivity extends EditableActivity implements Momo {
     protected MomoModel mModel;
     protected ListView  mContainer;
     protected View      mAddButton;
@@ -51,8 +52,6 @@ public class EntryActivity extends Activity implements Momo {
     protected Item      mItem;
     protected LayoutInflater mInflater;
     protected EntryAdapter mAdapter;
-
-    private boolean mIsEditing = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,15 +68,6 @@ public class EntryActivity extends Activity implements Momo {
             mAdapter = new EntryAdapter(this, mItem);
             mAdapter.setListener(new EditListener());
             mContainer.setAdapter(mAdapter);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mIsEditing) {
-            toggleEditing();
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -98,7 +88,7 @@ public class EntryActivity extends Activity implements Momo {
     }
 
     public void onClickEditButton(View v) {
-        toggleEditing();
+        super.onPerformEdit(v);
     }
 
     public void onClickAddButton(View v) {
@@ -106,17 +96,20 @@ public class EntryActivity extends Activity implements Momo {
         mAdapter.notifyDataSetChanged();
     }
 
-    private void toggleEditing() {
-        mIsEditing = ! mIsEditing;
-        mAdapter.setEditing(mIsEditing);
-        if (mIsEditing) {
-            mAddButton.setVisibility(View.VISIBLE);
-            mContainer.invalidateViews();
-        } else {
-            mAddButton.setVisibility(View.GONE);
-            mContainer.invalidateViews();
-            finishEditing();
-        }
+
+    @Override
+    protected void onStartEdit() {
+        mAdapter.setEditing(true);
+        mAddButton.setVisibility(View.VISIBLE);
+        mContainer.invalidateViews();
+    }
+
+    @Override
+    protected void onStopEdit() {
+        mAdapter.setEditing(false);
+        mAddButton.setVisibility(View.GONE);
+        mContainer.invalidateViews();
+        finishEditing();
     }
 
     private void finishEditing() {
