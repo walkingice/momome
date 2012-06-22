@@ -125,7 +125,13 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     public void onClickReload(View v) {
-        doReload();
+        MomoModel model = MomoApp.getModel();
+        if (model.status() == DataStatus.OK) {
+            model.lock();
+            mAdapter.notifyDataSetChanged();
+        } else {
+            doReload();
+        }
     }
 
     @Override
