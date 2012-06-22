@@ -23,6 +23,7 @@ import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
+import org.zeroxlab.momome.widget.EditableActivity;
 import org.zeroxlab.momome.widget.ItemAdapter;
 
 import android.app.Activity;
@@ -41,8 +42,10 @@ import org.json.JSONObject;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 
-public class MainActivity extends Activity implements Momo {
+public class MainActivity extends EditableActivity implements Momo {
+
     ListView mListView;
+    View     mBtnAdd;
     ItemAdapter mAdapter;
     MomoModel.StatusListener mStatusListener;
 
@@ -94,6 +97,7 @@ public class MainActivity extends Activity implements Momo {
 
     private void initViews() {
         mListView = (ListView) findViewById(R.id.main_list_view);
+        mBtnAdd   = findViewById(R.id.main_button_add);
     }
 
     private void launchEntryActivity(String key) {
@@ -102,10 +106,7 @@ public class MainActivity extends Activity implements Momo {
         startActivity(intent);
     }
 
-    public void onClickSettings(View v) {
-    }
-
-    public void onClickEdit(View v) {
+    public void onClickAdd(View v) {
         MomoModel model = MomoApp.getModel();
         if (model.status() == DataStatus.OK
                 || model.status() == DataStatus.FILE_IS_EMPTY) {
@@ -113,8 +114,25 @@ public class MainActivity extends Activity implements Momo {
         }
     }
 
+    public void onClickSettings(View v) {
+    }
+
+    public void onClickEdit(View v) {
+        super.onPerformEdit(v);
+    }
+
     public void onClickReload(View v) {
         doReload();
+    }
+
+    @Override
+    protected void onStartEdit() {
+        mBtnAdd.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onStopEdit() {
+        mBtnAdd.setVisibility(View.GONE);
     }
 
     private void doReload() {

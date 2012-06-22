@@ -71,6 +71,18 @@
         android:background="@drawable/bottombar_bg"
         >
         <Button
+            android:id="@+id/main_button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Add"
+            android:textColor="@color/btn_white"
+            android:background="@drawable/actionbar_btn_bg"
+            android:padding="10dp"
+            android:onClick="onClickAdd"
+            android:visibility="gone"
+            />
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
