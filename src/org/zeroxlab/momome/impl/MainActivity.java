@@ -58,7 +58,7 @@ public class MainActivity extends Activity implements Momo {
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
-                launchDetailActivity(v.getTag().toString());
+                launchEntryActivity(v.getTag().toString());
             }
         });
 
@@ -96,8 +96,8 @@ public class MainActivity extends Activity implements Momo {
         mListView = (ListView) findViewById(R.id.main_list_view);
     }
 
-    private void launchDetailActivity(String key) {
-        Intent intent = new Intent(this, DetailActivity.class);
+    private void launchEntryActivity(String key) {
+        Intent intent = new Intent(this, EntryActivity.class);
         intent.putExtra(CROSS_ITEM_KEY, key);
         startActivity(intent);
     }

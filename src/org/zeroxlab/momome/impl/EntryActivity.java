@@ -43,7 +43,7 @@ import android.app.AlertDialog;
 import android.widget.EditText;
 import android.content.DialogInterface;
 
-public class DetailActivity extends Activity implements Momo {
+public class EntryActivity extends Activity implements Momo {
     protected MomoModel mModel;
     protected ListView  mContainer;
     protected View      mAddButton;
@@ -57,7 +57,7 @@ public class DetailActivity extends Activity implements Momo {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detail);
+        setContentView(R.layout.activity_entry);
 
         mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mModel = MomoApp.getModel();
@@ -91,9 +91,9 @@ public class DetailActivity extends Activity implements Momo {
             return false;
         }
 
-        mContainer = (ListView) findViewById(R.id.detail_container);
-        mAddButton = findViewById(R.id.detail_add_button);
-        mEditButton = findViewById(R.id.detail_edit_button);
+        mContainer = (ListView) findViewById(R.id.entry_container);
+        mAddButton = findViewById(R.id.entry_add_button);
+        mEditButton = findViewById(R.id.entry_edit_button);
         return true;
     }
 
@@ -137,7 +137,7 @@ public class DetailActivity extends Activity implements Momo {
         }
 
         private void askData(final ItemEntry entry) {
-            final EditText edit = new EditText(DetailActivity.this);
+            final EditText edit = new EditText(EntryActivity.this);
 
             DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int what) {
@@ -156,7 +156,7 @@ public class DetailActivity extends Activity implements Momo {
         }
 
         private void askComment(final ItemEntry entry) {
-            final EditText edit = new EditText(DetailActivity.this);
+            final EditText edit = new EditText(EntryActivity.this);
 
             DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int what) {
@@ -180,7 +180,7 @@ public class DetailActivity extends Activity implements Momo {
                 DialogInterface.OnClickListener okListener,
                 DialogInterface.OnClickListener cancelListener) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(EntryActivity.this);
             builder.setMessage(msg);
             builder.setView(edit);
             edit.setText(defValue);
