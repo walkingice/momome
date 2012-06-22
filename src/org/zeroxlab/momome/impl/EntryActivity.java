@@ -25,6 +25,7 @@ import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.data.Item.ItemEntry;
 import org.zeroxlab.momome.widget.EditableActivity;
+import org.zeroxlab.momome.widget.EditableAdapter;
 import org.zeroxlab.momome.widget.EntryAdapter;
 
 import android.app.Activity;
@@ -117,7 +118,7 @@ public class EntryActivity extends EditableActivity implements Momo {
         mModel.save();
     }
 
-    class EditListener implements EntryAdapter.EditListener {
+    class EditListener implements EditableAdapter.EditListener<ItemEntry> {
         public void onEdit(ItemEntry entry) {
             askData(entry); // askData will call askComment
         }

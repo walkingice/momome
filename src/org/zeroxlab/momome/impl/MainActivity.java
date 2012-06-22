@@ -24,6 +24,7 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.widget.EditableActivity;
+import org.zeroxlab.momome.widget.EditableListItem;
 import org.zeroxlab.momome.widget.ItemAdapter;
 
 import android.app.Activity;
@@ -61,7 +62,8 @@ public class MainActivity extends EditableActivity implements Momo {
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
-                launchEntryActivity(v.getTag().toString());
+                Item item = (Item)mAdapter.getItem(pos);
+                launchEntryActivity(item.getId());
             }
         });
 

@@ -34,16 +34,12 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.List;
 
-public class ItemAdapter extends BaseAdapter implements Momo {
+public class ItemAdapter extends EditableAdapter<Item> implements Momo {
 
-    protected Context         mContext;
-    protected LayoutInflater  mInflater;
     protected MomoModel       mModel;
 
     public ItemAdapter(Context context) {
-        super();
-        mContext  = context;
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        super(context);
         mModel    = MomoApp.getModel();
     }
 
@@ -72,17 +68,14 @@ public class ItemAdapter extends BaseAdapter implements Momo {
     }
 
     @Override
-    public View getView(int pos, View convertView, ViewGroup parent) {
-         if (convertView == null || !(convertView instanceof TextView)) {
-             convertView = mInflater.inflate(R.layout.item_editable, null);
-         }
+    protected void initView(int pos, EditableListItem item) {
+        Item data = getBoundData(pos);
+        item.setText(data.getTitle());
+    }
 
-         TextView tv = (TextView) convertView.findViewById(R.id.item_title);
-         Item item = (Item) getItem(pos);
-         tv.setText(item.getTitle());
-         convertView.setTag(item.getId());
-
-         return convertView;
+    @Override
+    protected Item getBoundData(int pos) {
+        return (Item) getItem(pos);
     }
 
     private boolean modelAccessible() {

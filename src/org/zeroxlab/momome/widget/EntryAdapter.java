@@ -36,21 +36,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.List;
 
-public class EntryAdapter extends BaseAdapter implements Momo {
+public class EntryAdapter extends EditableAdapter<ItemEntry> implements Momo {
 
-    protected Context         mContext;
-    protected LayoutInflater  mInflater;
     protected Item            mItem;
-    protected EditListener    mListener;
-    protected ClickListener   mMyListener;
-    protected boolean         mIsEditing = false;
 
     public EntryAdapter(Context context, Item item) {
-        super();
-        mContext  = context;
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mItem     = item;
-        mMyListener = new ClickListener();
+        super(context);
+        mItem = item;
     }
 
     @Override
@@ -69,61 +61,15 @@ public class EntryAdapter extends BaseAdapter implements Momo {
     }
 
     @Override
-    public View getView(int pos, View convertView, ViewGroup parent) {
-         if (convertView == null
-                 || !(convertView instanceof EditableListItem)) {
-
-             convertView = new EditableListItem(mContext, mIsEditing);
-         }
-
-         ItemEntry entry = (ItemEntry) getItem(pos);
-
-         EditableListItem item = (EditableListItem)convertView;
-         item.setEditing(mIsEditing);
-         item.setText(entry.getData());
-         item.setComment(entry.getComment());
-         item.setListener(mMyListener);
-
-         item.setTag(entry);
-         return convertView;
+    protected void initView(int pos, EditableListItem item) {
+        ItemEntry entry = (ItemEntry) getItem(pos);
+        item.setText(entry.getData());
+        item.setComment(entry.getComment());
     }
 
-    public void setEditing(boolean editing) {
-        mIsEditing = editing;
-    }
-
-    private class ClickListener implements EditableListItem.Listener {
-        public void onClickEdit(View whichItem) {
-            if (mListener == null) {
-                return;
-            } else {
-                mListener.onEdit((ItemEntry)whichItem.getTag());
-            }
-        }
-
-        public void onClickDelete(View whichItem) {
-            if (mListener == null) {
-                return;
-            } else {
-                mListener.onDelete((ItemEntry)whichItem.getTag());
-            }
-        }
-    }
-
-    public void setListener(EditListener listener) {
-        mListener = listener;
-    }
-
-    /**
-     * each views generate by getView() provide interface to editing.
-     *
-     * The inflated list item might has buttons 'Edit' or 'Delete'.
-     * ItemAdapter tries to listen it OnClick event and notify
-     * EditLister to do corresponding action.
-     * */
-    public interface EditListener {
-        public void onEdit(ItemEntry which);
-        public void onDelete(ItemEntry which);
+    @Override
+    protected ItemEntry getBoundData(int pos) {
+        return (ItemEntry)getItem(pos);
     }
 }
 
