@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="editable_list_view" />
+
+    <!-- for widget EditableListItem -->
+    <item type="id" name="editable_item_btn_edit" />
+    <item type="id" name="editable_item_btn_delete" />
+    <item type="id" name="editable_item_text" />
+    <item type="id" name="editable_item_comment" />
+</resources>
