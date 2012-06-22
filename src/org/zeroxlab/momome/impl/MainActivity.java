@@ -130,6 +130,7 @@ public class MainActivity extends EditableActivity implements Momo,
 
     @Override
     public void onEdit(Item item) {
+        renameItem(item);
     }
 
     @Override
@@ -177,23 +178,39 @@ public class MainActivity extends EditableActivity implements Momo,
         builder.show();
     }
 
+    private void renameItem(Item item) {
+        EditText edit = new EditText(this);
+        edit.setText(item.getTitle());
+        edit.selectAll();
+        DialogInterface.OnClickListener rename = new RenameListener(edit, item);
+        showInputDialog("Rename for item", rename, edit);
+    }
+
     private void getNewItemName() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         EditText edit = new EditText(this);
         DialogInterface.OnClickListener okListener = new AddItemListener(edit);
+        showInputDialog("Name of new Item", okListener, edit);
+    }
 
-        builder.setMessage("Name of new Item");
+    private void showInputDialog(String msg, DialogInterface.OnClickListener listener, EditText edit) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(msg);
         builder.setCancelable(true);
         builder.setView(edit);
-        builder.setPositiveButton(android.R.string.ok, okListener);
-        builder.setNegativeButton(android.R.string.cancel, okListener);
+        builder.setPositiveButton(android.R.string.ok, listener);
+        builder.setNegativeButton(android.R.string.cancel, listener);
 
-        builder.show();
-    }
+        builder.show();    }
 
     private void onEnteredPassword(CharSequence password) {
         MomoModel model = MomoApp.getModel();
         model.unlock(password);
+    }
+
+    private void onRenameItem(CharSequence name, Item item) {
+        item.setTitle(name.toString());
+        MomoApp.getModel().save();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void onAddItem(CharSequence name) {
@@ -226,6 +243,28 @@ public class MainActivity extends EditableActivity implements Momo,
                 return; // cancel or does not give a name, nothing happen
             } else {
                 onEnteredPassword(input);
+            }
+        }
+    }
+
+    private class RenameListener implements DialogInterface.OnClickListener {
+        TextView iTextView;
+        Item iItem;
+
+        RenameListener(TextView tv, Item item) {
+            iTextView = tv;
+            iItem = item;
+        }
+
+        public void onClick(DialogInterface dialog, int button) {
+            CharSequence input = iTextView.getText();
+            if (button != AlertDialog.BUTTON_POSITIVE
+                    || input == null
+                    || input.toString().equals("")) {
+
+                return; // cancel or does not give a name, nothing happen
+            } else {
+                onRenameItem(input,iItem);
             }
         }
     }
