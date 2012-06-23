@@ -14,7 +14,7 @@
         android:layout_marginRight="@dimen/default_gutter"
         android:padding="6dp"
         android:src="@drawable/icon_edit"
-        android:background="@drawable/actionbar_btn_bg"
+        android:background="@drawable/btn_bg"
         android:text="Edit"
         android:visibility="gone"
         />

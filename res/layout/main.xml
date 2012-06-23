@@ -33,28 +33,40 @@
                 style="@style/actionbar_title"
                 />
         </LinearLayout>
+        <ImageView
+            android:id="@+id/main_btn_lock"
+            android:layout_width="@dimen/large_button_size"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:onClick="onClickReload"
+            android:src="@drawable/icon_lock"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_bg"
+            />
+        <include
+            android:layout_toRightOf="@id/main_btn_lock"
+            android:layout_width="@dimen/v_divider_width"
+            android:layout_height="match_parent"
+            layout="@layout/v_divider"
+            />
         <Button
+            android:id="@+id/main_btn_edit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:text="Edit"
-            android:textColor="@color/btn_white"
-            android:background="@drawable/actionbar_btn_bg"
+            android:textColor="@color/text_aluminium"
+            android:background="@drawable/btn_bg"
             android:padding="10dp"
             android:onClick="onClickEdit"
             />
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/default_gutter"
-            android:text="Lock"
-            android:onClick="onClickReload"
-            android:src="@drawable/icon_lock"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:background="@drawable/actionbar_btn_bg"
+        <include
+            android:layout_toLeftOf="@id/main_btn_edit"
+            android:layout_width="@dimen/v_divider_width"
+            android:layout_height="match_parent"
+            layout="@layout/v_divider"
             />
     </RelativeLayout>
     <ListView
@@ -76,8 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Add"
-            android:textColor="@color/btn_white"
-            android:background="@drawable/actionbar_btn_bg"
+            android:textColor="@color/text_aluminium"
+            android:background="@drawable/btn_bg"
             android:padding="10dp"
             android:onClick="onClickAdd"
             android:visibility="gone"
@@ -87,8 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Settings"
-            android:textColor="@color/btn_white"
-            android:background="@drawable/actionbar_btn_bg"
+            android:textColor="@color/text_aluminium"
+            android:background="@drawable/btn_bg"
             android:padding="10dp"
             android:onClick="onClickSettings"
             />

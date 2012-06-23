@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/divider"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/h_divider_height"
+    android:paddingLeft="@dimen/default_gutter"
+    android:paddingRight="@dimen/default_gutter"
+    android:scaleType="fitXY"
+    />
+

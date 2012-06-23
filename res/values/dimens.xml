@@ -9,8 +9,9 @@
     <dimen name="row_bottom_gutter">30dip</dimen>
 
     <dimen name="default_button_size">33dip</dimen>
-    <dimen name="default_button_width">40dip</dimen>
-    <dimen name="default_button_height">30dip</dimen>
+    <dimen name="large_button_size">50dip</dimen>
+    <dimen name="small_button_size">260dip</dimen>
+
     <dimen name="default_stroke_width">1dip</dimen>
     <dimen name="default_rounded_corner">3dp</dimen>
 
@@ -26,4 +27,7 @@
     <dimen name="small_font_size">12sp</dimen>
 
     <dimen name="listitem_height">80dp</dimen>
+
+    <dimen name="v_divider_width">1dp</dimen>
+    <dimen name="h_divider_height">1dp</dimen>
 </resources>
