@@ -44,6 +44,25 @@
             android:scaleType="centerInside"
             android:background="@drawable/btn_bg"
             />
+        <Button
+            android:id="@+id/main_btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="Add"
+            android:textColor="@color/text_aluminium"
+            android:background="@drawable/btn_bg"
+            android:padding="10dp"
+            android:onClick="onClickAdd"
+            android:visibility="gone"
+            />
+        <include
+            android:layout_toRightOf="@id/main_btn_add"
+            android:layout_width="@dimen/v_divider_width"
+            android:layout_height="match_parent"
+            layout="@layout/v_divider"
+            />
         <include
             android:layout_toRightOf="@id/main_btn_more"
             android:layout_width="@dimen/v_divider_width"
@@ -82,18 +101,6 @@
         android:gravity="center"
         android:background="@drawable/bottombar_bg"
         >
-        <Button
-            android:id="@+id/main_button_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="Add"
-            android:textColor="@color/text_aluminium"
-            android:background="@drawable/btn_bg"
-            android:padding="10dp"
-            android:onClick="onClickAdd"
-            android:visibility="gone"
-            />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">MomoMe</string>
     <string name="lock">Lock</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -53,6 +53,7 @@ public class MainActivity extends EditableActivity implements Momo,
 
     ListView mListView;
     View     mBtnAdd;
+    View     mBtnMore;
     ItemAdapter mAdapter;
     MomoModel.StatusListener mStatusListener;
     ItemClickListener mItemClickListener;
@@ -104,7 +105,8 @@ public class MainActivity extends EditableActivity implements Momo,
 
     private void initViews() {
         mListView = (ListView) findViewById(R.id.main_list_view);
-        mBtnAdd   = findViewById(R.id.main_button_add);
+        mBtnAdd   = findViewById(R.id.main_btn_add);
+        mBtnMore  = findViewById(R.id.main_btn_more);
     }
 
     private void launchEntryActivity(String key) {
@@ -168,6 +170,7 @@ public class MainActivity extends EditableActivity implements Momo,
     @Override
     protected void onStartEdit() {
         mBtnAdd.setVisibility(View.VISIBLE);
+        mBtnMore.setVisibility(View.GONE);
         mAdapter.setEditing(true);
         mListView.setOnItemClickListener(null);
         mListView.invalidateViews();
@@ -176,6 +179,7 @@ public class MainActivity extends EditableActivity implements Momo,
     @Override
     protected void onStopEdit() {
         mBtnAdd.setVisibility(View.GONE);
+        mBtnMore.setVisibility(View.VISIBLE);
         mAdapter.setEditing(false);
         mListView.setOnItemClickListener(mItemClickListener);
         mListView.invalidateViews();
