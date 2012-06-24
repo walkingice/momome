@@ -85,14 +85,26 @@ public class PopupMenu {
      *
      * @param itemId
      * @param titleRes
-     * @param iconRes
      *
      * @return item
      */
     public MenuItem add(int itemId, int titleRes) {
+        return this.add(itemId, mContext.getString(titleRes));
+    }
+
+    /**
+     * Add menu item.
+     *
+     * @param itemId
+     * @param title
+     * @param iconRes
+     *
+     * @return item
+     */
+    public MenuItem add(int itemId, String title) {
         MenuItem item = new MenuItem();
         item.setItemId(itemId);
-        item.setTitle(mContext.getString(titleRes));
+        item.setTitle(title);
         mItems.add(item);
 
         return item;
