@@ -24,9 +24,23 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.util.Util;
 
 import android.util.Log;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ClearTextIO implements FileIO, Momo {
+    @Override
+    public boolean save(String key,
+            FileOutputStream stream,
+            CharSequence content) throws RWException {
+        try {
+            Util.writeStrToStream(stream, content);
+        } catch (IOException e) {
+            throw new RWException(e);
+        }
+        return true;
+    }
+
     @Override
     public boolean save(String key,
             String outputPath,
@@ -38,6 +52,20 @@ public class ClearTextIO implements FileIO, Momo {
             throw new RWException(e);
         }
         return true;
+    }
+
+    @Override
+    public CharSequence read(String key,
+            FileInputStream stream) throws RWException {
+        CharSequence data = null;
+
+        try {
+            data = Util.readStrFromStream(stream);
+        } catch (IOException e) {
+            throw new RWException(e);
+        }
+
+        return data;
     }
 
     @Override
