@@ -38,7 +38,7 @@ public class MomoApp extends Application implements Momo {
     public void onCreate() {
         super.onCreate();
         checkExternalStorage();
-        sModel = new ImplModel();
+        sModel = new ImplModel(this);
     }
 
     @Override

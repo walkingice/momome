@@ -18,6 +18,7 @@
 
 package org.zeroxlab.momome.impl;
 
+import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.data.ClearTextIO;
 import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.data.JSONParser;
@@ -28,15 +29,20 @@ import org.zeroxlab.momome.Parser;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.util.Util;
 
+import android.content.Context;
 import android.util.Log;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ImplModel implements MomoModel {
+public class ImplModel implements MomoModel, Momo {
 
+    protected Context    mContext;
     protected List<StatusListener> mListeners;
     protected List<Item> mList;
     protected Parser     mParser;
@@ -46,7 +52,8 @@ public class ImplModel implements MomoModel {
     protected String mFilePath = EXTERNAL_DIR + "/encrypted";
     protected DataStatus mStatus;
 
-    public ImplModel() {
+    public ImplModel(Context context) {
+        mContext   = context;
         mListeners = new ArrayList<StatusListener>();
         mList = new ArrayList<Item>();
         mParser = new JSONParser();
@@ -67,15 +74,12 @@ public class ImplModel implements MomoModel {
         mPassword = password;
 
         try {
-            File file = new File(mFilePath);
-            if (!file.exists() && file.createNewFile()) {
-                file.setWritable(true);
-                changeStatus(DataStatus.FILE_IS_EMPTY);
-                return true;
-            }
-
-            CharSequence data = mFileIO.read(mPassword.toString(), mFilePath);
+            FileInputStream stream = mContext.openFileInput(FILENAME);
+            CharSequence data = mFileIO.read(mPassword.toString(), stream);
             mList = mParser.parse(data);
+        } catch (FileNotFoundException e) {
+            changeStatus(DataStatus.FILE_IS_EMPTY);
+            return true;
         } catch (IOException e) {
                 changeStatus(DataStatus.FILE_CANNOT_ACCESS);
                 clearListContent();
@@ -106,10 +110,15 @@ public class ImplModel implements MomoModel {
         try {
             if (mStatus == DataStatus.OK || mStatus == DataStatus.FILE_IS_EMPTY) {
                 CharSequence data = mParser.generate(mList);
-                mFileIO.save(mPassword.toString(), mFilePath, data);
+                FileOutputStream stream = mContext.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                mFileIO.save(mPassword.toString(), stream, data);
                 changeStatus(DataStatus.OK);
                 return true;
             }
+            return false;
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "cannot write file");
+            e.printStackTrace();
             return false;
         } catch (RWException e) {
             e.printStackTrace();
