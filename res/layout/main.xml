@@ -94,6 +94,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:cacheColorHint="@color/list_bg"
+        android:visibility="gone"
         />
+    <LinearLayout
+        android:id="@+id/main_hint"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="#EEEEEE"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unlock_hint"
+            android:layout_margin="@dimen/large_gutter"
+            />
+        <ImageButton
+            android:layout_width="@dimen/large_button_size"
+            android:layout_height="@dimen/large_button_size"
+            android:text="Unlock"
+            android:onClick="onClickReload"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_lock"
+            android:layout_margin="@dimen/small_gutter"
+            />
+    </LinearLayout>
 </LinearLayout>
 

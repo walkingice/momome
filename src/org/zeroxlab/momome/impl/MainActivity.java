@@ -52,6 +52,7 @@ public class MainActivity extends EditableActivity implements Momo,
        EditableAdapter.EditListener<Item> {
 
     ListView mListView;
+    View     mHint;
     View     mBtnAdd;
     View     mBtnMore;
     ItemAdapter mAdapter;
@@ -105,6 +106,7 @@ public class MainActivity extends EditableActivity implements Momo,
         mListView = (ListView) findViewById(R.id.main_list_view);
         mBtnAdd   = findViewById(R.id.main_btn_add);
         mBtnMore  = findViewById(R.id.main_btn_more);
+        mHint     = findViewById(R.id.main_hint);
     }
 
     private void launchEntryActivity(String key) {
@@ -336,7 +338,16 @@ public class MainActivity extends EditableActivity implements Momo,
 
     private class StatusListener implements MomoModel.StatusListener {
         public void onStatusChanged(DataStatus now) {
-            mAdapter.notifyDataSetChanged();
+            MomoModel model = MomoApp.getModel();
+            if (model.status() == DataStatus.OK
+                    || model.status() == DataStatus.FILE_IS_EMPTY) {
+                mAdapter.notifyDataSetChanged();
+                mHint.setVisibility(View.GONE);
+                mListView.setVisibility(View.VISIBLE);
+            } else {
+                mHint.setVisibility(View.VISIBLE);
+                mListView.setVisibility(View.GONE);
+            }
         }
     }
 }
