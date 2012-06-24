@@ -97,6 +97,11 @@ public class EntryActivity extends EditableActivity implements Momo {
         mAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected boolean onHomePressed() {
+        finish();
+        return true;
+    }
 
     @Override
     protected void onStartEdit() {

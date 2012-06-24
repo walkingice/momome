@@ -77,18 +77,16 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     @Override
-    public void onAttachedToWindow() {
-        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
-        super.onAttachedToWindow();
+    public void onBackPressed() {
+        closeModel();
+        finish();
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            //this.finish(); //結束此activity
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    public boolean onHomePressed(){
+        closeModel();
+        finish();
+        return false;
     }
 
     @Override
@@ -113,6 +111,15 @@ public class MainActivity extends EditableActivity implements Momo,
         Intent intent = new Intent(this, EntryActivity.class);
         intent.putExtra(CROSS_ITEM_KEY, key);
         startActivity(intent);
+    }
+
+    private void closeModel() {
+        MomoModel model = MomoApp.getModel();
+        if (model.status() == DataStatus.OK) {
+            model.save();
+            model.lock();
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     public void onClickAdd(View v) {
