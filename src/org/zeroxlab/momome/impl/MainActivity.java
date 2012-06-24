@@ -134,7 +134,11 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     public void onClickEdit(View v) {
-        super.onPerformEdit(v);
+        MomoModel model = MomoApp.getModel();
+        if (model.status() == DataStatus.OK
+                || model.status() == DataStatus.FILE_IS_EMPTY) {
+            super.onPerformEdit(v);
+        }
     }
 
     public void onClickMore(final View v) {
