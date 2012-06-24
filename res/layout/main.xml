@@ -34,18 +34,18 @@
                 />
         </LinearLayout>
         <ImageView
-            android:id="@+id/main_btn_lock"
+            android:id="@+id/main_btn_more"
             android:layout_width="@dimen/large_button_size"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:onClick="onClickReload"
-            android:src="@drawable/icon_lock"
-            android:padding="16dp"
+            android:onClick="onClickMore"
+            android:src="@drawable/icon_more"
+            android:padding="10dp"
             android:scaleType="centerInside"
             android:background="@drawable/btn_bg"
             />
         <include
-            android:layout_toRightOf="@id/main_btn_lock"
+            android:layout_toRightOf="@id/main_btn_more"
             android:layout_width="@dimen/v_divider_width"
             android:layout_height="match_parent"
             layout="@layout/v_divider"

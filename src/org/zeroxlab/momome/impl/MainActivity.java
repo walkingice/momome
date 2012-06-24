@@ -28,6 +28,10 @@ import org.zeroxlab.momome.widget.EditableAdapter;
 import org.zeroxlab.momome.widget.EditableListItem;
 import org.zeroxlab.momome.widget.ItemAdapter;
 
+import com.u1aryz.android.lib.newpopupmenu.MenuItem;
+import com.u1aryz.android.lib.newpopupmenu.PopupMenu;
+import com.u1aryz.android.lib.newpopupmenu.PopupMenu.OnItemSelectedListener;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -122,6 +126,21 @@ public class MainActivity extends EditableActivity implements Momo,
 
     public void onClickEdit(View v) {
         super.onPerformEdit(v);
+    }
+
+    public void onClickMore(final View v) {
+        final int fLock = 0;
+        PopupMenu menu = new PopupMenu(this);
+        menu.add(fLock, R.string.lock);
+        menu.setHeaderTitle("More options");
+        menu.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(MenuItem item) {
+                if (item.getItemId() == fLock) {
+                    onClickReload(v);
+                }
+            }
+        });
+        menu.show(v);
     }
 
     public void onClickReload(View v) {
