@@ -16,10 +16,6 @@
 
 package org.keyczar.util;
 
-
-import org.keyczar.exceptions.Base64DecodingException;
-import org.keyczar.i18n.Messages;
-
 /**
  * A web-safe Base64 encoding and decoding utility class. See RFC 3548
  *
@@ -65,10 +61,10 @@ public class Base64Coder {
    * @param source The string to decode. May contain whitespace and optionally
    * up to two padding '=' characters.
    * @return A byte array representation of the encoded data.
-   * @throws Base64DecodingException If the source string contains an illegal
+   * @throws Exception If the source string contains an illegal
    * character or is of an illegal length (1 mod 4).
    */
-  public static byte[] decode(String source) throws Base64DecodingException {
+  public static byte[] decode(String source) throws Exception {
     char[] input = source.toCharArray();
     int inLen = input.length;
     // Trim up to two trailing '=' padding characters
@@ -93,8 +89,7 @@ public class Base64Coder {
     int outputLen = inputBlocks * 3;
     switch (remainder) {
     case 1:
-      throw new Base64DecodingException(
-          Messages.getString("Base64Coder.IllegalLength", inLen));
+      throw new Exception("Base64Coder.IllegalLength");
     case 2:
       outputLen += 1;
       break;
@@ -178,10 +173,9 @@ public class Base64Coder {
     return new String(out);
   }
 
-  private static byte getByte(int i) throws Base64DecodingException {
+  private static byte getByte(int i) throws Exception {
     if (i < 0 || i > 127 || DECODE[i] == -1) {
-      throw new Base64DecodingException(
-          Messages.getString("Base64Coder.IllegalCharacter", i));
+      throw new Exception("Base64Coder.IllegalCharacter");
     }
     return DECODE[i];
   }
@@ -190,3 +184,4 @@ public class Base64Coder {
     return DECODE[i] == -2;
   }
 }
+
