@@ -165,7 +165,8 @@ public class PopupMenu {
         int screenHeight = mWindowManager.getDefaultDisplay().getHeight();
 
         // Set x-coordinate to display the popup menu
-        xPos = anchorRect.centerX() - mPopupWindow.getWidth() / 2;
+        int popupWidth = View.MeasureSpec.getSize(mPopupWindow.getWidth());
+        xPos = anchorRect.centerX() - popupWidth / 2;
 
         int dyTop = anchorRect.top;
         int dyBottom = screenHeight + rootHeight;
@@ -187,7 +188,8 @@ public class PopupMenu {
 
     private void preShow() {
         int width = (int) (mWidth * mScale);
-        mPopupWindow.setWidth(width);
+        int spec = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.AT_MOST);
+        mPopupWindow.setWidth(spec);
         mPopupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setTouchable(true);
         mPopupWindow.setFocusable(true);
