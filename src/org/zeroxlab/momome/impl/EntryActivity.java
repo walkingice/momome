@@ -203,6 +203,7 @@ public class EntryActivity extends EditableActivity implements Momo {
             ItemEntry entry = (ItemEntry)mAdapter.getItem(pos);
             intent.putExtra(CROSS_ENTRY_DATA_KEY, entry.getData());
             intent.putExtra(CROSS_ENTRY_COMMENT_KEY, entry.getComment());
+            intent.putExtra(CROSS_ENTRY_TIME_KEY, entry.getLastModifiedTime());
             startActivity(intent);
         }
     }

@@ -36,8 +36,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DetailActivity extends Activity implements Momo {
+    protected final static SimpleDateFormat sSDF = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +49,10 @@ public class DetailActivity extends Activity implements Momo {
         Intent intent = getIntent();
         String data = intent.getStringExtra(CROSS_ENTRY_DATA_KEY);
         String comment = intent.getStringExtra(CROSS_ENTRY_COMMENT_KEY);
+        long time = intent.getLongExtra(CROSS_ENTRY_TIME_KEY, System.currentTimeMillis());
 
-        text.setText(data + ":" + comment);
+        Date date = new Date(time);
+        text.setText(data + ":" + comment + "  " + sSDF.format(date));
     }
 
     @Override

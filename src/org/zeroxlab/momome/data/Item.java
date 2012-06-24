@@ -31,6 +31,7 @@ public class Item implements Momo {
     protected String mTitle;
     protected String mId;
     protected List<ItemEntry> mEntries;
+    protected long mTime;
 
     public Item() {
         this(DEF_TITLE);
@@ -44,10 +45,12 @@ public class Item implements Momo {
         setTitle(title);
         setId(id);
         mEntries = new ArrayList<ItemEntry>();
+        mTime = System.currentTimeMillis();
     }
 
     public void setTitle(String title) {
         mTitle = title;
+        mTime = System.currentTimeMillis();
     }
 
     public String getTitle() {
@@ -56,10 +59,19 @@ public class Item implements Momo {
 
     public void setId(String id) {
         mId = id;
+        mTime = System.currentTimeMillis();
     }
 
     public String getId() {
         return mId;
+    }
+
+    public void setLastModifiedTime(long time) {
+        mTime = time;
+    }
+
+    public long getLastModifiedTime() {
+        return mTime;
     }
 
     public int getEntryCount() {
@@ -81,14 +93,26 @@ public class Item implements Momo {
     }
 
     public void addEntry(String name, String content) {
+        long time = System.currentTimeMillis();
+        this.addEntry(time, name, content);
+    }
+
+    public void addEntry(long time, String name, String content) {
         ItemEntry entry = new ItemEntry(name, content);
-        updateEntry(entry, name, content);
+        updateEntry(time, entry, name, content);
     }
 
     public void updateEntry(ItemEntry entry, String name, String content) {
+        long time = System.currentTimeMillis();
+        updateEntry(time, entry, name, content);
+    }
+
+    public void updateEntry(long time, ItemEntry entry, String name, String content) {
         entry.update(name, content);
+        entry.setLastModifiedTime(time);
         if (!mEntries.contains(entry)) {
             mEntries.add(entry);
+            this.setLastModifiedTime(time);
         }
     }
 
@@ -114,6 +138,7 @@ public class Item implements Momo {
     public static class ItemEntry {
         String iData;
         String iComment;
+        long   iTime;
 
         public ItemEntry(String data, String comment) {
             update(data, comment);
@@ -122,6 +147,15 @@ public class Item implements Momo {
         public void update(String data, String comment) {
             iData = data;
             iComment = comment;
+            iTime = System.currentTimeMillis();
+        }
+
+        public void setLastModifiedTime(long time) {
+            iTime = time;
+        }
+
+        public long getLastModifiedTime() {
+            return iTime;
         }
 
         public String getData() {

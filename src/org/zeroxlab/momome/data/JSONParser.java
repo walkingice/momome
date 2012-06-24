@@ -99,6 +99,11 @@ public class JSONParser implements Momo, Parser {
 
         Item item = new Item(json.optString(KEY_ITEM_TITLE));
         JSONArrayToEntries(item, json.optJSONArray(KEY_ITEM_ENTRIES));
+
+        /* we should update time after parse entries since updateEntry will
+         * change the time as well. */
+        long time = json.optLong(KEY_ITEM_TIME, System.currentTimeMillis());
+        item.setLastModifiedTime(time);
         return item;
     }
 
@@ -107,7 +112,8 @@ public class JSONParser implements Momo, Parser {
             JSONObject obj = array.optJSONObject(i);
             String data    = obj.optString(KEY_ENTRY_DATA, Item.DEF_NAME);
             String comment = obj.optString(KEY_ENTRY_COMMENT, "");
-            item.addEntry(data, comment);
+            long   time    = obj.optLong(KEY_ENTRY_TIME, System.currentTimeMillis());
+            item.addEntry(time, data, comment);
         }
     }
 
@@ -135,6 +141,7 @@ public class JSONParser implements Momo, Parser {
             List<ItemEntry> entries = item.getEntries();
             JSONArray array = entriesToJSONArray(entries);
             json.put(KEY_ITEM_TITLE, item.getTitle());
+            json.put(KEY_ITEM_TIME, item.getLastModifiedTime());
             json.put(KEY_ITEM_ENTRIES, array);
             return json;
         } catch (JSONException e) {
@@ -150,6 +157,7 @@ public class JSONParser implements Momo, Parser {
                 JSONObject json = new JSONObject();
                 json.put(KEY_ENTRY_DATA, entry.getData());
                 json.put(KEY_ENTRY_COMMENT, entry.getComment());
+                json.put(KEY_ENTRY_TIME, entry.getLastModifiedTime());
                 array.put(json);
             }
 
