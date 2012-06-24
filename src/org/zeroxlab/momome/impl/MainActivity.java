@@ -132,13 +132,17 @@ public class MainActivity extends EditableActivity implements Momo,
 
     public void onClickMore(final View v) {
         final int fLock = 0;
+        final int fSettings = 1;
         PopupMenu menu = new PopupMenu(this);
         menu.add(fLock, R.string.lock);
+        menu.add(fSettings, R.string.settings);
         menu.setHeaderTitle("More options");
         menu.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void onItemSelected(MenuItem item) {
                 if (item.getItemId() == fLock) {
                     onClickReload(v);
+                } else if (item.getItemId() == fSettings) {
+                    onClickSettings(v);
                 }
             }
         });
