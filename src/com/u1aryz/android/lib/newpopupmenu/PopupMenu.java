@@ -1,5 +1,7 @@
 package com.u1aryz.android.lib.newpopupmenu;
 
+import org.zeroxlab.momome.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
