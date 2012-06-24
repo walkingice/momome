@@ -42,6 +42,8 @@ public interface Momo {
     /* for cross activity */
     public final static int    INVALID_INT    = -1;
     public final static String CROSS_ITEM_KEY = "cross_activity_item_key";
+    public final static String CROSS_ENTRY_DATA_KEY   = "cross_activity_entry_data_key";
+    public final static String CROSS_ENTRY_COMMENT_KEY = "cross_activity_entry_comment_key";
 
     public enum DataStatus {
         OK,

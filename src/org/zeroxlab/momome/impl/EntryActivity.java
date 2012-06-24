@@ -30,6 +30,7 @@ import org.zeroxlab.momome.widget.EntryAdapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ public class EntryActivity extends EditableActivity implements Momo {
     protected Item      mItem;
     protected LayoutInflater mInflater;
     protected EntryAdapter mAdapter;
+    protected EntryClickListener mEntryClickListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class EntryActivity extends EditableActivity implements Momo {
         mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mModel = MomoApp.getModel();
 
+        mEntryClickListener = new EntryClickListener();
         String key = getIntent().getStringExtra(CROSS_ITEM_KEY);
         mItem  = mModel.getItem(key);
 
@@ -69,6 +72,7 @@ public class EntryActivity extends EditableActivity implements Momo {
             mAdapter = new EntryAdapter(this, mItem);
             mAdapter.setListener(new EditListener());
             mContainer.setAdapter(mAdapter);
+            mContainer.setOnItemClickListener(mEntryClickListener);
         }
     }
 
@@ -107,6 +111,7 @@ public class EntryActivity extends EditableActivity implements Momo {
     protected void onStartEdit() {
         mAdapter.setEditing(true);
         mAddButton.setVisibility(View.VISIBLE);
+        mContainer.setOnItemClickListener(null);
         mContainer.invalidateViews();
     }
 
@@ -114,6 +119,7 @@ public class EntryActivity extends EditableActivity implements Momo {
     protected void onStopEdit() {
         mAdapter.setEditing(false);
         mAddButton.setVisibility(View.GONE);
+        mContainer.setOnItemClickListener(mEntryClickListener);
         mContainer.invalidateViews();
         finishEditing();
     }
@@ -188,6 +194,16 @@ public class EntryActivity extends EditableActivity implements Momo {
             builder.setPositiveButton(android.R.string.ok, okListener);
             builder.setNegativeButton(android.R.string.cancel, cancelListener);
             builder.show();
+        }
+    }
+
+    private class EntryClickListener implements OnItemClickListener {
+        public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
+            Intent intent = new Intent(EntryActivity.this, DetailActivity.class);
+            ItemEntry entry = (ItemEntry)mAdapter.getItem(pos);
+            intent.putExtra(CROSS_ENTRY_DATA_KEY, entry.getData());
+            intent.putExtra(CROSS_ENTRY_COMMENT_KEY, entry.getComment());
+            startActivity(intent);
         }
     }
 }
