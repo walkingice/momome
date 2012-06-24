@@ -20,6 +20,7 @@ package org.zeroxlab.momome.impl;
 
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.data.ClearTextIO;
+import org.zeroxlab.momome.data.PasswordIO;
 import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.data.JSONParser;
 import org.zeroxlab.momome.FileIO;
@@ -57,7 +58,7 @@ public class ImplModel implements MomoModel, Momo {
         mListeners = new ArrayList<StatusListener>();
         mList = new ArrayList<Item>();
         mParser = new JSONParser();
-        mFileIO = new ClearTextIO();
+        mFileIO = new PasswordIO();
 
         lock();
     }

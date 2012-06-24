@@ -28,6 +28,8 @@ public interface Momo {
 
     public final static String FILENAME = "MomomeData";
 
+    public final static String ENCODING = "UTF8";
+
     /* for JSON */
     public final static String KEY_VERSION       = "momo_version";
     public final static String KEY_ITEMS         = "momo_items";

@@ -192,6 +192,7 @@ public class MainActivity extends EditableActivity implements Momo,
     private void doReload() {
         MomoModel model = MomoApp.getModel();
         if (model.status() == DataStatus.NO_PASSWORD
+                || model.status() == DataStatus.FILE_CANNOT_ACCESS
                 || model.status() == DataStatus.PASSWORD_WRONG) {
             askForPassword();
         }
