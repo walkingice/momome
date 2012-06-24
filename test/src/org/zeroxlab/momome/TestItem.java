@@ -50,7 +50,7 @@ public class TestItem extends AndroidTestCase implements Momo {
         mItem.updateEntry(entry, "two", "blah"); // modify the item
 
         Item.ItemEntry modified = mItem.getEntry(0); // 'one' turns into 'two'
-        assertEquals("two", modified.getName());
+        assertEquals("two", modified.getData());
         assertEquals(3, mItem.getEntryCount());
 
         ItemEntry onemore = new ItemEntry("XD", "XD");

@@ -86,14 +86,14 @@ public class TestJSONParser extends AndroidTestCase implements Momo {
             ItemEntry entry1 = item.getEntry(0);
             ItemEntry entry2 = item.getEntry(1);
 
-            assertTrue(entry1.getName().equals("name1")
-                    || entry2.getName().equals("name1"));
-            assertTrue(entry1.getName().equals("name2")
-                    || entry2.getName().equals("name2"));
-            assertTrue(entry1.getContent().equals("content1")
-                    || entry2.getContent().equals("content1"));
-            assertTrue(entry1.getContent().equals("content2")
-                    || entry2.getContent().equals("content2"));
+            assertTrue(entry1.getData().equals("name1")
+                    || entry2.getData().equals("name1"));
+            assertTrue(entry1.getData().equals("name2")
+                    || entry2.getData().equals("name2"));
+            assertTrue(entry1.getComment().equals("content1")
+                    || entry2.getComment().equals("content1"));
+            assertTrue(entry1.getComment().equals("content2")
+                    || entry2.getComment().equals("content2"));
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());
