@@ -133,6 +133,8 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     public void onClickSettings(View v) {
+        Intent i = new Intent(this, PrefMain.class);
+        startActivity(i);
     }
 
     public void onClickEdit(View v) {

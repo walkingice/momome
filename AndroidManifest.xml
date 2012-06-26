@@ -29,5 +29,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity android:name="org.zeroxlab.momome.impl.PrefMain" />
+        <activity android:name="org.zeroxlab.momome.impl.AboutActivity" />
     </application>
 </manifest> 

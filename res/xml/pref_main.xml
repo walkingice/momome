@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <PreferenceCategory
+            android:title="@string/pref_others">
+
+            <PreferenceScreen
+                android:title="@string/pref_about"
+                android:summary="@string/pref_about_summary">
+                <intent
+                    android:targetPackage="org.zeroxlab.momome"
+                    android:targetClass="org.zeroxlab.momome.impl.AboutActivity"
+                    />
+            </PreferenceScreen> 
+        </PreferenceCategory>
+    
+</PreferenceScreen>
+
