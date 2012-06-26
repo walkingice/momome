@@ -48,6 +48,12 @@ public interface Momo {
     public final static String CROSS_ENTRY_COMMENT_KEY = "cross_activity_entry_comment_key";
     public final static String CROSS_ENTRY_TIME_KEY = "cross_activity_entry_time_key";
 
+    /* for preference */
+    public final static String KEY_EXPORT_DATA = "key_export_data";
+    public final static String KEY_IMPORT_DATA = "key_import_data";
+    public final static String KEY_DELETE_DATA = "key_delete_data";
+    public final static String KEY_CHANGE_PASSWORD = "key_change_password";
+
     public enum DataStatus {
         OK,
         DATA_LOCKING,

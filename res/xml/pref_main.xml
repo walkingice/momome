@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android">
-        <PreferenceCategory
-            android:title="@string/pref_others">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_actions">
+        <PreferenceScreen
+            android:title="@string/pref_manage_data"
+            >
+            <Preference
+                android:title="@string/pref_export_ext"
+                android:summary="@string/pref_export_ext_summary"
+                android:key="key_export_data"
+                />
+            <Preference
+                android:title="@string/pref_import_ext"
+                android:summary="@string/pref_import_ext_summary"
+                android:key="key_import_data"
+                />
+            <Preference
+                android:title="@string/pref_delete_file"
+                android:summary="@string/pref_delete_file_summary"
+                android:key="key_delete_data"
+                />
+            <Preference
+                android:title="@string/pref_change_password"
+                android:summary="@string/pref_change_password_summary"
+                android:key="key_change_password"
+                />
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_others">
+        <PreferenceScreen
+            android:title="@string/pref_about"
+            android:summary="@string/pref_about_summary">
+            <intent
+                android:targetPackage="org.zeroxlab.momome"
+                android:targetClass="org.zeroxlab.momome.impl.AboutActivity"
+                />
+        </PreferenceScreen> 
+    </PreferenceCategory>
 
-            <PreferenceScreen
-                android:title="@string/pref_about"
-                android:summary="@string/pref_about_summary">
-                <intent
-                    android:targetPackage="org.zeroxlab.momome"
-                    android:targetClass="org.zeroxlab.momome.impl.AboutActivity"
-                    />
-            </PreferenceScreen> 
-        </PreferenceCategory>
-    
 </PreferenceScreen>
 
