@@ -21,6 +21,8 @@ package org.zeroxlab.momome;
 import org.zeroxlab.momome.data.Item;
 
 import org.json.JSONObject;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.List;
 
 public interface MomoModel extends Momo {
@@ -54,6 +56,11 @@ public interface MomoModel extends Momo {
      * @return Status code
      */
     public DataStatus status();
+
+    /* these helper use the same way to read/save data from a file. but it does not
+     * effect exists data of Model. */
+    public boolean saveHelper(FileOutputStream fos, List<Item> data);
+    public List<Item> loadHelper(FileInputStream fis);
 
     public int getItemsSize();
     public void addItem(Item item);

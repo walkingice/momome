@@ -23,6 +23,8 @@ import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.util.Util;
 
 import android.util.Log;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -53,6 +55,16 @@ public class DummyModel implements MomoModel {
     @Override
     public boolean save() {
         return true;
+    }
+
+    @Override
+    public boolean saveHelper(FileOutputStream fos, List<Item> data) {
+        return true;
+    }
+
+    @Override
+    public List<Item> loadHelper(FileInputStream fis) {
+        return mList;
     }
 
     @Override

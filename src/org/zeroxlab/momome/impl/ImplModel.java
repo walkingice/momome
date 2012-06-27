@@ -107,6 +107,28 @@ public class ImplModel implements MomoModel, Momo {
     }
 
     @Override
+    public boolean saveHelper(FileOutputStream fos, List<Item> data) {
+        try {
+            CharSequence content = mParser.generate(data);
+            mFileIO.save(mPassword.toString(), fos, content);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<Item> loadHelper(FileInputStream fis) {
+        try {
+            CharSequence content = mFileIO.read(mPassword.toString(), fis);
+            return mParser.parse(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+     }
+
+    @Override
     public boolean save() {
         try {
             if (mStatus == DataStatus.OK || mStatus == DataStatus.FILE_IS_EMPTY) {
