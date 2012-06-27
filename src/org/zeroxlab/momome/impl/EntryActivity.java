@@ -49,6 +49,7 @@ import android.content.DialogInterface;
 public class EntryActivity extends EditableActivity implements Momo {
     protected MomoModel mModel;
     protected ListView  mContainer;
+    protected TextView  mTitle;
     protected View      mAddButton;
     protected View      mEditButton;
     protected Item      mItem;
@@ -69,6 +70,7 @@ public class EntryActivity extends EditableActivity implements Momo {
         mItem  = mModel.getItem(key);
 
         if (initViews(key)) {
+            mTitle.setText(mItem.getTitle());
             mAdapter = new EntryAdapter(this, mItem);
             mAdapter.setListener(new EditListener());
             mContainer.setAdapter(mAdapter);
@@ -86,6 +88,7 @@ public class EntryActivity extends EditableActivity implements Momo {
             return false;
         }
 
+        mTitle     = (TextView) findViewById(R.id.entry_title);
         mContainer = (ListView) findViewById(R.id.entry_container);
         mAddButton = findViewById(R.id.entry_add_button);
         mEditButton = findViewById(R.id.entry_edit_button);
