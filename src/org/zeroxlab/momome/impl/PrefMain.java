@@ -35,10 +35,13 @@ import android.widget.Toast;
 public class PrefMain extends PreferenceActivity implements Momo {
 
     OnPreferenceClickListener mDataActionListener;
+    MomoModel mModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mModel = MomoApp.getModel();
+
         addPreferencesFromResource(R.xml.pref_main);
         Preference exportPref = findPreference(KEY_EXPORT_DATA);
         Preference importPref = findPreference(KEY_IMPORT_DATA);
@@ -50,6 +53,14 @@ public class PrefMain extends PreferenceActivity implements Momo {
         importPref.setOnPreferenceClickListener(listener);
         deletePref.setOnPreferenceClickListener(listener);
         changePref.setOnPreferenceClickListener(listener);
+
+        if (mModel.status() != DataStatus.OK
+                || mModel.status() != DataStatus.FILE_IS_EMPTY) {
+
+            exportPref.setEnabled(false);
+            importPref.setEnabled(false);
+            changePref.setEnabled(false);
+        }
     }
 
     class DataActionListener implements OnPreferenceClickListener {
