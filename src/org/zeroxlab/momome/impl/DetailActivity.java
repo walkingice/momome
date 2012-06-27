@@ -54,18 +54,4 @@ public class DetailActivity extends Activity implements Momo {
         Date date = new Date(time);
         text.setText(data + ":" + comment + "  " + sSDF.format(date));
     }
-
-    @Override
-    public void onAttachedToWindow() {
-        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
-        super.onAttachedToWindow();
-    }
-
-     @Override
-     public boolean onKeyDown(int keyCode, KeyEvent event) {
-         if (keyCode == KeyEvent.KEYCODE_HOME) {
-             finish();
-         }
-         return super.onKeyDown(keyCode, event);
-     }
 }

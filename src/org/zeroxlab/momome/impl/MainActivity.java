@@ -78,16 +78,21 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onDestroy() {
+        super.onDestroy();
+        onStopEdit();
         closeModel();
-        finish();
     }
 
     @Override
-    public boolean onHomePressed(){
+    protected void onNewIntent(Intent newIntent) {
+        /* 1) singleTask launch mode
+         * 2) clearTaskOnLaunch
+         * when set both of them, onNewIntent meanse
+         * re-enter this activity from HomeScreen or other
+         * application. Locl model to protect data. */
+        MomoApp.getModel().addListener(mStatusListener);
         closeModel();
-        finish();
-        return false;
     }
 
     @Override
@@ -167,8 +172,7 @@ public class MainActivity extends EditableActivity implements Momo,
     public void onClickReload(View v) {
         MomoModel model = MomoApp.getModel();
         if (model.status() == DataStatus.OK) {
-            model.lock();
-            mAdapter.notifyDataSetChanged();
+            closeModel();
         } else {
             doReload();
         }

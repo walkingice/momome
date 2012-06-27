@@ -65,22 +65,6 @@ public abstract class EditableActivity extends Activity {
         }
     }
 
-    @Override
-    public void onAttachedToWindow() {
-        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
-        super.onAttachedToWindow();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_HOME) {
-            if (onHomePressed()) {
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     protected void onPerformEdit(View v) {
         toggleEditing();
     }
@@ -93,9 +77,6 @@ public abstract class EditableActivity extends Activity {
             onStopEdit();
         }
     }
-
-    /* return false if pass the event to super class */
-    abstract protected boolean onHomePressed();
 
     abstract protected void onStartEdit();
     abstract protected void onStopEdit();

@@ -102,12 +102,6 @@ public class EntryActivity extends EditableActivity implements Momo {
     }
 
     @Override
-    protected boolean onHomePressed() {
-        finish();
-        return true;
-    }
-
-    @Override
     protected void onStartEdit() {
         mAdapter.setEditing(true);
         mAddButton.setVisibility(View.VISIBLE);
