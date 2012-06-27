@@ -99,6 +99,7 @@ public class MainActivity extends EditableActivity implements Momo,
     public void onResume() {
         super.onResume();
         MomoApp.getModel().addListener(mStatusListener);
+        updateVisibilityByStatus(MomoApp.getModel().status());
     }
 
     @Override
@@ -273,6 +274,18 @@ public class MainActivity extends EditableActivity implements Momo,
         mAdapter.notifyDataSetChanged();
     }
 
+    private void updateVisibilityByStatus(DataStatus status) {
+        if (status == DataStatus.OK
+                || status == DataStatus.FILE_IS_EMPTY) {
+            mAdapter.notifyDataSetChanged();
+            mHint.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+        } else {
+            mHint.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+        }
+    }
+
     private class ItemClickListener implements OnItemClickListener {
         public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
             Item item = (Item)mAdapter.getItem(pos);
@@ -345,15 +358,7 @@ public class MainActivity extends EditableActivity implements Momo,
     private class StatusListener implements MomoModel.StatusListener {
         public void onStatusChanged(DataStatus now) {
             MomoModel model = MomoApp.getModel();
-            if (model.status() == DataStatus.OK
-                    || model.status() == DataStatus.FILE_IS_EMPTY) {
-                mAdapter.notifyDataSetChanged();
-                mHint.setVisibility(View.GONE);
-                mListView.setVisibility(View.VISIBLE);
-            } else {
-                mHint.setVisibility(View.VISIBLE);
-                mListView.setVisibility(View.GONE);
-            }
+            updateVisibilityByStatus(model.status());
         }
     }
 }
