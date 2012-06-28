@@ -34,6 +34,9 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -156,6 +159,42 @@ public class PrefMain extends PreferenceActivity implements Momo {
         }
     }
 
+    private void askPassword() {
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.dialog_setpassword, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Change password");
+        builder.setView(view);
+        builder.setPositiveButton(android.R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            TextView t1 = (TextView) view.findViewById(R.id.pwd_oldpwd);
+                            TextView t2 = (TextView) view.findViewById(R.id.pwd_newpwd1);
+                            TextView t3 = (TextView) view.findViewById(R.id.pwd_newpwd2);
+                            onChangePassword(t1.getText(), t2.getText(), t3.getText());
+                        }
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.show();
+    }
+
+    private void onChangePassword(CharSequence old, CharSequence new1, CharSequence new2) {
+        if (!new1.toString().equals(new2.toString())) {
+            showToast("New passwords are not match");
+            return;
+        }
+
+        if (mModel.changePassword(old, new1)) {
+            showToast("Change password successfully");
+            mModel.save();
+        } else {
+            showToast("The old password is not correct");
+        }
+    }
+
     private void showToast(CharSequence msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
@@ -169,7 +208,7 @@ public class PrefMain extends PreferenceActivity implements Momo {
             } else if (preference.getKey().equals(KEY_DELETE_DATA)) {
                 Toast.makeText(PrefMain.this, "Delete not implement yet",Toast.LENGTH_SHORT).show();
             } else if (preference.getKey().equals(KEY_CHANGE_PASSWORD)) {
-                Toast.makeText(PrefMain.this, "Change password not implement yet",Toast.LENGTH_SHORT).show();
+                askPassword();
             } else {
                 Toast.makeText(PrefMain.this, "oooops",Toast.LENGTH_SHORT).show();
                 return false;

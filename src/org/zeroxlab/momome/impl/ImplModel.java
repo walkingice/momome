@@ -158,6 +158,21 @@ public class ImplModel implements MomoModel, Momo {
     }
 
     @Override
+    public boolean changePassword(CharSequence oldPwd, CharSequence newPwd) {
+        if (mPassword == null) {
+            mPassword = oldPwd;
+            return true;
+        }
+
+        if(mPassword.toString().equals(oldPwd.toString())) {
+            mPassword = newPwd;
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public int getItemsSize() {
         return mList.size();
     }

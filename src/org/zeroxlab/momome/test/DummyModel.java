@@ -43,6 +43,11 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
+    public boolean changePassword(CharSequence pwd, CharSequence newPwd) {
+        return true;
+    }
+
+    @Override
     public void lock() {
         // I am dummy, I am not luck and never lock!
     }

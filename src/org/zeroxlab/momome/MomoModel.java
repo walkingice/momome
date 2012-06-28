@@ -57,6 +57,13 @@ public interface MomoModel extends Momo {
      */
     public DataStatus status();
 
+    /**
+     * Change password if provide correct old password.
+     *
+     * @return true if change password successfully.
+     */
+    public boolean changePassword(CharSequence oldPwd, CharSequence newPwd);
+
     /* these helper use the same way to read/save data from a file. but it does not
      * effect exists data of Model. */
     public boolean saveHelper(FileOutputStream fos, List<Item> data);
