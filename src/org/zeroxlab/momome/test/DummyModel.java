@@ -63,7 +63,7 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
-    public List<Item> loadHelper(FileInputStream fis) {
+    public List<Item> loadHelper(FileInputStream fis, CharSequence password) {
         return mList;
     }
 

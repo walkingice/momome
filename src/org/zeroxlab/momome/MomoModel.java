@@ -60,7 +60,7 @@ public interface MomoModel extends Momo {
     /* these helper use the same way to read/save data from a file. but it does not
      * effect exists data of Model. */
     public boolean saveHelper(FileOutputStream fos, List<Item> data);
-    public List<Item> loadHelper(FileInputStream fis);
+    public List<Item> loadHelper(FileInputStream fis, CharSequence password);
 
     public int getItemsSize();
     public void addItem(Item item);

@@ -23,6 +23,7 @@ import org.zeroxlab.momome.data.Item;;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
+import org.zeroxlab.momome.widget.BasicInputDialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -66,6 +67,54 @@ public class PrefMain extends PreferenceActivity implements Momo {
             exportPref.setEnabled(false);
             importPref.setEnabled(false);
             changePref.setEnabled(false);
+        }
+    }
+
+    private void askImportData() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        File file = new File(EXTERNAL_DIR, FILENAME);
+        if (!file.exists()) {
+            showToast("File to import not exists: " + file.getPath());
+            return;
+        }
+
+        BasicInputDialog dialog = new BasicInputDialog(this);
+        dialog.setTitle("Import data?");
+        dialog.setMessage("Enter password to read : " + file.getPath());
+        dialog.setListener(0, new BasicInputDialog.InputListener() {
+            public void onInput(int id, CharSequence input, Object extra) {
+                onImportData(input);
+            }
+
+            public void onCancelInput(int id) {
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void onImportData(CharSequence password) {
+        File input = new File(EXTERNAL_DIR, FILENAME);
+        if (!input.exists()) {
+            showToast("File to import not exists:" + input.getPath());
+            return;
+        }
+
+        try {
+            FileInputStream fis = new FileInputStream(input);
+            List<Item> list = mModel.loadHelper(fis, password);
+            if (list != null) {
+                for (int i = 0; i < list.size(); i++) {
+                    mModel.addItem(list.get(i));
+                }
+                mModel.save();
+                showToast("Done!");
+            } else {
+                showToast("Failed on loading");
+            }
+        } catch (Exception e) {
+            showToast("Failed");
+            e.printStackTrace();
         }
     }
 
@@ -116,7 +165,7 @@ public class PrefMain extends PreferenceActivity implements Momo {
             if (preference.getKey().equals(KEY_EXPORT_DATA)) {
                 askExportData();
             } else if (preference.getKey().equals(KEY_IMPORT_DATA)) {
-                Toast.makeText(PrefMain.this, "Import not implement yet",Toast.LENGTH_SHORT).show();
+                askImportData();
             } else if (preference.getKey().equals(KEY_DELETE_DATA)) {
                 Toast.makeText(PrefMain.this, "Delete not implement yet",Toast.LENGTH_SHORT).show();
             } else if (preference.getKey().equals(KEY_CHANGE_PASSWORD)) {

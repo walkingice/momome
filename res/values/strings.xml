@@ -10,7 +10,7 @@
     <string name="pref_export_ext">Export data</string>
     <string name="pref_export_ext_summary">Save your encrypted data to external storage for back up</string>
     <string name="pref_import_ext">Import data</string>
-    <string name="pref_import_ext_summary">Read encrypted data from external storage to overwrite exists data.</string>
+    <string name="pref_import_ext_summary">Read encrypted data from external storage then append to list</string>
     <string name="pref_delete_file">Delete data</string>
     <string name="pref_delete_file_summary">Delete encrypted data from internal store. You need this when you forget your password</string>
     <string name="pref_change_password">Change password</string>

@@ -118,9 +118,9 @@ public class ImplModel implements MomoModel, Momo {
         }
     }
 
-    public List<Item> loadHelper(FileInputStream fis) {
+    public List<Item> loadHelper(FileInputStream fis, CharSequence password) {
         try {
-            CharSequence content = mFileIO.read(mPassword.toString(), fis);
+            CharSequence content = mFileIO.read(password.toString(), fis);
             return mParser.parse(content);
         } catch (Exception e) {
             e.printStackTrace();
