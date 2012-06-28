@@ -23,6 +23,7 @@ import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
+import org.zeroxlab.momome.widget.BasicInputDialog;
 import org.zeroxlab.momome.widget.EditableActivity;
 import org.zeroxlab.momome.widget.EditableAdapter;
 import org.zeroxlab.momome.widget.EditableListItem;
@@ -56,8 +57,13 @@ public class MainActivity extends EditableActivity implements Momo,
     View     mBtnAdd;
     View     mBtnMore;
     ItemAdapter mAdapter;
+    DialogListener mDialogListener;
     MomoModel.StatusListener mStatusListener;
     ItemClickListener mItemClickListener;
+
+    private final static int DIALOG_PASSWORD  = 0xFF01;
+    private final static int DIALOG_RENAME    = 0xFF02;
+    private final static int DIALOG_ADD_ITEM  = 0xFF03;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,7 @@ public class MainActivity extends EditableActivity implements Momo,
         setContentView(R.layout.main);
         initViews();
 
+        mDialogListener = new DialogListener();
         mStatusListener = new StatusListener();
         MomoModel model = MomoApp.getModel();
         mAdapter = new ItemAdapter(this);
@@ -219,42 +226,24 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     private void askForPassword() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        EditText edit = new EditText(this);
-        DialogInterface.OnClickListener okListener = new PasswordListener(edit);
-
-        builder.setMessage("Enter Password to Unlock");
-        builder.setCancelable(true);
-        builder.setView(edit);
-        builder.setPositiveButton(android.R.string.ok, okListener);
-        builder.setNegativeButton(android.R.string.cancel, okListener);
-
-        builder.show();
+        BasicInputDialog dialog = new BasicInputDialog(this, "Enter Password to unlock");
+        dialog.setListener(DIALOG_PASSWORD, mDialogListener);
+        dialog.show();
     }
 
     private void renameItem(Item item) {
-        EditText edit = new EditText(this);
-        edit.setText(item.getTitle());
-        edit.selectAll();
-        DialogInterface.OnClickListener rename = new RenameListener(edit, item);
-        showInputDialog("Rename for item", rename, edit);
+        BasicInputDialog dialog = new BasicInputDialog(this, "Rename for item");
+        dialog.setDefaultText(item.getTitle());
+        dialog.setExtra(item);
+        dialog.setListener(DIALOG_RENAME, mDialogListener);
+        dialog.show();
     }
 
     private void getNewItemName() {
-        EditText edit = new EditText(this);
-        DialogInterface.OnClickListener okListener = new AddItemListener(edit);
-        showInputDialog("Name of new Item", okListener, edit);
+        BasicInputDialog dialog = new BasicInputDialog(this, "Name for new item");
+        dialog.setListener(DIALOG_ADD_ITEM, mDialogListener);
+        dialog.show();
     }
-
-    private void showInputDialog(String msg, DialogInterface.OnClickListener listener, EditText edit) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(msg);
-        builder.setCancelable(true);
-        builder.setView(edit);
-        builder.setPositiveButton(android.R.string.ok, listener);
-        builder.setNegativeButton(android.R.string.cancel, listener);
-
-        builder.show();    }
 
     private void onEnteredPassword(CharSequence password) {
         MomoModel model = MomoApp.getModel();
@@ -293,65 +282,22 @@ public class MainActivity extends EditableActivity implements Momo,
         }
     }
 
-    private class PasswordListener implements DialogInterface.OnClickListener {
-        TextView iTextView;
-
-        PasswordListener(TextView tv) {
-            iTextView = tv;
-        }
-
-        public void onClick(DialogInterface dialog, int button) {
-            CharSequence input = iTextView.getText();
-            if (button != AlertDialog.BUTTON_POSITIVE
-                    || input == null
-                    || input.toString().equals("")) {
-
-                return; // cancel or does not give a name, nothing happen
-            } else {
+    private class DialogListener implements BasicInputDialog.InputListener {
+        public void onInput(int id, CharSequence input, Object extra) {
+            if (input.toString().equals("")) {
+                return; // do nothing if user input nothing
+            } else if (id == DIALOG_PASSWORD) {
                 onEnteredPassword(input);
-            }
-        }
-    }
-
-    private class RenameListener implements DialogInterface.OnClickListener {
-        TextView iTextView;
-        Item iItem;
-
-        RenameListener(TextView tv, Item item) {
-            iTextView = tv;
-            iItem = item;
-        }
-
-        public void onClick(DialogInterface dialog, int button) {
-            CharSequence input = iTextView.getText();
-            if (button != AlertDialog.BUTTON_POSITIVE
-                    || input == null
-                    || input.toString().equals("")) {
-
-                return; // cancel or does not give a name, nothing happen
-            } else {
-                onRenameItem(input,iItem);
-            }
-        }
-    }
-
-    private class AddItemListener implements DialogInterface.OnClickListener {
-        TextView iTextView;
-
-        AddItemListener(TextView tv) {
-            iTextView = tv;
-        }
-
-        public void onClick(DialogInterface dialog, int button) {
-            CharSequence input = iTextView.getText();
-            if (button != AlertDialog.BUTTON_POSITIVE
-                    || input == null
-                    || input.toString().equals("")) {
-
-                return; // cancel or does not give a name, nothing happen
-            } else {
+            } else if (id == DIALOG_RENAME) {
+                if (extra != null && extra instanceof Item) {
+                    onRenameItem(input, (Item) extra);
+                }
+            } else if (id == DIALOG_ADD_ITEM) {
                 onAddItem(input);
             }
+        }
+
+        public void onCancelInput(int id) {
         }
     }
 
