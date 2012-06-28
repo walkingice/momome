@@ -44,7 +44,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 
-public class PrefMain extends PreferenceActivity implements Momo {
+public class PrefMain extends PreferenceActivity implements Momo, MomoModel.StatusListener {
 
     OnPreferenceClickListener mDataActionListener;
     MomoModel mModel;
@@ -66,11 +66,24 @@ public class PrefMain extends PreferenceActivity implements Momo {
         deletePref.setOnPreferenceClickListener(listener);
         changePref.setOnPreferenceClickListener(listener);
 
-        if (mModel.status() != DataStatus.OK) {
-            exportPref.setEnabled(false);
-            importPref.setEnabled(false);
-            changePref.setEnabled(false);
-        }
+        updateVisibility();
+    }
+
+    @Override
+    public void onStatusChanged(DataStatus now) {
+        updateVisibility();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mModel.addListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onResume();
+        mModel.removeListener(this);
     }
 
     private void askImportData() {
@@ -195,6 +208,71 @@ public class PrefMain extends PreferenceActivity implements Momo {
         }
     }
 
+    private void askDeleteData() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete data");
+        builder.setMessage("Are you sure to delete data of list? It CANNOT be undo");
+        builder.setPositiveButton(android.R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            checkDeleteData();
+                        }
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.show();
+    }
+
+    private void checkDeleteData() {
+        final String answer = "" + ((int)(Math.random() * 900) + 100); // 100 ~ 999
+        BasicInputDialog dialog = new BasicInputDialog(this);
+        dialog.setTitle("Check again");
+        dialog.setMessage("To delete data, please enter this number: " + answer);
+        dialog.setListener(0, new BasicInputDialog.InputListener() {
+            public void onInput(int id, CharSequence input, Object extra) {
+                if (input.toString().equals(answer)) {
+                    doDeleteData();
+                } else {
+                    showToast("Incorrect, abort deletion");
+                }
+            }
+
+            public void onCancelInput(int id) {
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void doDeleteData() {
+        if (mModel.delete()) {
+            showToast("Successfully delete data");
+        } else {
+            showToast("Delete data failed");
+        }
+    }
+
+    private void updateVisibility() {
+        Preference exportPref = findPreference(KEY_EXPORT_DATA);
+        Preference importPref = findPreference(KEY_IMPORT_DATA);
+        Preference changePref = findPreference(KEY_CHANGE_PASSWORD);
+
+        if (mModel.status() == DataStatus.OK) {
+            exportPref.setEnabled(true);
+            importPref.setEnabled(true);
+            changePref.setEnabled(true);
+        } else {
+            exportPref.setEnabled(false);
+            importPref.setEnabled(false);
+            changePref.setEnabled(false);
+        }
+
+        if (mModel.status() == DataStatus.FILE_IS_EMPTY) {
+            importPref.setEnabled(true);
+        }
+    }
+
     private void showToast(CharSequence msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
@@ -206,7 +284,7 @@ public class PrefMain extends PreferenceActivity implements Momo {
             } else if (preference.getKey().equals(KEY_IMPORT_DATA)) {
                 askImportData();
             } else if (preference.getKey().equals(KEY_DELETE_DATA)) {
-                Toast.makeText(PrefMain.this, "Delete not implement yet",Toast.LENGTH_SHORT).show();
+                askDeleteData();
             } else if (preference.getKey().equals(KEY_CHANGE_PASSWORD)) {
                 askPassword();
             } else {

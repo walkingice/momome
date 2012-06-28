@@ -48,6 +48,11 @@ public interface MomoModel extends Momo {
     public boolean save();
 
     /**
+     * Delete internal data
+     */
+    public boolean delete();
+
+    /**
      * To check if there is data to access.
      *
      * Model might have data for accessing. It might not have if

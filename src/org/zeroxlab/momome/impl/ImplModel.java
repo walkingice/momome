@@ -153,6 +153,12 @@ public class ImplModel implements MomoModel, Momo {
     }
 
     @Override
+    public boolean delete() {
+        lock();
+        return mContext.deleteFile(FILENAME);
+    }
+
+    @Override
     public DataStatus status() {
         return mStatus;
     }

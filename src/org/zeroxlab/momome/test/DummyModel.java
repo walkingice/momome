@@ -63,6 +63,11 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
+    public boolean delete() {
+        return false; // DummyModel has nothing to delete
+    }
+
+    @Override
     public boolean saveHelper(FileOutputStream fos, List<Item> data) {
         return true;
     }
