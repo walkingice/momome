@@ -90,13 +90,13 @@ public class BasicInputDialog extends AlertDialog {
             if (which == DialogInterface.BUTTON_POSITIVE) {
                 mListener.onInput(mId, input, mExtra);
             } else if (which == DialogInterface.BUTTON_NEGATIVE) {
-                mListener.onCancelInput(mId);
+                mListener.onCancelInput(mId, mExtra);
             }
         }
     }
 
     public interface InputListener {
         public void onInput(int id, CharSequence input, Object extra);
-        public void onCancelInput(int id);
+        public void onCancelInput(int id, Object extra);
     }
 }

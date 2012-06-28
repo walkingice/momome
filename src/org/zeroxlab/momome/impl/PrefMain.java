@@ -102,7 +102,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
                 onImportData(input);
             }
 
-            public void onCancelInput(int id) {
+            public void onCancelInput(int id, Object extra) {
             }
         });
 
@@ -238,7 +238,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
                 }
             }
 
-            public void onCancelInput(int id) {
+            public void onCancelInput(int id, Object extra) {
             }
         });
 

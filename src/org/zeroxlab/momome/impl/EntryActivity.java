@@ -24,12 +24,15 @@ import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.data.Item.ItemEntry;
+import org.zeroxlab.momome.widget.BasicInputDialog;
 import org.zeroxlab.momome.widget.EditableActivity;
 import org.zeroxlab.momome.widget.EditableAdapter;
 import org.zeroxlab.momome.widget.EntryAdapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,13 +41,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
-import android.app.AlertDialog;
-import android.widget.EditText;
-import android.content.DialogInterface;
 
 public class EntryActivity extends EditableActivity implements Momo {
     protected MomoModel mModel;
@@ -56,6 +57,10 @@ public class EntryActivity extends EditableActivity implements Momo {
     protected LayoutInflater mInflater;
     protected EntryAdapter mAdapter;
     protected EntryClickListener mEntryClickListener;
+    protected DialogListener     mDialogListener;
+
+    private final int DIALOG_DATA    = 0x1000;
+    private final int DIALOG_COMMENT = 0x1001;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class EntryActivity extends EditableActivity implements Momo {
         mModel = MomoApp.getModel();
 
         mEntryClickListener = new EntryClickListener();
+        mDialogListener     = new DialogListener();
         String key = getIntent().getStringExtra(CROSS_ITEM_KEY);
         mItem  = mModel.getItem(key);
 
@@ -126,6 +132,42 @@ public class EntryActivity extends EditableActivity implements Momo {
         mModel.save();
     }
 
+    private void askData(final ItemEntry entry) {
+        BasicInputDialog dialog = new BasicInputDialog(this, "Edit data");
+        dialog.setListener(DIALOG_DATA, mDialogListener);
+        dialog.setExtra(entry);
+        dialog.setDefaultText(entry.getData());
+        dialog.show();
+    }
+
+    private void askComment(final ItemEntry entry) {
+        BasicInputDialog dialog = new BasicInputDialog(this, "Edit comment");
+        dialog.setListener(DIALOG_COMMENT, mDialogListener);
+        dialog.setExtra(entry);
+        dialog.setDefaultText(entry.getComment());
+        dialog.show();
+    }
+
+
+    private class DialogListener implements BasicInputDialog.InputListener {
+        public void onInput(int id, CharSequence input, Object extra) {
+            ItemEntry entry = (ItemEntry) extra;
+            if (id == DIALOG_DATA) {
+                mItem.updateEntry(entry, input.toString(), entry.getComment());
+                askComment(entry);
+            } else if (id == DIALOG_COMMENT) {
+                mItem.updateEntry(entry, entry.getData(), input.toString());
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+
+        public void onCancelInput(int id, Object extra) {
+            if (id == DIALOG_DATA) {
+                askComment((ItemEntry) extra);
+            }
+        }
+    }
+
     class EditListener implements EditableAdapter.EditListener<ItemEntry> {
         public void onEdit(ItemEntry entry) {
             askData(entry); // askData will call askComment
@@ -136,61 +178,6 @@ public class EntryActivity extends EditableActivity implements Momo {
             if (success) {
                 mAdapter.notifyDataSetChanged();
             }
-        }
-
-        private void askData(final ItemEntry entry) {
-            final EditText edit = new EditText(EntryActivity.this);
-
-            DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int what) {
-                    mItem.updateEntry(entry, edit.getText().toString(), entry.getComment());
-                    askComment(entry);
-                }
-            };
-
-            DialogInterface.OnClickListener cancel = new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int what) {
-                    askComment(entry);
-                }
-            };
-
-            showDialog(edit, entry.getData(), "Edit Data", entry, ok, cancel);
-        }
-
-        private void askComment(final ItemEntry entry) {
-            final EditText edit = new EditText(EntryActivity.this);
-
-            DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int what) {
-                    mItem.updateEntry(entry, entry.getData(), edit.getText().toString());
-                    mAdapter.notifyDataSetChanged();
-                }
-            };
-
-            DialogInterface.OnClickListener cancel = new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int what) {
-                }
-            };
-
-            showDialog(edit, entry.getComment(), "Edit Comment", entry, ok, cancel);
-        }
-
-        private void showDialog(EditText edit,
-                CharSequence defValue,
-                CharSequence msg,
-                ItemEntry entry,
-                DialogInterface.OnClickListener okListener,
-                DialogInterface.OnClickListener cancelListener) {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(EntryActivity.this);
-            builder.setMessage(msg);
-            builder.setView(edit);
-            edit.setText(defValue);
-            edit.selectAll();
-            edit.requestFocus();
-            builder.setPositiveButton(android.R.string.ok, okListener);
-            builder.setNegativeButton(android.R.string.cancel, cancelListener);
-            builder.show();
         }
     }
 

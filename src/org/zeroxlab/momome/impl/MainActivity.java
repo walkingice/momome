@@ -297,7 +297,7 @@ public class MainActivity extends EditableActivity implements Momo,
             }
         }
 
-        public void onCancelInput(int id) {
+        public void onCancelInput(int id, Object extra) {
         }
     }
 
