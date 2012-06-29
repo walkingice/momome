@@ -59,6 +59,7 @@ public class BasicInputDialog extends AlertDialog {
 
     private void init(Context context) {
         mEditText = new EditText(context);
+        mEditText.setSingleLine(true);
         setCancelable(true);
         setView(mEditText, PADDING, PADDING, PADDING, PADDING);
     }
