@@ -22,7 +22,7 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.Parser;
 import org.zeroxlab.momome.Parser.ParseException;
 import org.zeroxlab.momome.data.Item;
-import org.zeroxlab.momome.data.Item.ItemEntry;
+import org.zeroxlab.momome.data.Entry;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -138,7 +138,7 @@ public class JSONParser implements Momo, Parser {
     private JSONObject itemToJSONObject(Item item) throws ParseException {
         try {
             JSONObject json = new JSONObject();
-            List<ItemEntry> entries = item.getEntries();
+            List<Entry> entries = item.getEntries();
             JSONArray array = entriesToJSONArray(entries);
             json.put(KEY_ITEM_TITLE, item.getTitle());
             json.put(KEY_ITEM_TIME, item.getLastModifiedTime());
@@ -149,11 +149,11 @@ public class JSONParser implements Momo, Parser {
         }
     }
 
-    private JSONArray entriesToJSONArray(List<ItemEntry> entries) throws ParseException {
+    private JSONArray entriesToJSONArray(List<Entry> entries) throws ParseException {
         try {
             JSONArray array = new JSONArray();
             for (int i = 0; i < entries.size(); i++) {
-                ItemEntry entry = entries.get(i);
+                Entry entry = entries.get(i);
                 JSONObject json = new JSONObject();
                 json.put(KEY_ENTRY_DATA, entry.getData());
                 json.put(KEY_ENTRY_COMMENT, entry.getComment());

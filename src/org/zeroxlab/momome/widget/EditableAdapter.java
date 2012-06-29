@@ -23,7 +23,6 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
-import org.zeroxlab.momome.data.Item.ItemEntry;
 import org.zeroxlab.momome.widget.EditableListItem;
 
 import android.content.Context;

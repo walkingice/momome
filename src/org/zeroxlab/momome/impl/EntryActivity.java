@@ -23,7 +23,7 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
-import org.zeroxlab.momome.data.Item.ItemEntry;
+import org.zeroxlab.momome.data.Entry;
 import org.zeroxlab.momome.widget.BasicInputDialog;
 import org.zeroxlab.momome.widget.EditableActivity;
 import org.zeroxlab.momome.widget.EditableAdapter;
@@ -132,7 +132,7 @@ public class EntryActivity extends EditableActivity implements Momo {
         mModel.save();
     }
 
-    private void askData(final ItemEntry entry) {
+    private void askData(final Entry entry) {
         BasicInputDialog dialog = new BasicInputDialog(this, "Edit data");
         dialog.setListener(DIALOG_DATA, mDialogListener);
         dialog.setExtra(entry);
@@ -140,7 +140,7 @@ public class EntryActivity extends EditableActivity implements Momo {
         dialog.show();
     }
 
-    private void askComment(final ItemEntry entry) {
+    private void askComment(final Entry entry) {
         BasicInputDialog dialog = new BasicInputDialog(this, "Edit comment");
         dialog.setListener(DIALOG_COMMENT, mDialogListener);
         dialog.setExtra(entry);
@@ -151,7 +151,7 @@ public class EntryActivity extends EditableActivity implements Momo {
 
     private class DialogListener implements BasicInputDialog.InputListener {
         public void onInput(int id, CharSequence input, Object extra) {
-            ItemEntry entry = (ItemEntry) extra;
+            Entry entry = (Entry) extra;
             if (id == DIALOG_DATA) {
                 mItem.updateEntry(entry, input.toString(), entry.getComment());
                 askComment(entry);
@@ -163,17 +163,17 @@ public class EntryActivity extends EditableActivity implements Momo {
 
         public void onCancelInput(int id, Object extra) {
             if (id == DIALOG_DATA) {
-                askComment((ItemEntry) extra);
+                askComment((Entry) extra);
             }
         }
     }
 
-    class EditListener implements EditableAdapter.EditListener<ItemEntry> {
-        public void onEdit(ItemEntry entry) {
+    class EditListener implements EditableAdapter.EditListener<Entry> {
+        public void onEdit(Entry entry) {
             askData(entry); // askData will call askComment
         }
 
-        public void onDelete(ItemEntry entry) {
+        public void onDelete(Entry entry) {
             boolean success = mItem.removeEntry(entry);
             if (success) {
                 mAdapter.notifyDataSetChanged();
@@ -184,7 +184,7 @@ public class EntryActivity extends EditableActivity implements Momo {
     private class EntryClickListener implements OnItemClickListener {
         public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
             Intent intent = new Intent(EntryActivity.this, DetailActivity.class);
-            ItemEntry entry = (ItemEntry)mAdapter.getItem(pos);
+            Entry entry = (Entry) mAdapter.getItem(pos);
             intent.putExtra(CROSS_ENTRY_DATA_KEY, entry.getData());
             intent.putExtra(CROSS_ENTRY_COMMENT_KEY, entry.getComment());
             intent.putExtra(CROSS_ENTRY_TIME_KEY, entry.getLastModifiedTime());

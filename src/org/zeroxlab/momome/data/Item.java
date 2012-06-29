@@ -30,7 +30,7 @@ public class Item implements Momo {
 
     protected String mTitle;
     protected String mId;
-    protected List<ItemEntry> mEntries;
+    protected List<Entry> mEntries;
     protected long mTime;
 
     public Item() {
@@ -44,7 +44,7 @@ public class Item implements Momo {
     public Item(String id, String title) {
         setTitle(title);
         setId(id);
-        mEntries = new ArrayList<ItemEntry>();
+        mEntries = new ArrayList<Entry>();
         mTime = System.currentTimeMillis();
     }
 
@@ -78,15 +78,15 @@ public class Item implements Momo {
         return mEntries.size();
     }
 
-    public ItemEntry getEntry(int position) {
+    public Entry getEntry(int position) {
         return mEntries.get(position);
     }
 
-    public List<ItemEntry> getEntries() {
+    public List<Entry> getEntries() {
         return mEntries;
     }
 
-    public void addEntry(ItemEntry entry) {
+    public void addEntry(Entry entry) {
         if (!mEntries.contains(entry)) {
             mEntries.add(entry);
         }
@@ -98,16 +98,16 @@ public class Item implements Momo {
     }
 
     public void addEntry(long time, String name, String content) {
-        ItemEntry entry = new ItemEntry(name, content);
+        Entry entry = new Entry(name, content);
         updateEntry(time, entry, name, content);
     }
 
-    public void updateEntry(ItemEntry entry, String name, String content) {
+    public void updateEntry(Entry entry, String name, String content) {
         long time = System.currentTimeMillis();
         updateEntry(time, entry, name, content);
     }
 
-    public void updateEntry(long time, ItemEntry entry, String name, String content) {
+    public void updateEntry(long time, Entry entry, String name, String content) {
         entry.update(name, content);
         entry.setLastModifiedTime(time);
         if (!mEntries.contains(entry)) {
@@ -116,7 +116,7 @@ public class Item implements Momo {
         }
     }
 
-    public boolean removeEntry(ItemEntry entry) {
+    public boolean removeEntry(Entry entry) {
         if (mEntries.contains(entry)) {
             mEntries.remove(entry);
             return true;
@@ -130,45 +130,8 @@ public class Item implements Momo {
         mTitle = DEF_TITLE;
         mId    = "";
 
-        for(ItemEntry entry: mEntries) {
+        for(Entry entry: mEntries) {
             entry.clear();
-        }
-    }
-
-    public static class ItemEntry {
-        String iData;
-        String iComment;
-        long   iTime;
-
-        public ItemEntry(String data, String comment) {
-            update(data, comment);
-        }
-
-        public void update(String data, String comment) {
-            iData = data;
-            iComment = comment;
-            iTime = System.currentTimeMillis();
-        }
-
-        public void setLastModifiedTime(long time) {
-            iTime = time;
-        }
-
-        public long getLastModifiedTime() {
-            return iTime;
-        }
-
-        public String getData() {
-            return iData;
-        }
-
-        public String getComment() {
-            return iComment;
-        }
-
-        public void clear() {
-            iData= "";
-            iComment= "";
         }
     }
 }

@@ -23,8 +23,6 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
-import org.zeroxlab.momome.data.Item.ItemEntry;
-import org.zeroxlab.momome.widget.EntryAdapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -48,7 +46,6 @@ public abstract class EditableActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entry);
     }
 
     @Override

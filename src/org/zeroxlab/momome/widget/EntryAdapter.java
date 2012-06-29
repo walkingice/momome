@@ -23,7 +23,7 @@ import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.data.Item;
-import org.zeroxlab.momome.data.Item.ItemEntry;
+import org.zeroxlab.momome.data.Entry;
 import org.zeroxlab.momome.widget.EditableListItem;
 
 import android.content.Context;
@@ -36,7 +36,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.List;
 
-public class EntryAdapter extends EditableAdapter<ItemEntry> implements Momo {
+public class EntryAdapter extends EditableAdapter<Entry> implements Momo {
 
     protected Item            mItem;
 
@@ -62,14 +62,14 @@ public class EntryAdapter extends EditableAdapter<ItemEntry> implements Momo {
 
     @Override
     protected void initView(int pos, EditableListItem item) {
-        ItemEntry entry = (ItemEntry) getItem(pos);
+        Entry entry = (Entry) getItem(pos);
         item.setText(entry.getData());
         item.setComment(entry.getComment());
     }
 
     @Override
-    protected ItemEntry getBoundData(int pos) {
-        return (ItemEntry)getItem(pos);
+    protected Entry getBoundData(int pos) {
+        return (Entry)getItem(pos);
     }
 }
 
