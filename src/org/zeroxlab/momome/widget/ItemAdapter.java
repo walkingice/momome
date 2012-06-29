@@ -78,6 +78,13 @@ public class ItemAdapter extends EditableAdapter<Item> implements Momo {
         return (Item) getItem(pos);
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        List<Item> items = mModel.getItems();
+        java.util.Collections.sort(items);
+        super.notifyDataSetChanged();
+    }
+
     private boolean modelAccessible() {
         return ((mModel.status() == DataStatus.OK)
                 || mModel.status() == DataStatus.FILE_IS_EMPTY);

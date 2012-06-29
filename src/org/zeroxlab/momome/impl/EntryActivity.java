@@ -157,14 +157,16 @@ public class EntryActivity extends EditableActivity implements Momo {
                 askComment(entry);
             } else if (id == DIALOG_COMMENT) {
                 mItem.updateEntry(entry, entry.getData(), input.toString());
-                mAdapter.notifyDataSetChanged();
             }
+
+            mAdapter.notifyDataSetChanged();
         }
 
         public void onCancelInput(int id, Object extra) {
             if (id == DIALOG_DATA) {
                 askComment((Entry) extra);
             }
+            mAdapter.notifyDataSetChanged();
         }
     }
 

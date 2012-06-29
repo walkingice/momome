@@ -71,5 +71,12 @@ public class EntryAdapter extends EditableAdapter<Entry> implements Momo {
     protected Entry getBoundData(int pos) {
         return (Entry)getItem(pos);
     }
+
+    @Override
+    public void notifyDataSetChanged() {
+        List<Entry> entries = mItem.getEntries();
+        java.util.Collections.sort(entries);
+        super.notifyDataSetChanged();
+    }
 }
 
