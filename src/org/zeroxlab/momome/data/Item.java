@@ -26,7 +26,6 @@ import java.util.List;
 public class Item implements Momo, Comparable<Item> {
 
     public final static String DEF_TITLE = "(NO TITLE)";
-    public final static String DEF_NAME  = "(Empty)";
 
     protected String mTitle;
     protected String mId;

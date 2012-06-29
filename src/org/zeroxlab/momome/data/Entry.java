@@ -25,6 +25,8 @@ import java.util.List;
 
 public class Entry implements Momo, Comparable<Entry> {
 
+    public final static String DEF_NAME  = "(Empty)";
+
     String mData;
     String mComment;
     long   mTime;

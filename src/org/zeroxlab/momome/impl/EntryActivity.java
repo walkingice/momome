@@ -106,8 +106,10 @@ public class EntryActivity extends EditableActivity implements Momo {
     }
 
     public void onClickAddButton(View v) {
-        mItem.addEntry(Item.DEF_NAME, "");
+        Entry entry = new Entry(Entry.DEF_NAME, "");
+        mItem.addEntry(entry);
         mAdapter.notifyDataSetChanged();
+        askData(entry);
     }
 
     @Override
