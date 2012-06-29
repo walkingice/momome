@@ -23,7 +23,7 @@ import org.zeroxlab.momome.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entry implements Momo {
+public class Entry implements Momo, Comparable<Entry> {
 
     String mData;
     String mComment;
@@ -58,5 +58,15 @@ public class Entry implements Momo {
     public void clear() {
         mData= "";
         mComment= "";
+    }
+
+    @Override
+    public int compareTo(Entry another) {
+        int dataCompare = getData().compareTo(another.getData());
+        if (dataCompare == 0) {
+            return getComment().compareTo(another.getComment());
+        } else {
+            return dataCompare;
+        }
     }
 }

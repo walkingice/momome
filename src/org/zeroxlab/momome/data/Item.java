@@ -23,7 +23,7 @@ import org.zeroxlab.momome.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item implements Momo {
+public class Item implements Momo, Comparable<Item> {
 
     public final static String DEF_TITLE = "(NO TITLE)";
     public final static String DEF_NAME  = "(Empty)";
@@ -133,5 +133,10 @@ public class Item implements Momo {
         for(Entry entry: mEntries) {
             entry.clear();
         }
+    }
+
+    @Override
+    public int compareTo(Item another) {
+        return getTitle().compareTo(another.getTitle());
     }
 }
