@@ -45,6 +45,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 import org.json.JSONObject;
 import android.view.KeyEvent;
 import android.view.WindowManager;
@@ -54,8 +55,8 @@ public class MainActivity extends EditableActivity implements Momo,
 
     ListView mListView;
     View     mHint;
-    View     mBtnAdd;
-    View     mBtnMore;
+    ViewSwitcher mLTSwitcher; // left-top
+    ViewSwitcher mRTSwitcher; // right-top
     ItemAdapter mAdapter;
     DialogListener mDialogListener;
     MomoModel.StatusListener mStatusListener;
@@ -117,9 +118,9 @@ public class MainActivity extends EditableActivity implements Momo,
 
     private void initViews() {
         mListView = (ListView) findViewById(R.id.main_list_view);
-        mBtnAdd   = findViewById(R.id.main_btn_add);
-        mBtnMore  = findViewById(R.id.main_btn_more);
         mHint     = findViewById(R.id.main_hint);
+        mLTSwitcher = (ViewSwitcher) findViewById(R.id.main_lt_switcher);
+        mRTSwitcher = (ViewSwitcher) findViewById(R.id.main_rt_switcher);
     }
 
     private void launchEntryActivity(String key) {
@@ -154,8 +155,12 @@ public class MainActivity extends EditableActivity implements Momo,
         MomoModel model = MomoApp.getModel();
         if (model.status() == DataStatus.OK
                 || model.status() == DataStatus.FILE_IS_EMPTY) {
-            super.onPerformEdit(v);
+            super.toggleEditing();
         }
+    }
+
+    public void onClickDone(View v) {
+        super.toggleEditing();
     }
 
     public void onClickMore(final View v) {
@@ -200,8 +205,8 @@ public class MainActivity extends EditableActivity implements Momo,
 
     @Override
     protected void onStartEdit() {
-        mBtnAdd.setVisibility(View.VISIBLE);
-        mBtnMore.setVisibility(View.GONE);
+        mLTSwitcher.showNext();
+        mRTSwitcher.showNext();
         mAdapter.setEditing(true);
         mListView.setOnItemClickListener(null);
         mListView.invalidateViews();
@@ -209,8 +214,8 @@ public class MainActivity extends EditableActivity implements Momo,
 
     @Override
     protected void onStopEdit() {
-        mBtnAdd.setVisibility(View.GONE);
-        mBtnMore.setVisibility(View.VISIBLE);
+        mLTSwitcher.showNext();
+        mRTSwitcher.showNext();
         mAdapter.setEditing(false);
         mListView.setOnItemClickListener(mItemClickListener);
         mListView.invalidateViews();

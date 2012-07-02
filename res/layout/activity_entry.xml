@@ -11,23 +11,38 @@
         android:background="@drawable/actionbar_bg"
         android:gravity="center_vertical"
         >
-        <Button
-            android:id="@+id/entry_add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            android:textColor="@color/text_aluminium"
-            android:onClick="onClickAddButton"
-            android:padding="10dp"
-            android:background="@drawable/btn_bg"
-            android:visibility="gone"
-            />
-        <include
-            android:layout_toRightOf="@id/entry_add_button"
-            android:layout_width="@dimen/v_divider_width"
+        <ViewSwitcher
+            android:id="@+id/entry_lt_switcher"
+            android:layout_width="@dimen/large_button_size"
             android:layout_height="match_parent"
-            layout="@layout/v_divider"
-            />
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out"
+            >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <Button
+                    android:id="@+id/entry_add_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Add"
+                    android:textColor="@color/text_aluminium"
+                    android:onClick="onClickAddButton"
+                    android:padding="10dp"
+                    android:background="@drawable/btn_bg"
+                    />
+                <include
+                    android:layout_width="@dimen/v_divider_width"
+                    android:layout_height="match_parent"
+                    layout="@layout/v_divider"
+                    />
+            </LinearLayout>
+        </ViewSwitcher>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,16 +63,32 @@
             android:layout_height="match_parent"
             layout="@layout/v_divider"
             />
-        <Button
-            android:id="@+id/entry_edit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_aluminium"
-            android:background="@drawable/btn_bg"
-            android:padding="10dp"
-            android:text="Edit"
-            android:onClick="onClickEditButton"
-            />
+        <ViewSwitcher
+            android:id="@+id/entry_rt_switcher"
+            android:layout_width="@dimen/large_button_size"
+            android:layout_height="match_parent"
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out"
+            >
+            <Button
+                android:id="@+id/entry_edit_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/text_aluminium"
+                android:background="@drawable/btn_bg"
+                android:text="Edit"
+                android:onClick="onClickEditButton"
+                />
+            <Button
+                android:id="@+id/entry_done_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/text_aluminium"
+                android:background="@drawable/btn_bg"
+                android:text="Done"
+                android:onClick="onClickDoneButton"
+                />
+        </ViewSwitcher>
     </LinearLayout>
     <ListView
         android:id="@+id/entry_container"

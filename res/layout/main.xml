@@ -11,27 +11,34 @@
         android:background="@drawable/actionbar_bg"
         android:gravity="center_vertical"
         >
-        <ImageView
-            android:id="@+id/main_btn_more"
+        <ViewSwitcher
+            android:id="@+id/main_lt_switcher"
             android:layout_width="@dimen/large_button_size"
             android:layout_height="match_parent"
-            android:onClick="onClickMore"
-            android:src="@drawable/icon_more"
-            android:padding="12dp"
-            android:scaleType="centerInside"
-            android:background="@drawable/btn_bg"
-            />
-        <Button
-            android:id="@+id/main_btn_add"
-            android:layout_width="@dimen/large_button_size"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            android:textColor="@color/text_aluminium"
-            android:background="@drawable/btn_bg"
-            android:padding="10dp"
-            android:onClick="onClickAdd"
-            android:visibility="gone"
-            />
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out"
+            >
+            <ImageView
+                android:id="@+id/main_btn_more"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="onClickMore"
+                android:src="@drawable/icon_more"
+                android:padding="12dp"
+                android:scaleType="centerInside"
+                android:background="@drawable/btn_bg"
+                />
+            <Button
+                android:id="@+id/main_btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Add"
+                android:textColor="@color/text_aluminium"
+                android:background="@drawable/btn_bg"
+                android:padding="10dp"
+                android:onClick="onClickAdd"
+                />
+        </ViewSwitcher>
         <include
             android:layout_toRightOf="@id/main_btn_add"
             android:layout_width="@dimen/v_divider_width"
@@ -57,16 +64,32 @@
             android:layout_height="match_parent"
             layout="@layout/v_divider"
             />
-        <Button
-            android:id="@+id/main_btn_edit"
+        <ViewSwitcher
+            android:id="@+id/main_rt_switcher"
             android:layout_width="@dimen/large_button_size"
             android:layout_height="match_parent"
-            android:text="Edit"
-            android:textColor="@color/text_aluminium"
-            android:background="@drawable/btn_bg"
-            android:padding="10dp"
-            android:onClick="onClickEdit"
-            />
+            android:inAnimation="@android:anim/fade_in"
+            android:outAnimation="@android:anim/fade_out"
+            >
+            <Button
+                android:id="@+id/main_btn_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Edit"
+                android:textColor="@color/text_aluminium"
+                android:background="@drawable/btn_bg"
+                android:onClick="onClickEdit"
+                />
+            <Button
+                android:id="@+id/main_btn_done"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Done"
+                android:textColor="@color/text_aluminium"
+                android:background="@drawable/btn_bg"
+                android:onClick="onClickDone"
+                />
+        </ViewSwitcher>
     </LinearLayout>
     <ListView
         android:id="@+id/main_list_view"

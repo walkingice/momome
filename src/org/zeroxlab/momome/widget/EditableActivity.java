@@ -62,11 +62,7 @@ public abstract class EditableActivity extends Activity {
         }
     }
 
-    protected void onPerformEdit(View v) {
-        toggleEditing();
-    }
-
-    private void toggleEditing() {
+    protected void toggleEditing() {
         mIsEditing = !mIsEditing;
         if (mIsEditing) {
             onStartEdit();

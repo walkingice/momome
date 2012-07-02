@@ -45,14 +45,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 import java.util.List;
 
 public class EntryActivity extends EditableActivity implements Momo {
     protected MomoModel mModel;
     protected ListView  mContainer;
     protected TextView  mTitle;
-    protected View      mAddButton;
-    protected View      mEditButton;
+    protected ViewSwitcher mLTSwitcher; // left-top
+    protected ViewSwitcher mRTSwitcher; // right-top
     protected Item      mItem;
     protected LayoutInflater mInflater;
     protected EntryAdapter mAdapter;
@@ -96,13 +97,17 @@ public class EntryActivity extends EditableActivity implements Momo {
 
         mTitle     = (TextView) findViewById(R.id.entry_title);
         mContainer = (ListView) findViewById(R.id.entry_container);
-        mAddButton = findViewById(R.id.entry_add_button);
-        mEditButton = findViewById(R.id.entry_edit_button);
+        mRTSwitcher = (ViewSwitcher) findViewById(R.id.entry_rt_switcher);
+        mLTSwitcher = (ViewSwitcher) findViewById(R.id.entry_lt_switcher);
         return true;
     }
 
     public void onClickEditButton(View v) {
-        super.onPerformEdit(v);
+        super.toggleEditing();
+    }
+
+    public void onClickDoneButton(View v) {
+        super.toggleEditing();
     }
 
     public void onClickAddButton(View v) {
@@ -115,7 +120,8 @@ public class EntryActivity extends EditableActivity implements Momo {
     @Override
     protected void onStartEdit() {
         mAdapter.setEditing(true);
-        mAddButton.setVisibility(View.VISIBLE);
+        mLTSwitcher.showNext();
+        mRTSwitcher.showNext();
         mContainer.setOnItemClickListener(null);
         mContainer.invalidateViews();
     }
@@ -123,7 +129,8 @@ public class EntryActivity extends EditableActivity implements Momo {
     @Override
     protected void onStopEdit() {
         mAdapter.setEditing(false);
-        mAddButton.setVisibility(View.GONE);
+        mLTSwitcher.showNext();
+        mRTSwitcher.showNext();
         mContainer.setOnItemClickListener(mEntryClickListener);
         mContainer.invalidateViews();
         finishEditing();
