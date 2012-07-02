@@ -60,6 +60,7 @@ public class BasicInputDialog extends AlertDialog {
     private void init(Context context) {
         mEditText = new EditText(context);
         mEditText.setSingleLine(true);
+        setIcon(android.R.drawable.ic_dialog_info);
         setCancelable(true);
         setView(mEditText, PADDING, PADDING, PADDING, PADDING);
     }

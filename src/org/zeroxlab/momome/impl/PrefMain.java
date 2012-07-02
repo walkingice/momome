@@ -87,7 +87,6 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     }
 
     private void askImportData() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         File file = new File(EXTERNAL_DIR, FILENAME);
         if (!file.exists()) {
             showToast("File to import not exists: " + file.getPath());
@@ -137,6 +136,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     private void askExportData() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         File file = new File(EXTERNAL_DIR, FILENAME);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
         builder.setTitle("Export data?");
         builder.setMessage("write to: " + file.getPath());
         builder.setPositiveButton(android.R.string.yes,
@@ -211,6 +211,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     private void askDeleteData() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete data");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setMessage("Are you sure to delete data of list? It CANNOT be undo");
         builder.setPositiveButton(android.R.string.yes,
                 new DialogInterface.OnClickListener() {
