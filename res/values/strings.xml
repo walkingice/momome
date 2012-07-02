@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">MomoMe</string>
     <string name="lock">Lock/Unlock</string>
+    <string name="delete">Delete</string>
     <string name="settings">Settings</string>
     <string name="unlock_hint">Tap button and enter correct\npasswordto unlock data</string>
     <string name="pref_actions">Actions</string>

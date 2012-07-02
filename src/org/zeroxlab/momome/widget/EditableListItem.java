@@ -132,9 +132,23 @@ public class EditableListItem extends FrameLayout {
     }
 
     private void onClickDelete(View v) {
-        if (mListener != null) {
-            mListener.onClickDelete(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(R.string.delete);
+        if (mText != null) {
+            builder.setMessage(mText.getText());
         }
+        builder.setPositiveButton(android.R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                            if (mListener != null) {
+                                mListener.onClickDelete(EditableListItem.this);
+                            }
+                        }
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.show();
     }
 
     private class PrivateOnClickListener implements View.OnClickListener {
