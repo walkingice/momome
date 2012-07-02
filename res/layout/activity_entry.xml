@@ -5,52 +5,16 @@
     android:layout_height="match_parent"
     android:background="@color/list_bg"
     >
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/actionbar_height"
         android:background="@drawable/actionbar_bg"
+        android:gravity="center_vertical"
         >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            >
-            <TextView
-                android:id="@+id/entry_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:scrollHorizontally="true"
-                android:text="@string/app_name"
-                style="@style/actionbar_title"
-                />
-        </LinearLayout>
-        <Button
-            android:id="@+id/entry_edit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_aluminium"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/btn_bg"
-            android:padding="10dp"
-            android:text="Edit"
-            android:onClick="onClickEditButton"
-            />
-        <include
-            android:layout_toLeftOf="@id/entry_edit_button"
-            android:layout_width="@dimen/v_divider_width"
-            android:layout_height="match_parent"
-            layout="@layout/v_divider"
-            />
         <Button
             android:id="@+id/entry_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
             android:text="Add"
             android:textColor="@color/text_aluminium"
             android:onClick="onClickAddButton"
@@ -64,7 +28,37 @@
             android:layout_height="match_parent"
             layout="@layout/v_divider"
             />
-    </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+            <TextView
+                android:id="@+id/entry_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollHorizontally="true"
+                android:text="@string/app_name"
+                style="@style/actionbar_title"
+                />
+        </LinearLayout>
+        <include
+            android:layout_width="@dimen/v_divider_width"
+            android:layout_height="match_parent"
+            layout="@layout/v_divider"
+            />
+        <Button
+            android:id="@+id/entry_edit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_aluminium"
+            android:background="@drawable/btn_bg"
+            android:padding="10dp"
+            android:text="Edit"
+            android:onClick="onClickEditButton"
+            />
+    </LinearLayout>
     <ListView
         android:id="@+id/entry_container"
         android:layout_weight="1"
