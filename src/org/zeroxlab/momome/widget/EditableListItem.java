@@ -77,6 +77,7 @@ public class EditableListItem extends FrameLayout {
         mText      = (TextView) findViewById(R.id.editable_item_text);
         mComment   = (TextView) findViewById(R.id.editable_item_comment);
 
+        mComment.setVisibility(View.GONE);
         PrivateOnClickListener listener = new PrivateOnClickListener();
         mBtnEdit.setOnClickListener(listener);
         mBtnDelete.setOnClickListener(listener);
@@ -109,8 +110,11 @@ public class EditableListItem extends FrameLayout {
     }
 
     public void setComment(CharSequence text) {
-        if (mComment != null) {
+        if (mComment != null && text != null && !text.toString().equals("")) {
             mComment.setText(text);
+            mComment.setVisibility(View.VISIBLE);
+        } else {
+            mComment.setVisibility(View.GONE);
         }
     }
 
