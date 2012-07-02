@@ -41,7 +41,7 @@
         android:layout_height="@dimen/default_button_size"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@android:drawable/ic_delete"
+        android:src="@drawable/icon_delete"
         android:scaleType="fitXY"
         android:visibility="gone"
         />
