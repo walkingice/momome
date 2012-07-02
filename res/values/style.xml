@@ -37,4 +37,11 @@
         <item name="android:ellipsize">marquee</item>
         <item name="android:marqueeRepeatLimit">marquee_forever</item>
     </style>
+    <style name="about_title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+    </style>
+    <style name="about_content">
+        <item name="android:textColor">#FFEEEEEE</item>
+    </style>
 </resources>
