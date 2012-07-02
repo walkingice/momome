@@ -45,13 +45,18 @@ public class DetailActivity extends Activity implements Momo {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        TextView text = (TextView)findViewById(R.id.detail_text);
+        TextView viewData    = (TextView)findViewById(R.id.detail_data);
+        TextView viewComment = (TextView)findViewById(R.id.detail_comment);
+        TextView viewTime    = (TextView)findViewById(R.id.detail_time);
+
         Intent intent = getIntent();
         String data = intent.getStringExtra(CROSS_ENTRY_DATA_KEY);
         String comment = intent.getStringExtra(CROSS_ENTRY_COMMENT_KEY);
         long time = intent.getLongExtra(CROSS_ENTRY_TIME_KEY, System.currentTimeMillis());
 
         Date date = new Date(time);
-        text.setText(data + ":" + comment + "  " + sSDF.format(date));
+        viewData.setText(data);
+        viewComment.setText(comment);
+        viewTime.setText(sSDF.format(date));
     }
 }

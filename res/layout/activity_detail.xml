@@ -3,14 +3,30 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/list_bg"
+    android:background="#333333"
+    android:padding="@dimen/default_gutter"
     >
     <TextView
-        android:id="@+id/detail_text"
+        android:id="@+id/detail_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="@string/app_name"
+        android:layout_marginTop="@dimen/large_gutter"
+        android:textSize="38sp"
+        android:textColor="#FFF9F9F9"
+        />
+    <TextView
+        android:id="@+id/detail_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#FFE9E9E9"
+        />
+    <TextView
+        android:id="@+id/detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_gutter"
+        android:textColor="#FFAAAAAA"
         />
 </LinearLayout>
 

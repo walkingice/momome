@@ -5,6 +5,7 @@
     <string name="delete">Delete</string>
     <string name="settings">Settings</string>
     <string name="unlock_hint">Tap button and enter correct\npasswordto unlock data</string>
+    <string name="detail_time">Last modified time</string>
     <string name="pref_actions">Actions</string>
     <string name="pref_others">Others</string>
     <string name="pref_manage_data">Manage Data</string>
