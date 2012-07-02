@@ -89,7 +89,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     private void askImportData() {
         File file = new File(EXTERNAL_DIR, FILENAME);
         if (!file.exists()) {
-            showToast("File to import not exists: " + file.getPath());
+            showMsg("File to import not exists: " + file.getPath());
             return;
         }
 
@@ -111,7 +111,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     private void onImportData(CharSequence password) {
         File input = new File(EXTERNAL_DIR, FILENAME);
         if (!input.exists()) {
-            showToast("File to import not exists:" + input.getPath());
+            showMsg("File to import not exists:" + input.getPath());
             return;
         }
 
@@ -123,12 +123,12 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
                     mModel.addItem(list.get(i));
                 }
                 mModel.save();
-                showToast("Done!");
+                showMsg("Done!");
             } else {
-                showToast("Failed on loading");
+                showMsg("Failed on loading");
             }
         } catch (Exception e) {
-            showToast("Failed");
+            showMsg("Failed");
             e.printStackTrace();
         }
     }
@@ -154,7 +154,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         List<Item> items = mModel.getItems();
         File output = new File(EXTERNAL_DIR, FILENAME);
         if (!output.getParentFile().canWrite()) {
-            showToast("Cannot write to " + output.getPath());
+            showMsg("Cannot write to " + output.getPath());
             return;
         }
 
@@ -162,12 +162,12 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
             FileOutputStream fos = new FileOutputStream(output);
             boolean success = mModel.saveHelper(fos, items);
             if (success) {
-                showToast("Done!");
+                showMsg("Done!");
             } else {
-                showToast("Failed on writing");
+                showMsg("Failed on writing");
             }
         } catch (Exception e) {
-            showToast("Failed");
+            showMsg("Failed");
             e.printStackTrace();
         }
     }
@@ -196,15 +196,15 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
 
     private void onChangePassword(CharSequence old, CharSequence new1, CharSequence new2) {
         if (!new1.toString().equals(new2.toString())) {
-            showToast("New passwords are not match");
+            showMsg("New passwords are not match");
             return;
         }
 
         if (mModel.changePassword(old, new1)) {
-            showToast("Change password successfully");
+            showMsg("Change password successfully");
             mModel.save();
         } else {
-            showToast("The old password is not correct");
+            showMsg("The old password is not correct");
         }
     }
 
@@ -235,7 +235,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
                 if (input.toString().equals(answer)) {
                     doDeleteData();
                 } else {
-                    showToast("Incorrect, abort deletion");
+                    showMsg("Incorrect, abort deletion");
                 }
             }
 
@@ -248,9 +248,9 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
 
     private void doDeleteData() {
         if (mModel.delete()) {
-            showToast("Successfully delete data");
+            showMsg("Successfully delete data");
         } else {
-            showToast("Delete data failed");
+            showMsg("Delete data failed");
         }
     }
 
@@ -274,8 +274,11 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         }
     }
 
-    private void showToast(CharSequence msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    private void showMsg(CharSequence msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(msg);
+        builder.setNeutralButton(android.R.string.ok, null);
+        builder.show();
     }
 
     class DataActionListener implements OnPreferenceClickListener {
