@@ -17,6 +17,8 @@
     <string name="pref_delete_file_summary">Delete encrypted data from internal store. You need this when you forget your password</string>
     <string name="pref_change_password">Change password</string>
     <string name="pref_change_password_summary">Change password for saved data</string>
+    <string name="pref_send_data">Send data</string>
+    <string name="pref_send_data_summary">Email encrypted data to back up</string>
     <string name="pref_about">About</string>
     <string name="pref_about_summary">Introduce of this application</string>
 

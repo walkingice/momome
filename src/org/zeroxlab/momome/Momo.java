@@ -52,6 +52,7 @@ public interface Momo {
     public final static String KEY_EXPORT_DATA = "key_export_data";
     public final static String KEY_IMPORT_DATA = "key_import_data";
     public final static String KEY_DELETE_DATA = "key_delete_data";
+    public final static String KEY_SEND_DATA   = "key_send_data";
     public final static String KEY_CHANGE_PASSWORD = "key_change_password";
 
     public enum DataStatus {

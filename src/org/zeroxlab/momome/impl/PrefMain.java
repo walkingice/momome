@@ -29,6 +29,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -42,6 +43,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class PrefMain extends PreferenceActivity implements Momo, MomoModel.StatusListener {
@@ -59,12 +62,14 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         Preference importPref = findPreference(KEY_IMPORT_DATA);
         Preference deletePref = findPreference(KEY_DELETE_DATA);
         Preference changePref = findPreference(KEY_CHANGE_PASSWORD);
+        Preference sendPref   = findPreference(KEY_SEND_DATA);
 
         OnPreferenceClickListener listener = new DataActionListener();
         exportPref.setOnPreferenceClickListener(listener);
         importPref.setOnPreferenceClickListener(listener);
         deletePref.setOnPreferenceClickListener(listener);
         changePref.setOnPreferenceClickListener(listener);
+        sendPref.setOnPreferenceClickListener(listener);
 
         updateVisibility();
     }
@@ -172,6 +177,25 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         }
     }
 
+    private void onSendData() {
+        File attachment = new File(EXTERNAL_DIR, FILENAME);
+
+        if (!attachment.exists()) {
+            showMsg("No file to send, please export data first");
+            return;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+        String date = sdf.format(new Date(System.currentTimeMillis()));
+
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "MomoMe backup encrypted data");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, date);
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(attachment));
+        intent.setType("plain/text");
+        startActivity(Intent.createChooser(intent, "Mail Chooser"));
+    }
+
     private void askPassword() {
         LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.dialog_setpassword, null);
@@ -258,15 +282,18 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         Preference exportPref = findPreference(KEY_EXPORT_DATA);
         Preference importPref = findPreference(KEY_IMPORT_DATA);
         Preference changePref = findPreference(KEY_CHANGE_PASSWORD);
+        Preference sendPref   = findPreference(KEY_SEND_DATA);
 
         if (mModel.status() == DataStatus.OK) {
             exportPref.setEnabled(true);
             importPref.setEnabled(true);
             changePref.setEnabled(true);
+            sendPref.setEnabled(true);
         } else {
             exportPref.setEnabled(false);
             importPref.setEnabled(false);
             changePref.setEnabled(false);
+            sendPref.setEnabled(false);
         }
 
         if (mModel.status() == DataStatus.FILE_IS_EMPTY) {
@@ -291,6 +318,8 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
                 askDeleteData();
             } else if (preference.getKey().equals(KEY_CHANGE_PASSWORD)) {
                 askPassword();
+            } else if (preference.getKey().equals(KEY_SEND_DATA)) {
+                onSendData();
             } else {
                 Toast.makeText(PrefMain.this, "oooops",Toast.LENGTH_SHORT).show();
                 return false;
