@@ -21,9 +21,11 @@ package org.zeroxlab.momome.widget;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.List;
+import android.view.WindowManager;
 
 public class BasicInputDialog extends AlertDialog {
 
@@ -60,6 +62,16 @@ public class BasicInputDialog extends AlertDialog {
     private void init(Context context) {
         mEditText = new EditText(context);
         mEditText.setSingleLine(true);
+        mEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    getWindow().setSoftInputMode(
+                        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+
         setIcon(android.R.drawable.ic_dialog_info);
         setCancelable(true);
         setView(mEditText, PADDING, PADDING, PADDING, PADDING);
