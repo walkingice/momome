@@ -17,14 +17,6 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             >
-            <ImageView
-                android:layout_width="@dimen/actionbar_logo_width"
-                android:layout_height="@dimen/actionbar_logo_height"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/small_gutter"
-                android:src="@drawable/logo"
-                android:scaleType="centerInside"
-                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
