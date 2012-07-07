@@ -9,14 +9,11 @@
     <ImageView
         android:id="@id/editable_item_btn_edit"
         android:layout_width="@dimen/default_button_size"
-        android:layout_height="@dimen/default_button_size"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/default_gutter"
-        android:layout_marginLeft="@dimen/default_gutter"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
         android:padding="6dp"
         android:src="@drawable/icon_edit"
-        android:background="@drawable/btn_bg"
-        android:text="Edit"
+        android:scaleType="fitCenter"
         android:visibility="gone"
         />
     <RelativeLayout
@@ -46,12 +43,12 @@
     <ImageView
         android:id="@id/editable_item_btn_delete"
         android:layout_width="@dimen/default_button_size"
-        android:layout_height="@dimen/default_button_size"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/default_gutter"
         android:layout_marginRight="@dimen/default_gutter"
         android:src="@drawable/icon_delete"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:visibility="gone"
         />
 </LinearLayout>
