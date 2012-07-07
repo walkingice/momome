@@ -45,6 +45,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 import org.json.JSONObject;
 import android.view.KeyEvent;
@@ -253,6 +254,12 @@ public class MainActivity extends EditableActivity implements Momo,
     private void onEnteredPassword(CharSequence password) {
         MomoModel model = MomoApp.getModel();
         model.unlock(password);
+        /* FIXME: it should detect PASSWORD_WRONG ONLY*/
+        if(model.status() == DataStatus.PASSWORD_WRONG
+                || model.status() == DataStatus.FILE_CANNOT_ACCESS ) {
+
+            Toast.makeText(this, "Decrypt failed", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void onRenameItem(CharSequence name, Item item) {
