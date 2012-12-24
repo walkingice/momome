@@ -30,7 +30,7 @@
                     android:id="@+id/entry_add_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Add"
+                    android:text="@string/add"
                     android:textColor="@color/text_aluminium"
                     android:onClick="onClickAddButton"
                     android:padding="10dp"
@@ -76,7 +76,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/text_aluminium"
                 android:background="@drawable/btn_bg"
-                android:text="Edit"
+                android:text="@string/edit"
                 android:onClick="onClickEditButton"
                 />
             <Button
@@ -85,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/text_aluminium"
                 android:background="@drawable/btn_bg"
-                android:text="Done"
+                android:text="@string/done"
                 android:onClick="onClickDoneButton"
                 />
         </ViewSwitcher>

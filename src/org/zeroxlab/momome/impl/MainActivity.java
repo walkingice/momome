@@ -168,7 +168,7 @@ public class MainActivity extends EditableActivity implements Momo,
         final int fLock = 0;
         final int fSettings = 1;
         PopupMenu menu = new PopupMenu(this);
-        menu.add(fLock, R.string.lock);
+        menu.add(fLock, R.string.lockaction);
         menu.add(fSettings, R.string.settings);
         menu.setHeaderTitle("More options");
         menu.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -232,13 +232,15 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     private void askForPassword() {
-        BasicInputDialog dialog = new BasicInputDialog(this, "Enter Password to unlock");
+        BasicInputDialog dialog = new BasicInputDialog(this,
+                super.getString(R.string.main_dialog_unlock));
         dialog.setListener(DIALOG_PASSWORD, mDialogListener);
         dialog.show();
     }
 
     private void renameItem(Item item) {
-        BasicInputDialog dialog = new BasicInputDialog(this, "Rename for item");
+        BasicInputDialog dialog = new BasicInputDialog(this,
+                super.getString(R.string.main_dialog_rename_item));
         dialog.setDefaultText(item.getTitle());
         dialog.setExtra(item);
         dialog.setListener(DIALOG_RENAME, mDialogListener);
@@ -246,7 +248,8 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     private void getNewItemName() {
-        BasicInputDialog dialog = new BasicInputDialog(this, "Name for new item");
+        BasicInputDialog dialog = new BasicInputDialog(this,
+                super.getString(R.string.main_dialog_add_item));
         dialog.setListener(DIALOG_ADD_ITEM, mDialogListener);
         dialog.show();
     }

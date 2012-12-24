@@ -94,13 +94,13 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     private void askImportData() {
         File file = new File(EXTERNAL_DIR, FILENAME);
         if (!file.exists()) {
-            showMsg("File to import not exists: " + file.getPath());
+            showMsg(super.getString(R.string.pref_dialog_import_data_missed) + file.getPath());
             return;
         }
 
         BasicInputDialog dialog = new BasicInputDialog(this);
-        dialog.setTitle("Import data?");
-        dialog.setMessage("Enter password to read : " + file.getPath());
+        dialog.setTitle(R.string.pref_import_ext);
+        dialog.setMessage(super.getString(R.string.pref_dialog_import_data_msg) + file.getPath());
         dialog.setListener(0, new BasicInputDialog.InputListener() {
             public void onInput(int id, CharSequence input, Object extra) {
                 onImportData(input);
@@ -116,7 +116,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     private void onImportData(CharSequence password) {
         File input = new File(EXTERNAL_DIR, FILENAME);
         if (!input.exists()) {
-            showMsg("File to import not exists:" + input.getPath());
+            showMsg(super.getString(R.string.pref_dialog_import_data_fail) + input.getPath());
             return;
         }
 
@@ -128,12 +128,12 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
                     mModel.addItem(list.get(i));
                 }
                 mModel.save();
-                showMsg("Done!");
+                showMsg(super.getString(R.string.pref_dialog_done));
             } else {
-                showMsg("Failed on loading");
+                showMsg(super.getString(R.string.pref_dialog_import_data_fail));
             }
         } catch (Exception e) {
-            showMsg("Failed");
+            showMsg("Exception occurred!");
             e.printStackTrace();
         }
     }
@@ -142,8 +142,8 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         File file = new File(EXTERNAL_DIR, FILENAME);
         builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("Export data?");
-        builder.setMessage("write to: " + file.getPath());
+        builder.setTitle(R.string.pref_export_ext);
+        builder.setMessage(super.getString(R.string.pref_dialog_export_data_msg) + file.getPath());
         builder.setPositiveButton(android.R.string.yes,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -159,7 +159,8 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         List<Item> items = mModel.getItems();
         File output = new File(EXTERNAL_DIR, FILENAME);
         if (!output.getParentFile().canWrite()) {
-            showMsg("Cannot write to " + output.getPath());
+            showMsg(super.getString(R.string.pref_dialog_export_data_cannot_write)
+                        + output.getPath());
             return;
         }
 
@@ -167,12 +168,12 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
             FileOutputStream fos = new FileOutputStream(output);
             boolean success = mModel.saveHelper(fos, items);
             if (success) {
-                showMsg("Done!");
+                showMsg(R.string.pref_dialog_done);
             } else {
-                showMsg("Failed on writing");
+                showMsg(R.string.pref_dialog_export_data_fail);
             }
         } catch (Exception e) {
-            showMsg("Failed");
+            showMsg("Exception occurred!");
             e.printStackTrace();
         }
     }
@@ -181,7 +182,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         File attachment = new File(EXTERNAL_DIR, FILENAME);
 
         if (!attachment.exists()) {
-            showMsg("No file to send, please export data first");
+            showMsg(R.string.pref_dialog_send_data_missed);
             return;
         }
 
@@ -201,7 +202,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         final View view = inflater.inflate(R.layout.dialog_setpassword, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Change password");
+        builder.setTitle(R.string.pref_change_password);
         builder.setView(view);
         builder.setPositiveButton(android.R.string.yes,
                 new DialogInterface.OnClickListener() {
@@ -220,23 +221,23 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
 
     private void onChangePassword(CharSequence old, CharSequence new1, CharSequence new2) {
         if (!new1.toString().equals(new2.toString())) {
-            showMsg("New passwords are not match");
+            showMsg(R.string.pref_dialog_pwd_mismatch);
             return;
         }
 
         if (mModel.changePassword(old, new1)) {
-            showMsg("Change password successfully");
+            showMsg(R.string.pref_dialog_pwd_success);
             mModel.save();
         } else {
-            showMsg("The old password is not correct");
+            showMsg(R.string.pref_dialog_pwd_incorrect);
         }
     }
 
     private void askDeleteData() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete data");
+        builder.setTitle(R.string.pref_delete_file);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
-        builder.setMessage("Are you sure to delete data of list? It CANNOT be undo");
+        builder.setMessage(super.getString(R.string.pref_dialog_del_data_msg));
         builder.setPositiveButton(android.R.string.yes,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -252,14 +253,14 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
     private void checkDeleteData() {
         final String answer = "" + ((int)(Math.random() * 900) + 100); // 100 ~ 999
         BasicInputDialog dialog = new BasicInputDialog(this);
-        dialog.setTitle("Check again");
-        dialog.setMessage("To delete data, please enter this number: " + answer);
+        dialog.setTitle(R.string.pref_dialog_del_check_title);
+        dialog.setMessage(super.getString(R.string.pref_dialog_del_check_msg) + answer);
         dialog.setListener(0, new BasicInputDialog.InputListener() {
             public void onInput(int id, CharSequence input, Object extra) {
                 if (input.toString().equals(answer)) {
                     doDeleteData();
                 } else {
-                    showMsg("Incorrect, abort deletion");
+                    showMsg(R.string.pref_dialog_del_check_abort);
                 }
             }
 
@@ -272,9 +273,9 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
 
     private void doDeleteData() {
         if (mModel.delete()) {
-            showMsg("Successfully delete data");
+            showMsg(R.string.pref_dialog_del_success);
         } else {
-            showMsg("Delete data failed");
+            showMsg(R.string.pref_dialog_del_fail);
         }
     }
 
@@ -299,6 +300,10 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
         if (mModel.status() == DataStatus.FILE_IS_EMPTY) {
             importPref.setEnabled(true);
         }
+    }
+
+    private void showMsg(int id) {
+        this.showMsg(super.getString(id));
     }
 
     private void showMsg(CharSequence msg) {
