@@ -1,5 +1,6 @@
 /*
  * Copyright 2008 Google Inc.
+ * Modified by 2012 Walkingice.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
