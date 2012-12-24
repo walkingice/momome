@@ -19,7 +19,7 @@
 package org.zeroxlab.momome.impl;
 
 import org.zeroxlab.momome.R;
-import org.zeroxlab.momome.data.Item;;
+import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.MomoApp;
 import org.zeroxlab.momome.MomoModel;

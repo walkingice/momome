@@ -18,7 +18,7 @@
 
 package org.zeroxlab.momome.test;
 
-import org.zeroxlab.momome.data.Item;;
+import org.zeroxlab.momome.data.Item;
 import org.zeroxlab.momome.MomoModel;
 import org.zeroxlab.momome.util.Util;
 
