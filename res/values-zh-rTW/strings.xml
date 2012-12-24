@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MomoMe</string>
+    <string name="lockaction">上鎖/解鎖</string>
+    <string name="lock">上鎖</string>
+    <string name="unlock">解鎖</string>
+    <string name="delete">刪除</string>
+    <string name="add">新增</string>
+    <string name="edit">編輯</string>
+    <string name="done">完成</string>
+    <string name="settings">設定</string>
+    <string name="unlock_hint">點此並輸入正確密碼\n讀取內容</string>
+    <string name="detail_time">最後修改時間</string>
+    <string name="main_dialog_unlock">輸入密碼解鎖檔案</string>
+    <string name="main_dialog_rename_item">更換名稱</string>
+    <string name="main_dialog_add_item">新項目的名稱</string>
+    <string name="main_dialog_init">歡迎！\n請設定一個密碼用來保護你的資料</string>
+    <string name="pref_actions">動作</string>
+    <string name="pref_others">其他</string>
+    <string name="pref_manage_data">管理資料</string>
+    <string name="pref_export_ext">匯出到檔案</string>
+    <string name="pref_export_ext_summary">把資料加密後備份到外部空間，如 SD card</string>
+    <string name="pref_import_ext">從檔案匯入</string>
+    <string name="pref_import_ext_summary">從外部空間將檔案讀入，並且新增到列表中</string>
+    <string name="pref_delete_file">刪除列表的內容</string>
+    <string name="pref_delete_file_summary">清光紀錄過的東西。如果你忘記密碼，可以清光重來</string>
+    <string name="pref_change_password">更換密碼</string>
+    <string name="pref_change_password_summary">用新的密碼加密內容</string>
+    <string name="pref_send_data">用 Email 備份</string>
+    <string name="pref_send_data_summary">傳送加密過的內容到指定 e-mail</string>
+    <string name="pref_about">關於</string>
+    <string name="pref_about_summary">關於此應用程式</string>
+
+    <string name="pref_dialog_done">完成</string>
+    <string name="pref_dialog_import_data_msg">輸入密碼來讀取：</string>
+    <string name="pref_dialog_import_data_missed">欲匯入的檔案並不存在：</string>
+    <string name="pref_dialog_import_data_fail">匯入失敗，密碼錯誤？</string>
+    <string name="pref_dialog_export_data_msg">寫至：</string>
+    <string name="pref_dialog_export_data_cannot_write">無法寫至：</string>
+    <string name="pref_dialog_export_data_fail">匯出失敗</string>
+    <string name="pref_dialog_send_data_missed">沒有檔案可供傳送，請先匯出檔案</string>
+    <string name="pref_dialog_pwd_incorrect">舊密碼錯誤</string>
+    <string name="pref_dialog_pwd_mismatch">新的密碼不一致</string>
+    <string name="pref_dialog_pwd_success">成功更換密碼</string>
+    <string name="pref_dialog_del_data_msg">確定要刪除所有內容？此動作無法回覆</string>
+    <string name="pref_dialog_del_check_title">再次確認</string>
+    <string name="pref_dialog_del_check_msg">請輸入此亂數以確認刪除：</string>
+    <string name="pref_dialog_del_check_abort">不正確，取消刪除</string>
+    <string name="pref_dialog_del_success">成功刪除內容</string>
+    <string name="pref_dialog_del_fail">刪除內容失敗</string>
+
+    <string name="pref_dialog_pwd_old">舊密碼</string>
+    <string name="pref_dialog_pwd_new">新密碼</string>
+    <string name="pref_dialog_pwd_again">再次輸入新密碼</string>
+
+    <string name="about_title">關於此應用程式</string>
+    <string name="about_content">這個獻給我妻子小桃，讓她可以用這個程式存一些比較重要的文字，好比網站的難記密碼。以某種角度來說，她是 PM</string>
+    <string name="about_coworker">Co-worker</string>
+    <string name="about_coworker_desc">我的貓，呼嚕，跟我一起做了這個程式，牠最大的貢獻就是盡可能地妨礙我。</string>
+</resources>
