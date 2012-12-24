@@ -22,10 +22,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.List;
-import android.view.WindowManager;
 
 public class BasicInputDialog extends AlertDialog {
 
@@ -53,6 +53,10 @@ public class BasicInputDialog extends AlertDialog {
     public void setDefaultText(CharSequence text) {
         mEditText.setText(text);
         mEditText.selectAll();
+    }
+
+    public void setInputType(int type) {
+        mEditText.setInputType(type);
     }
 
     public void setExtra(Object o) {
