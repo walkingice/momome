@@ -26,6 +26,7 @@
     <dimen name="default_font_size">15sp</dimen>
     <dimen name="small_font_size">12sp</dimen>
 
+    <dimen name="list_divider">1px</dimen>
     <dimen name="listitem_height">80dp</dimen>
 
     <dimen name="v_divider_width">1dp</dimen>

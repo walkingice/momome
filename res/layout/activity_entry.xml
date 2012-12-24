@@ -96,6 +96,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:cacheColorHint="@color/list_bg"
+        android:divider="@color/list_divider"
+        android:dividerHeight="@dimen/list_divider"
         />
 </LinearLayout>
 

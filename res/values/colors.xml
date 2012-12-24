@@ -12,5 +12,6 @@
 
     <color name="text_aluminium">#555753</color>
 
+    <color name="list_divider">#E5E5E5</color>
     <color name="list_bg">#FFFFFF</color>
 </resources>
