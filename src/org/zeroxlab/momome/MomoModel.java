@@ -53,6 +53,11 @@ public interface MomoModel extends Momo {
     public boolean delete();
 
     /**
+     * To check existance of internal file.
+     */
+    public boolean internalFileExists();
+
+    /**
      * To check if there is data to access.
      *
      * Model might have data for accessing. It might not have if

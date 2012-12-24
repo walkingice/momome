@@ -14,6 +14,7 @@
     <string name="main_dialog_unlock">Enter password to unlock</string>
     <string name="main_dialog_rename_item">Rename item</string>
     <string name="main_dialog_add_item">Name for new item</string>
+    <string name="main_dialog_init">Welcome! Please provide a password to protect your data</string>
     <string name="pref_actions">Actions</string>
     <string name="pref_others">Others</string>
     <string name="pref_manage_data">Manage Data</string>

@@ -64,6 +64,17 @@ public class ImplModel implements MomoModel, Momo {
     }
 
     @Override
+    public boolean internalFileExists() {
+        try {
+            // no specified path, it refers to Internal storage
+            FileInputStream stream = mContext.openFileInput(FILENAME);
+            return true;
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+    }
+
+    @Override
     public void lock() {
         clearListContent();
         mPassword = null;

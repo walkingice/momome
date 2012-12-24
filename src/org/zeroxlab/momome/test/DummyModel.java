@@ -68,6 +68,11 @@ public class DummyModel implements MomoModel {
     }
 
     @Override
+    public boolean internalFileExists() {
+        return true; // always true since I am dummy
+    }
+
+    @Override
     public boolean saveHelper(FileOutputStream fos, List<Item> data) {
         return true;
     }

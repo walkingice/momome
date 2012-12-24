@@ -232,8 +232,13 @@ public class MainActivity extends EditableActivity implements Momo,
     }
 
     private void askForPassword() {
-        BasicInputDialog dialog = new BasicInputDialog(this,
-                super.getString(R.string.main_dialog_unlock));
+        String msg = super.getString(R.string.main_dialog_unlock);
+        if (!MomoApp.getModel().internalFileExists()) {
+            Log.d(TAG, "not exist?");
+            msg = super.getString(R.string.main_dialog_init);
+        }
+
+        BasicInputDialog dialog = new BasicInputDialog(this, msg);
         dialog.setListener(DIALOG_PASSWORD, mDialogListener);
         dialog.show();
     }
