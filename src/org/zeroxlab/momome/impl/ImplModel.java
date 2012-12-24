@@ -75,6 +75,7 @@ public class ImplModel implements MomoModel, Momo {
         mPassword = password;
 
         try {
+            // no specified path, it refers to Internal storage
             FileInputStream stream = mContext.openFileInput(FILENAME);
             CharSequence data = mFileIO.read(mPassword.toString(), stream);
             mList = mParser.parse(data);
