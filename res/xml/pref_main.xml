@@ -43,6 +43,14 @@
                 android:targetClass="org.zeroxlab.momome.impl.AboutActivity"
                 />
         </PreferenceScreen> 
+        <PreferenceScreen
+            android:title="@string/pref_contri"
+            >
+            <intent
+                android:targetPackage="org.zeroxlab.momome"
+                android:targetClass="org.zeroxlab.momome.impl.ContributionActivity"
+                />
+        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>

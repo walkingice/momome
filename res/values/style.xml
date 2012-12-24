@@ -37,4 +37,11 @@
     <style name="about_content">
         <item name="android:textColor">#FFEEEEEE</item>
     </style>
+    <style name="text_title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+    </style>
+    <style name="text_content">
+        <item name="android:textColor">#FFEEEEEE</item>
+    </style>
 </resources>

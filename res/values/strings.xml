@@ -30,6 +30,7 @@
     <string name="pref_send_data_summary">Mail encrypted file to back up</string>
     <string name="pref_about">About</string>
     <string name="pref_about_summary">Introduction of this application</string>
+    <string name="pref_contri">Contribution and License</string>
 
     <string name="pref_dialog_done">Done</string>
     <string name="pref_dialog_import_data_msg">Enter password to read: </string>

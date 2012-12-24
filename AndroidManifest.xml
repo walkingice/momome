@@ -35,5 +35,6 @@
         </activity>
         <activity android:name="org.zeroxlab.momome.impl.PrefMain" />
         <activity android:name="org.zeroxlab.momome.impl.AboutActivity" />
+        <activity android:name="org.zeroxlab.momome.impl.ContributionActivity" />
     </application>
 </manifest> 
