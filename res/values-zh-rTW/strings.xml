@@ -30,6 +30,7 @@
     <string name="pref_send_data_summary">傳送加密過的內容到指定 e-mail</string>
     <string name="pref_about">關於</string>
     <string name="pref_about_summary">關於此應用程式</string>
+    <string name="pref_contri">貢獻與授權</string>
 
     <string name="pref_dialog_done">完成</string>
     <string name="pref_dialog_import_data_msg">輸入密碼來讀取：</string>
