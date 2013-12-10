@@ -20,6 +20,7 @@ package org.zeroxlab.momome.util;
 
 import org.zeroxlab.momome.Momo;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -70,15 +71,20 @@ public class Util implements Momo {
     }
 
     public static CharSequence readStrFromStream(InputStream str) throws IOException {
-        InputStreamReader isr = new InputStreamReader(str, ENCODE);
-        BufferedReader reader = new BufferedReader(isr);
-        StringBuilder builder = new StringBuilder();
-        String line = null;
-        while((line = reader.readLine()) != null) {
-            builder.append(line);
+        byte[] data = readBytesFromStream(str);
+        return new String(data);
+    }
+
+    public static byte[] readBytesFromStream(InputStream str) throws IOException {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024];
+        int count = 0;
+        while ((count = str.read(buf, 0, buf.length)) != -1) {
+            output.write(buf, 0, count);
         }
 
-        return builder;
+        output.flush();
+        return output.toByteArray();
     }
 
     public static void writeStrToStream(OutputStream str, CharSequence data) throws IOException {
