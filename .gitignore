@@ -7,3 +7,6 @@ test/coverage.em
 
 .classpath
 .project
+
+.gradle
+build
