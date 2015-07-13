@@ -10,3 +10,6 @@ test/coverage.em
 
 .gradle
 build
+
+*.iml
+.idea
