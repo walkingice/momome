@@ -23,15 +23,15 @@ android {
 			assets.srcDirs = ['assets']
 		}
 	}
-
 	defaultConfig {
-		targetSdkVersion 10
+		targetSdkVersion 14
+		minSdkVersion 10
 	}
-
 	lintOptions {
 		abortOnError false
 	}
-
+	productFlavors {
+	}
 }
 
 dependencies {
