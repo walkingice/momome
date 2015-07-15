@@ -25,5 +25,7 @@ You and download this app from [Google Play](https://play.google.com/store/apps/
 
 Use gradle as build system. Just git clone this project and execute below command.
 
+    $ cd android
+    $ cp local.properties.example local.properties  # then edit for SDK path
     $ ./gradlew --daemon build
 
