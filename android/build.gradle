@@ -4,10 +4,16 @@ buildscript {
 	}
 	dependencies {
 		classpath 'com.android.tools.build:gradle:1.2.3'
+		classpath 'me.tatarka:gradle-retrolambda:3.2.0'
 	}
 }
 
+repositories {
+	mavenCentral()
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
 	compileSdkVersion 10
@@ -33,9 +39,17 @@ android {
 	productFlavors {
 	}
 	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_6
+		sourceCompatibility JavaVersion.VERSION_1_8
 		targetCompatibility JavaVersion.VERSION_1_6
 	}
+}
+
+retrolambda {
+	jdk System.getenv("JAVA8_HOME")
+	oldJdk System.getenv("JAVA6_HOME")
+	javaVersion JavaVersion.VERSION_1_6
+	defaultMethods true
+	incremental true
 }
 
 dependencies {
