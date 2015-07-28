@@ -21,46 +21,46 @@ package org.zeroxlab.momome;
 import android.os.Environment;
 
 public interface Momo {
-    public final static String TAG = "Momo";
+    String TAG = "Momo";
 
     // just a test for Java 8 new feature
     default String getAppTag () {
         return TAG;
     }
 
-    public final static String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().getPath();
-    public final static String EXTERNAL_DIR = EXTERNAL_STORAGE + "/Momome";
+    String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().getPath();
+    String EXTERNAL_DIR = EXTERNAL_STORAGE + "/Momome";
 
-    public final static String FILENAME = "MomomeData";
+    String FILENAME = "MomomeData";
 
-    public final static String ENCODING = "UTF8";
+    String ENCODING = "UTF8";
 
     /* for JSON */
-    public final static String KEY_VERSION       = "momo_version";
-    public final static String KEY_ITEMS         = "momo_items";
-    public final static String KEY_ITEM_TITLE    = "momo_item_title";
-    public final static String KEY_ITEM_ENTRIES  = "momo_item_entries";
-    public final static String KEY_ITEM_TIME     = "momo_item_last_modified_time";
-    public final static String KEY_ENTRY_DATA    = "momo_entry_data";
-    public final static String KEY_ENTRY_COMMENT = "momo_entry_comment";
-    public final static String KEY_ENTRY_TIME    = "momo_entry_last_modified_time";
+    String KEY_VERSION       = "momo_version";
+    String KEY_ITEMS         = "momo_items";
+    String KEY_ITEM_TITLE    = "momo_item_title";
+    String KEY_ITEM_ENTRIES  = "momo_item_entries";
+    String KEY_ITEM_TIME     = "momo_item_last_modified_time";
+    String KEY_ENTRY_DATA    = "momo_entry_data";
+    String KEY_ENTRY_COMMENT = "momo_entry_comment";
+    String KEY_ENTRY_TIME    = "momo_entry_last_modified_time";
 
 
     /* for cross activity */
-    public final static int    INVALID_INT    = -1;
-    public final static String CROSS_ITEM_KEY = "cross_activity_item_key";
-    public final static String CROSS_ENTRY_DATA_KEY   = "cross_activity_entry_data_key";
-    public final static String CROSS_ENTRY_COMMENT_KEY = "cross_activity_entry_comment_key";
-    public final static String CROSS_ENTRY_TIME_KEY = "cross_activity_entry_time_key";
+    int    INVALID_INT    = -1;
+    String CROSS_ITEM_KEY = "cross_activity_item_key";
+    String CROSS_ENTRY_DATA_KEY   = "cross_activity_entry_data_key";
+    String CROSS_ENTRY_COMMENT_KEY = "cross_activity_entry_comment_key";
+    String CROSS_ENTRY_TIME_KEY = "cross_activity_entry_time_key";
 
     /* for preference */
-    public final static String KEY_EXPORT_DATA = "key_export_data";
-    public final static String KEY_IMPORT_DATA = "key_import_data";
-    public final static String KEY_DELETE_DATA = "key_delete_data";
-    public final static String KEY_SEND_DATA   = "key_send_data";
-    public final static String KEY_CHANGE_PASSWORD = "key_change_password";
+    String KEY_EXPORT_DATA = "key_export_data";
+    String KEY_IMPORT_DATA = "key_import_data";
+    String KEY_DELETE_DATA = "key_delete_data";
+    String KEY_SEND_DATA   = "key_send_data";
+    String KEY_CHANGE_PASSWORD = "key_change_password";
 
-    public enum DataStatus {
+    enum DataStatus {
         OK,
         DATA_LOCKING,
         NO_PASSWORD,
