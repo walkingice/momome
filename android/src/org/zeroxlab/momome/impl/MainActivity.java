@@ -84,6 +84,7 @@ public class MainActivity extends EditableActivity implements Momo,
         mItemClickListener = new ItemClickListener();
         mListView.setOnItemClickListener(mItemClickListener);
 
+        Log.d(getAppTag(), "Momome on created");
         doReload();
     }
 
