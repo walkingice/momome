@@ -20,8 +20,11 @@ package org.zeroxlab.momome.data;
 
 import org.zeroxlab.momome.Momo;
 import org.zeroxlab.momome.util.Util;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import java8.util.J8Arrays;
 
 public class Item implements Momo, Comparable<Item> {
 
@@ -129,9 +132,10 @@ public class Item implements Momo, Comparable<Item> {
         mTitle = DEF_TITLE;
         mId    = "";
 
-        for(Entry entry: mEntries) {
-            entry.clear();
-        }
+        J8Arrays.stream(mEntries.toArray(new Entry[mEntries.size()]))
+                .forEach(entry -> {
+                    entry.clear();
+                });
     }
 
     @Override
