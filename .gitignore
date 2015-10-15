@@ -1,15 +1,11 @@
-bin/*
-gen/*
-local.properties
-test/bin/*
-test/gen/*
-test/coverage.em
+.DS_Store
 
-.classpath
-.project
+/build
 
-.gradle
-build
+/.gradle
 
-*.iml
 .idea
+*.iml
+
+local.properties
+gradle.properties
