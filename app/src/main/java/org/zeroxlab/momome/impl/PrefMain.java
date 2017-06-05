@@ -87,7 +87,7 @@ public class PrefMain extends PreferenceActivity implements Momo, MomoModel.Stat
 
     @Override
     public void onPause() {
-        super.onResume();
+        super.onPause();
         mModel.removeListener(this);
     }
 

@@ -23,11 +23,6 @@ import android.os.Environment;
 public interface Momo {
     String TAG = "Momo";
 
-    // just a test for Java 8 new feature
-    default String getAppTag () {
-        return TAG;
-    }
-
     String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().getPath();
     String EXTERNAL_DIR = EXTERNAL_STORAGE + "/Momome";
 
