@@ -16,23 +16,17 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.momome.impl;
+package org.zeroxlab.momome.impl
 
-import org.zeroxlab.momome.R;
-import org.zeroxlab.momome.Momo;
-import org.zeroxlab.momome.MomoApp;
-import org.zeroxlab.momome.MomoModel;
+import android.app.Activity
+import android.os.Bundle
+import org.zeroxlab.momome.Momo
+import org.zeroxlab.momome.R
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.util.Log;
+class AboutActivity : Activity(), Momo {
 
-public class AboutActivity extends Activity implements Momo {
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+    public override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_about)
     }
 }
